@@ -2,10 +2,11 @@ import React from 'react'
 import {BrowserRouter} from "react-router-dom";
 import classes from './App.module.css'
 import MainRouter from "./modules/router";
+import "./layout.css";
 
-const App = () => (
+const App = (): React.ReactElement => (
     <BrowserRouter>
-        <div className={classes.container}>
+        <div className={classes['main-container']}>
             <MainRouter/>
         </div>
     </BrowserRouter>
