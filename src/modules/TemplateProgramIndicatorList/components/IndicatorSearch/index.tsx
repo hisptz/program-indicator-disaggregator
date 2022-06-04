@@ -4,15 +4,22 @@ import { InputField } from "@dhis2/ui";
 
 const { useState } = React;
 
-export default function IndicatorSearch(): React.ReactElement {
+type Props = {
+  onSearch: (newPage: string) => void;
+};
+
+export default function IndicatorSearch({
+  onSearch,
+}: Props): React.ReactElement {
   const [searchValue, setSearchValue] = useState<string>("");
 
   return (
-    <div>
+    <div style={{ width: "30vw" }}>
       <InputField
         value={searchValue}
         onChange={({ value }: any) => {
           setSearchValue(value);
+          onSearch(`${value}`);
         }}
         placeholder={i18n.t("Search by name, code or id")}
       />

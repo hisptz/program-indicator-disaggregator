@@ -28,6 +28,8 @@
   "dependencies": {
     "@dhis2/app-runtime": "^3.4.3",
     "@hisptz/dhis2-utils": "^1.0.0-alpha.0",
+    "@types/lodash": "^4.14.182",
+    "lodash": "^4.17.21",
     "luxon": "^2.4.0",
     "react-router-dom": "6"
   }
