@@ -21,11 +21,13 @@
     "@dhis2/cli-utils-cypress": "^9.0.2",
     "@dhis2/cypress-commands": "^9.0.2",
     "@dhis2/cypress-plugins": "^9.0.2",
+    "@types/lodash": "^4.14.182",
     "cypress": "^10.0.2",
     "cypress-cucumber-preprocessor": "^4.3.1"
   },
   "dependencies": {
     "@dhis2/app-runtime": "^3.4.3",
+    "lodash": "^4.17.21",
     "react-error-overlay": "6.0.9",
     "react-hook-form": "^7.31.3",
     "react-router-dom": "6",
