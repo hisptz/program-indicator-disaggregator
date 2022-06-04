@@ -20,7 +20,7 @@ import { getSanitizedDateString } from "../../../shared/utils";
 
 // property type
 type Props = {
-  pagination: Pager;
+  pagination?: Pager;
   loadingData: boolean;
   tableData: ProgramIndicator[];
   onPageChange: (newPage: number) => void;
@@ -56,7 +56,7 @@ export default function TemplateIndicatorsTable({
           <>
             <TableBody>
               <TableRow>
-                <TableCell colSpan={12}>
+                <TableCell colSpan="12">
                   <div
                     style={{
                       width: "100%",
