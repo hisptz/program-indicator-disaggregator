@@ -6,8 +6,9 @@ import i18n from '@dhis2/d2-i18n'
 export default function CustomValueField({
                                              name,
                                              label,
+                                             type,
                                              ...props
-                                         }: { name: string, label: string, [key: string]: any }): React.ReactElement {
+                                         }: { name: string, label: string, type?: string, [key: string]: any }): React.ReactElement {
 
     const [inputValue, setInputValue] = useState("");
 
@@ -30,6 +31,7 @@ export default function CustomValueField({
                         </div>
                         <div className="row-gap-16">
                             <InputField
+                                type={type}
                                 value={inputValue}
                                 onChange={({value}: { value: string }) => setInputValue(value)}
                                 name={`${name}-input`}

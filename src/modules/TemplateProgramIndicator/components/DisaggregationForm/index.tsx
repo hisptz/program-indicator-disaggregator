@@ -7,7 +7,7 @@ import {FormProvider, useForm} from "react-hook-form";
 
 export default function DisaggregationForm({
                                                open,
-                                               onClose
+                                               onClose,
                                            }: { open: boolean, onClose: () => void }): React.ReactElement {
 
     const form = useForm();

@@ -15,7 +15,8 @@ export default function CustomSingleSelectField({
             render={({field: {value, onBlur, onChange, name, ref}}) => (
                 <SingleSelectField
                     {...props}
-                    selected={value}
+                    selected={options.filter(option => option.value === value).length > 0 ? value : undefined}
+                    filterable
                     name={name}
                     ref={ref}
                     onChange={({selected}: { selected: any }) => onChange(selected)}
