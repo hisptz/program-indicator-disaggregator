@@ -5,8 +5,17 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-04T07:19:40.230Z\n"
-"PO-Revision-Date: 2022-06-04T07:19:40.230Z\n"
+"POT-Creation-Date: 2022-06-04T09:38:57.911Z\n"
+"PO-Revision-Date: 2022-06-04T09:38:57.911Z\n"
 
-msgid "Program Indicator Disaggregator"
-msgstr "Program Indicator Disaggregator"
+msgid "Create new disaggregation"
+msgstr "Create new disaggregation"
+
+msgid "Disaggregation form"
+msgstr "Disaggregation form"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Save"
+msgstr "Save"
