@@ -18,6 +18,10 @@ const onPageSizeChange = (newPageSize: number) => {
   console.log("onPageSizeChange", newPageSize);
 };
 
+const onOpenIndicatorTemplate = (indicator: ProgramIndicator) => {
+  console.log("onOpenIndicatorTemplate", indicator);
+};
+
 export default function TemplateProgramIndicatorList(): React.ReactElement {
   return (
     <>
@@ -28,6 +32,7 @@ export default function TemplateProgramIndicatorList(): React.ReactElement {
         pagination={pagination}
         onPageChange={onPageChange}
         onPageSizeChange={onPageSizeChange}
+        onOpenIndicatorTemplate={onOpenIndicatorTemplate}
       ></TemplateIndicatorsTable>
     </>
   );

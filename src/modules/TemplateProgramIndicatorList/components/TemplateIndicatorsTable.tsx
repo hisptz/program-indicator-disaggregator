@@ -22,6 +22,7 @@ type Props = {
   tableData: ProgramIndicator[];
   onPageChange: (newPage: number) => void;
   onPageSizeChange: (newPageSize: number) => void;
+  onOpenIndicatorTemplate: (indicator: ProgramIndicator) => void;
 };
 
 const defaultPagination: Pager = {
@@ -34,6 +35,7 @@ export default function TemplateIndicatorsTable({
   tableData = [],
   onPageChange,
   onPageSizeChange,
+  onOpenIndicatorTemplate,
   loadingData,
 }: Props): React.ReactElement {
   return (
@@ -42,8 +44,8 @@ export default function TemplateIndicatorsTable({
         <TableHead>
           <TableRowHead>
             <TableCellHead>{i18n.t("Name")}</TableCellHead>
-            <TableCellHead>{i18n.t("Last Updated")}</TableCellHead>
             <TableCellHead>{i18n.t("Program")}</TableCellHead>
+            <TableCellHead>{i18n.t("Last Updated")}</TableCellHead>
             <TableCellHead>{i18n.t("Disaggregated")}</TableCellHead>
           </TableRowHead>
         </TableHead>
@@ -72,10 +74,27 @@ export default function TemplateIndicatorsTable({
           <TableBody>
             {tableData.map((indicator) => (
               <TableRow key={indicator.id}>
-                <TableCell>{indicator.displayName}</TableCell>
-                <TableCell>{indicator.lastUpdated}</TableCell>
-                <TableCell>{indicator.program.displayName}</TableCell>
-                <TableCell>{indicator.disaggregated ? "Yes" : "No"}</TableCell>
+                <TableCell>
+                  <div onClick={() => onOpenIndicatorTemplate(indicator)}>
+                    {indicator.displayName}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div onClick={() => onOpenIndicatorTemplate(indicator)}>
+                    {indicator.program.displayName}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div onClick={() => onOpenIndicatorTemplate(indicator)}>
+                    {indicator.lastUpdated}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div onClick={() => onOpenIndicatorTemplate(indicator)}>
+                    {/* TODO add icon */}
+                    {indicator.disaggregated ? "Yes" : "No"}
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
