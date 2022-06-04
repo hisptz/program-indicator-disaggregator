@@ -27,6 +27,7 @@
   "dependencies": {
     "@dhis2/app-runtime": "^3.4.3",
     "react-error-overlay": "6.0.9",
+    "react-hook-form": "^7.31.3",
     "react-router-dom": "6"
   },
   "resolutions": {

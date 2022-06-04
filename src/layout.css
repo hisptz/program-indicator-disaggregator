@@ -44,6 +44,11 @@
     margin-left: -15px;
 }
 
+.row-gap-16 {
+    display: flex;
+    gap: 16px;
+}
+
 .row-no-gutters {
     margin-right: 0;
     margin-left: 0;
@@ -940,6 +945,27 @@
     display: block !important;
 }
 
+.gap-16 {
+    gap: 16px;
+}
+
+.gap-8 {
+    gap: 8px;
+}
+
+.gap-32 {
+    gap: 32px;
+}
+
 .invisible {
     visibility: hidden;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.align-middle {
+    align-items: center;
 }

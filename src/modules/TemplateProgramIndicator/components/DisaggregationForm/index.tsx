@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, ButtonStrip, Modal, ModalActions, ModalContent, ModalTitle} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n';
+import Form from "./components/Form";
 
 
 export default function DisaggregationForm({
@@ -14,7 +15,7 @@ export default function DisaggregationForm({
                 {i18n.t("Create new disaggregation")}
             </ModalTitle>
             <ModalContent>
-                <p>{i18n.t("Disaggregation form")}</p>
+                <Form/>
             </ModalContent>
             <ModalActions>
                 <ButtonStrip>
