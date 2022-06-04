@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {CircularLoader, InputField} from '@dhis2/ui'
+import {CircularLoader} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import classes from "../../DisaggregationForm.module.css"
 import CustomSingleSelectField from "../../../../../../shared/components/InputFields/SingleSelectField";
@@ -12,11 +12,12 @@ import {
     PROGRAM_TYPES,
     SUPPORTED_VALUE_TYPES
 } from "../../../../../../shared/constants";
-import MultipleOptionsField from "../../../../../../shared/components/MultipleOptionsField";
-import CustomValueField from "../../../../../../shared/components/CustomValueField";
+import MultipleOptionsField from "../../../../../../shared/components/InputFields/MultipleOptionsField";
+import CustomValueField from "../../../../../../shared/components/InputFields/CustomValueField";
 import {useDataQuery} from "@dhis2/app-runtime";
 import {useParams} from "react-router-dom";
 import {DataElement, ProgramIndicator, TrackedEntityAttribute} from "../../../../../../shared/interfaces/metadata";
+import CustomTextInputField from "../../../../../../shared/components/InputFields/TextInputField";
 
 function OptionSetDisaggregationType({options}: { options: { label: string, value: any }[] }): React.ReactElement | null {
     const type = useWatch({name: "type"});
@@ -170,12 +171,22 @@ function MainDataTypeSelector({pi}: { pi: ProgramIndicator }) {
 }
 
 function NameEditor({pi}: { pi: ProgramIndicator }) {
-    const data = useWatch({name: "data"})
+    const [data, nameTemplate] = useWatch({name: ["data", "nameTemplate"]});
+    const {setValue} = useFormContext();
+
+    useEffect(() => {
+        if (!nameTemplate) {
+            setValue("nameTemplate", `${pi.displayName} - {{ disaggregationValue }}`)
+        }
+    }, [pi.displayName, setValue, data]);
+
     return data ? <div className={classes["form-group"]}>
         <label>{i18n.t("Disaggregation name")}</label>
         <div className="row-gap-16">
             <div className="col-sm-12">
-                <InputField
+                <CustomTextInputField
+                    required
+                    name={`nameTemplate`}
                     helpText={`${i18n.t("You can access the disaggregation value using the placeholder")} {{ disaggregationValue }}`}
                     label={i18n.t("Disaggregated indicators name template")}/>
             </div>
