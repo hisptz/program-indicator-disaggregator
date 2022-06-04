@@ -2,4 +2,5 @@
 node_modules
 .d2
 src/locales
-build
+build!/cypress.env.json
+cypress.env.json
