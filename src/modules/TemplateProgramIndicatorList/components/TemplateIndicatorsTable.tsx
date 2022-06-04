@@ -1,5 +1,6 @@
 import i18n from "@dhis2/d2-i18n";
 import React from "react";
+
 import {
   Table,
   Pagination,
@@ -11,9 +12,11 @@ import {
   TableCellHead,
   TableRow,
   TableCell,
+  IconCheckmark24,
 } from "@dhis2/ui";
 import { ProgramIndicator } from "../../../shared/interfaces/metadata";
 import { Pagination as Pager } from "../../../shared/interfaces/pagination";
+import { getSanitizedDateString } from "../../../shared/utils";
 
 // property type
 type Props = {
@@ -86,13 +89,12 @@ export default function TemplateIndicatorsTable({
                 </TableCell>
                 <TableCell>
                   <div onClick={() => onOpenIndicatorTemplate(indicator)}>
-                    {indicator.lastUpdated}
+                    {getSanitizedDateString(indicator.lastUpdated ?? "")}
                   </div>
                 </TableCell>
                 <TableCell>
                   <div onClick={() => onOpenIndicatorTemplate(indicator)}>
-                    {/* TODO add icon */}
-                    {indicator.disaggregated ? "Yes" : "No"}
+                    {indicator.disaggregated ? <IconCheckmark24 /> : ""}
                   </div>
                 </TableCell>
               </TableRow>

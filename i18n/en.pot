@@ -5,17 +5,17 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-04T10:59:22.936Z\n"
-"PO-Revision-Date: 2022-06-04T10:59:22.936Z\n"
+"POT-Creation-Date: 2022-06-04T13:22:41.036Z\n"
+"PO-Revision-Date: 2022-06-04T13:22:41.036Z\n"
 
 msgid "Name"
 msgstr "Name"
 
-msgid "Last Updated"
-msgstr "Last Updated"
-
 msgid "Program"
 msgstr "Program"
+
+msgid "Last Updated"
+msgstr "Last Updated"
 
 msgid "Disaggregated"
 msgstr "Disaggregated"
