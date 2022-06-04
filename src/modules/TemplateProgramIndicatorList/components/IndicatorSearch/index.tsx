@@ -1,6 +1,7 @@
 import i18n from "@dhis2/d2-i18n";
 import React from "react";
 import { InputField } from "@dhis2/ui";
+import { debounce } from "lodash";
 
 const { useState } = React;
 
@@ -19,7 +20,7 @@ export default function IndicatorSearch({
         value={searchValue}
         onChange={({ value }: any) => {
           setSearchValue(value);
-          onSearch(`${value}`);
+          debounce((value) => onSearch(value), 3000)(value);
         }}
         placeholder={i18n.t("Search by name, code or id")}
       />
