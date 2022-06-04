@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Field, IconAdd24, IconDelete24, InputField} from '@dhis2/ui'
+import {InputField} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import classes from "../../DisaggregationForm.module.css"
 import CustomSingleSelectField from "../../../../../../shared/components/InputFields/SingleSelectField";
@@ -7,6 +7,7 @@ import CustomRadioField from "../../../../../../shared/components/InputFields/Ra
 import {useWatch} from "react-hook-form";
 import {DISAGGREGATION_TYPES, DISAGGREGATION_TYPES_OPTIONS} from "../../../../../../shared/constants";
 import MultipleOptionsField from "../../../../../../shared/components/MultipleOptionsField";
+import CustomValueField from "../../../../../../shared/components/CustomValueField";
 
 function OptionSetDisaggregationType() {
     const type = useWatch({name: "type"});
@@ -25,14 +26,8 @@ function OptionSetDisaggregationType() {
 function CustomValueDisaggregationType() {
     const type = useWatch({name: "type"});
 
-    return type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? <div className="col gap-16 col-sm-6">
-        <Field label={i18n.t("Add values")}>
-            <div className="row-gap-16 align-middle">
-                <InputField/>
-                <Button icon={<IconDelete24/>}/>
-            </div>
-        </Field>
-        <Button icon={<IconAdd24/>}>{i18n.t("Add value")}</Button>
+    return type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? <div className="col gap-16 col-sm-12">
+        <CustomValueField name="values" label={i18n.t("Add options")}/>
     </div> : null;
 }
 

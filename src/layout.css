@@ -49,6 +49,15 @@
     gap: 16px;
 }
 
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.row-gap-8 {
+    display: flex;
+    gap: 8px;
+}
+
 .row-no-gutters {
     margin-right: 0;
     margin-left: 0;
