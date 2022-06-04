@@ -40,11 +40,6 @@ function CustomValueDisaggregationType({valueType}: { valueType: string }): Reac
 
 function DataTypeSelector({pi}: { pi: ProgramIndicator }) {
     const dataType = useWatch({name: "dataType"});
-    const {setValue} = useFormContext();
-
-    useEffect(() => {
-        setValue("data", "");
-    }, [dataType, setValue]);
 
     const programStages = pi.program.programStages?.map(ps => ({label: ps.displayName ?? '', value: ps.id}));
     const attributes = pi.program.programTrackedEntityAttributes?.filter((attribute) => SUPPORTED_VALUE_TYPES.includes(attribute?.trackedEntityAttribute?.valueType ?? "")).map(pta => ({
@@ -67,7 +62,10 @@ function DataTypeSelector({pi}: { pi: ProgramIndicator }) {
                                              label={i18n.t("Program stage")}/>
                 </div>
                 <div className="col-sm-6">
-                    <CustomSingleSelectField options={dataElements} name="data" label={i18n.t("Data Element")}/>
+                    <CustomSingleSelectField
+                        disabled={!selectedProgramStage}
+                        options={dataElements} name="data"
+                        label={i18n.t("Data Element")}/>
                 </div>
             </>
         }
@@ -139,10 +137,12 @@ function MainDataTypeSelector({pi}: { pi: ProgramIndicator }) {
     const {setValue} = useFormContext();
     const isEventProgram = pi.program.programType === PROGRAM_TYPES.WITHOUT_REGISTRATION;
 
-
     //Clear data value on data type change
     useEffect(() => {
         setValue("data", "");
+        if (dataType === "attribute") {
+            setValue("programStage", "");
+        }
     }, [dataType, setValue]);
 
     //Auto assign data element for event programs
@@ -151,7 +151,6 @@ function MainDataTypeSelector({pi}: { pi: ProgramIndicator }) {
             setValue("dataType", "dataElement");
         }
     }, [isEventProgram, pi.program.programType, setValue]);
-
 
     return <div className={classes["form-group"]}>
         <label>{i18n.t("Disaggregate by")}</label>
