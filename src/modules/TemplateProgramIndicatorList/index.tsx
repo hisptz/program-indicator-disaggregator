@@ -1,7 +1,8 @@
+import i18n from "@dhis2/d2-i18n";
 import React from "react";
 import { ProgramIndicator } from "../../shared/interfaces/metadata";
 import { useDataQuery } from "@dhis2/app-runtime";
-
+import { NoticeBox } from "@dhis2/ui";
 import { TemplateIndicatorsTable } from "./components";
 import { Pagination } from "../../shared/interfaces/pagination";
 
@@ -34,7 +35,11 @@ export default function TemplateProgramIndicatorList(): React.ReactElement {
   });
 
   if (error) {
-    return <div>Error!</div>;
+    return (
+      <NoticeBox error title={i18n.t("Failed to load Program indicators!")}>
+        {i18n.t("Refresh the page to reload the indicators.")}
+      </NoticeBox>
+    );
   }
 
   const queryData: {

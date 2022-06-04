@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-04T13:22:41.036Z\n"
-"PO-Revision-Date: 2022-06-04T13:22:41.036Z\n"
+"POT-Creation-Date: 2022-06-04T14:59:13.035Z\n"
+"PO-Revision-Date: 2022-06-04T14:59:13.035Z\n"
 
 msgid "Name"
 msgstr "Name"
@@ -19,3 +19,9 @@ msgstr "Last Updated"
 
 msgid "Disaggregated"
 msgstr "Disaggregated"
+
+msgid "Failed to load Program indicators!"
+msgstr "Failed to load Program indicators!"
+
+msgid "Refresh the page to reload the indicators."
+msgstr "Refresh the page to reload the indicators."
