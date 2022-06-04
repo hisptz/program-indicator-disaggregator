@@ -18,6 +18,11 @@ function OptionSetDisaggregationType() {
             options={[
                 {label: i18n.t("Option 1"), value: "option1"},
                 {label: i18n.t("Option 2"), value: "option2"},
+                {label: i18n.t("Option 3"), value: "option3"},
+                {label: i18n.t("Option 4"), value: "option4"},
+                {label: i18n.t("Option 5"), value: "option5"},
+                {label: i18n.t("Option 6"), value: "option6"},
+
             ]}
         />
     </div> : null;
@@ -25,7 +30,6 @@ function OptionSetDisaggregationType() {
 
 function CustomValueDisaggregationType() {
     const type = useWatch({name: "type"});
-
     return type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? <div className="col gap-16 col-sm-12">
         <CustomValueField name="values" label={i18n.t("Add options")}/>
     </div> : null;
@@ -33,7 +37,6 @@ function CustomValueDisaggregationType() {
 
 function DataTypeSelector() {
     const dataType = useWatch({name: "dataType"});
-
     return <div className="row-gap-16">
         {
             dataType === "dataElement" && <>
@@ -51,64 +54,78 @@ function DataTypeSelector() {
                             label: "Data element 1",
                             value: "dataElement1"
                         }
-                    ]} name="dataElement" label={i18n.t("Data Element")}/>
+                    ]} name="data" label={i18n.t("Data Element")}/>
                 </div>
             </>
         }
         {
             dataType === "attribute" && <>
                 <div className="col-sm-12">
-                    <CustomSingleSelectField options={[]} name="attribute" label={i18n.t("Attribute")}/>
+                    <CustomSingleSelectField options={[]} name="data" label={i18n.t("Attribute")}/>
                 </div>
             </>
         }
     </div>;
 }
 
+function DisaggregationOptions() {
+    const data = useWatch({name: "data"})
+    return data ? <div className={classes["form-group"]}>
+        <label>{i18n.t("Disaggregation options")}</label>
+        <div className="row-gap-16">
+            <div className="col gap-16 col-sm-12">
+                <CustomSingleSelectField options={DISAGGREGATION_TYPES_OPTIONS} name="type"
+                                         label={i18n.t("Disaggregation type")}/>
+            </div>
+        </div>
+        <div className="row-gap-16">
+            <OptionSetDisaggregationType/>
+        </div>
+        <div className="row-gap-16">
+            <CustomValueDisaggregationType/>
+        </div>
+
+    </div> : null;
+}
+
+function MainDataTypeSelector() {
+    return <div className={classes["form-group"]}>
+        <label>{i18n.t("Filter by")}</label>
+        <div className="row-gap-16">
+            <div className="col-sm-6">
+                <CustomRadioField name="dataType" radioValue="dataElement" dataTest="data-element-radio-option"
+                                  label={i18n.t("Data element")}/>
+            </div>
+            <div className="col-sm-6">
+                <CustomRadioField name="dataType" radioValue="attribute" dataTest="attribute-radio-option"
+                                  label={i18n.t("Attribute")}/>
+            </div>
+        </div>
+        <DataTypeSelector/>
+    </div>;
+}
+
+function NameEditor() {
+    const data = useWatch({name: "data"})
+    return data ? <div className={classes["form-group"]}>
+        <label>{i18n.t("Disaggregation name")}</label>
+        <div className="row-gap-16">
+            <div className="col-sm-12">
+                <InputField
+                    helpText={`${i18n.t("You can access the disaggregation value using the placeholder")} {{ disaggregationValue }}`}
+                    label={i18n.t("Disaggregated indicators name template")}/>
+            </div>
+        </div>
+    </div> : null;
+}
+
 export default function Form(): React.ReactElement {
 
     return (
         <form>
-            <div className={classes["form-group"]}>
-                <label>{i18n.t("Filter by")}</label>
-                <div className="row-gap-16">
-                    <div className="col-sm-6">
-                        <CustomRadioField name="dataType" radioValue="dataElement" dataTest="data-element-radio-option"
-                                          label={i18n.t("Data element")}/>
-                    </div>
-                    <div className="col-sm-6">
-                        <CustomRadioField name="dataType" radioValue="attribute" dataTest="attribute-radio-option"
-                                          label={i18n.t("Attribute")}/>
-                    </div>
-                </div>
-                <DataTypeSelector/>
-            </div>
-            <div className={classes["form-group"]}>
-                <label>{i18n.t("Disaggregation options")}</label>
-                <div className="row-gap-16">
-                    <div className="col gap-16 col-sm-12">
-                        <CustomSingleSelectField options={DISAGGREGATION_TYPES_OPTIONS} name="type"
-                                                 label={i18n.t("Disaggregation type")}/>
-                    </div>
-                </div>
-                <div className="row-gap-16">
-                    <OptionSetDisaggregationType/>
-                </div>
-                <div className="row-gap-16">
-                    <CustomValueDisaggregationType/>
-                </div>
-
-            </div>
-            <div className={classes["form-group"]}>
-                <label>{i18n.t("Disaggregation name")}</label>
-                <div className="row-gap-16">
-                    <div className="col-sm-12">
-                        <InputField
-                            helpText={`${i18n.t("You can access the disaggregation value using the placeholder")} {{ disaggregationValue }}`}
-                            label={i18n.t("Disaggregated indicators name template")}/>
-                    </div>
-                </div>
-            </div>
+            <MainDataTypeSelector/>
+            <DisaggregationOptions/>
+            <NameEditor/>
         </form>
     )
 }

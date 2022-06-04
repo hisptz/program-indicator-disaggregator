@@ -9,24 +9,22 @@ export default function MultipleOptionsField({
                                                  ...props
                                              }: { name: string, label: string, options: { label: string, value: string }[], [key: string]: any }): React.ReactElement {
 
-
     return (
         <Controller
             name={name}
             render={({field: {value, onChange, ref}}) => (
                 <Field {...props} label={label}>
-                    <div ref={ref} className="col gap-16 col-sm-12">
+                    <div ref={ref} className="row-gap-8 flex-wrap">
                         {
                             options.map(({label, value: optionValue}) => (
                                 <Checkbox
-                                    checked={value.includes(optionValue)}
+                                    checked={value?.includes(optionValue)}
                                     onChange={({checked}: { checked: boolean }) => {
                                         if (checked) {
                                             onChange([...(value ?? []), optionValue])
                                         } else {
-                                            onChange(value.filter((item: any) => item !== optionValue))
+                                            onChange((value ?? [])?.filter((item: any) => item !== optionValue))
                                         }
-
                                     }}
                                     label={label}
                                     key={`${label}-option`}
