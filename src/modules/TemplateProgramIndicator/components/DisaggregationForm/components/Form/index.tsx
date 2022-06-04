@@ -23,7 +23,7 @@ function OptionSetDisaggregationType({options}: { options: { label: string, valu
     const type = useWatch({name: "type"});
     return type === DISAGGREGATION_TYPES.OPTION_SET ? <div className="col-sm-12">
         <MultipleOptionsField
-            name="values"
+            name="disaggregationValues"
             label={i18n.t("Select options")}
             options={options}
         />
@@ -34,7 +34,7 @@ function CustomValueDisaggregationType({valueType}: { valueType: string }): Reac
     const type = useWatch({name: "type"});
     return type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? <div className="col gap-16 col-sm-12">
         <CustomValueField
-            type={valueType.toLowerCase()} name="values"
+            type={valueType.toLowerCase()} name="disaggregationValues"
             label={i18n.t("Add options")}/>
     </div> : null;
 }
@@ -114,6 +114,10 @@ function DisaggregationOptions({pi}: { pi: ProgramIndicator }) {
             setValue("type", disaggregationOptions[0].value);
         }
     }, [disaggregationOptions, setValue]);
+    useEffect(() => {
+        setValue("disaggregationValues", []);
+    }, [data, setValue]);
+
 
     return data ? <div className={classes["form-group"]}>
         <label>{i18n.t("Disaggregation options")}</label>
@@ -198,11 +202,11 @@ export default function Form(): React.ReactElement {
     const {id} = useParams<{ id: string }>();
     const {loading, data, error} = useDataQuery(PROGRAM_INDICATOR_QUERY, {variables: {id}})
 
-
     if (loading) {
         return <div style={{
             height: "100%",
             width: "100%",
+            minHeight: 500,
             display: "flex",
             justifyContent: "center",
             alignItems: "center"
