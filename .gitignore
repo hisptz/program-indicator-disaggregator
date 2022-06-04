@@ -4,3 +4,10 @@ node_modules
 src/locales
 build!/cypress.env.json
 cypress.env.json
+
+
+#  enviroment files
+.env
+
+# trial data files
+**/*.trial.*
