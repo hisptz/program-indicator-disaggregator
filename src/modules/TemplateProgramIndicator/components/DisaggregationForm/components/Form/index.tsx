@@ -1,22 +1,31 @@
 import React from 'react'
-import {Button, CheckboxField, Field, IconAdd24, IconDelete24, InputField, Radio, SingleSelectField} from '@dhis2/ui'
+import {Button, Field, IconAdd24, IconDelete24, InputField} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import classes from "../../DisaggregationForm.module.css"
+import CustomSingleSelectField from "../../../../../../shared/components/InputFields/SingleSelectField";
+import CustomRadioField from "../../../../../../shared/components/InputFields/RadioField";
+import {useWatch} from "react-hook-form";
+import {DISAGGREGATION_TYPES, DISAGGREGATION_TYPES_OPTIONS} from "../../../../../../shared/constants";
+import MultipleOptionsField from "../../../../../../shared/components/MultipleOptionsField";
 
 function OptionSetDisaggregationType() {
-    return <div className="col-sm-12">
-        <Field label={i18n.t("Select options")}>
-            <div className="col gap-16 col-sm-12">
-                <CheckboxField label="Option 1"/>
-                <CheckboxField label="Option 2"/>
-                <CheckboxField label="Option 3"/>
-            </div>
-        </Field>
-    </div>;
+    const type = useWatch({name: "type"});
+    return type === DISAGGREGATION_TYPES.OPTION_SET ? <div className="col-sm-12">
+        <MultipleOptionsField
+            name="values"
+            label={i18n.t("Select options")}
+            options={[
+                {label: i18n.t("Option 1"), value: "option1"},
+                {label: i18n.t("Option 2"), value: "option2"},
+            ]}
+        />
+    </div> : null;
 }
 
 function CustomValueDisaggregationType() {
-    return <div className="col gap-16 col-sm-6">
+    const type = useWatch({name: "type"});
+
+    return type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? <div className="col gap-16 col-sm-6">
         <Field label={i18n.t("Add values")}>
             <div className="row-gap-16 align-middle">
                 <InputField/>
@@ -24,6 +33,40 @@ function CustomValueDisaggregationType() {
             </div>
         </Field>
         <Button icon={<IconAdd24/>}>{i18n.t("Add value")}</Button>
+    </div> : null;
+}
+
+function DataTypeSelector() {
+    const dataType = useWatch({name: "dataType"});
+
+    return <div className="row-gap-16">
+        {
+            dataType === "dataElement" && <>
+                <div className="col-sm-6">
+                    <CustomSingleSelectField options={[
+                        {
+                            label: "Program stage 1",
+                            value: "programStage1"
+                        }
+                    ]} name="programStage" label={i18n.t("Program stage")}/>
+                </div>
+                <div className="col-sm-6">
+                    <CustomSingleSelectField options={[
+                        {
+                            label: "Data element 1",
+                            value: "dataElement1"
+                        }
+                    ]} name="dataElement" label={i18n.t("Data Element")}/>
+                </div>
+            </>
+        }
+        {
+            dataType === "attribute" && <>
+                <div className="col-sm-12">
+                    <CustomSingleSelectField options={[]} name="attribute" label={i18n.t("Attribute")}/>
+                </div>
+            </>
+        }
     </div>;
 }
 
@@ -35,26 +78,22 @@ export default function Form(): React.ReactElement {
                 <label>{i18n.t("Filter by")}</label>
                 <div className="row-gap-16">
                     <div className="col-sm-6">
-                        <Radio label={i18n.t("Data element")}/>
+                        <CustomRadioField name="dataType" radioValue="dataElement" dataTest="data-element-radio-option"
+                                          label={i18n.t("Data element")}/>
                     </div>
                     <div className="col-sm-6">
-                        <Radio label={i18n.t("Attribute")}/>
+                        <CustomRadioField name="dataType" radioValue="attribute" dataTest="attribute-radio-option"
+                                          label={i18n.t("Attribute")}/>
                     </div>
                 </div>
-                <div className="row-gap-16">
-                    <div className="col-sm-6">
-                        <SingleSelectField label={i18n.t("Program stage")}/>
-                    </div>
-                    <div className="col-sm-6">
-                        <SingleSelectField label={i18n.t("Data Element")}/>
-                    </div>
-                </div>
+                <DataTypeSelector/>
             </div>
             <div className={classes["form-group"]}>
                 <label>{i18n.t("Disaggregation options")}</label>
                 <div className="row-gap-16">
                     <div className="col gap-16 col-sm-12">
-                        <SingleSelectField label={i18n.t("Disaggregation type")}/>
+                        <CustomSingleSelectField options={DISAGGREGATION_TYPES_OPTIONS} name="type"
+                                                 label={i18n.t("Disaggregation type")}/>
                     </div>
                 </div>
                 <div className="row-gap-16">
