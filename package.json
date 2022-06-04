@@ -21,12 +21,14 @@
     "@dhis2/cli-utils-cypress": "^9.0.2",
     "@dhis2/cypress-commands": "^9.0.2",
     "@dhis2/cypress-plugins": "^9.0.2",
+    "@types/luxon": "^2.3.2",
     "cypress": "^10.0.2",
     "cypress-cucumber-preprocessor": "^4.3.1"
   },
   "dependencies": {
     "@dhis2/app-runtime": "^3.4.3",
     "@hisptz/dhis2-utils": "^1.0.0-alpha.0",
+    "luxon": "^2.4.0",
     "react-router-dom": "6"
   }
 }
