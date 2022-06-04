@@ -1,3 +1,4 @@
+import IndicatorSearch from "./IndicatorSearch";
 import TemplateIndicatorsTable from "./TemplateIndicatorsTable";
 
-export { TemplateIndicatorsTable };
+export { TemplateIndicatorsTable, IndicatorSearch };
