@@ -5,29 +5,71 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-04T16:12:35.906Z\n"
-"PO-Revision-Date: 2022-06-04T16:12:35.906Z\n"
+"POT-Creation-Date: 2022-06-04T16:55:42.059Z\n"
+"PO-Revision-Date: 2022-06-04T16:55:42.059Z\n"
 
-msgid "Search by name, code or id"
-msgstr "Search by name, code or id"
+msgid "Select options"
+msgstr "Select options"
 
-msgid "Name"
-msgstr "Name"
+msgid "Add options"
+msgstr "Add options"
 
-msgid "Program"
-msgstr "Program"
+msgid "Program stage"
+msgstr "Program stage"
 
-msgid "Last Updated"
-msgstr "Last Updated"
+msgid "Data Element"
+msgstr "Data Element"
 
-msgid "Disaggregated"
-msgstr "Disaggregated"
+msgid "Attribute"
+msgstr "Attribute"
 
-msgid "Failed to load Program indicators!"
-msgstr "Failed to load Program indicators!"
+msgid "Disaggregation options"
+msgstr "Disaggregation options"
 
-msgid "Refresh the page to reload the indicators."
-msgstr "Refresh the page to reload the indicators."
+msgid "Disaggregation type"
+msgstr "Disaggregation type"
 
-msgid "Template Program Indicator list"
-msgstr "Template Program Indicator list"
+msgid "Disaggregate by"
+msgstr "Disaggregate by"
+
+msgid "Data element"
+msgstr "Data element"
+
+msgid "Disaggregation name"
+msgstr "Disaggregation name"
+
+msgid "You can access the disaggregation value using the placeholder"
+msgstr "You can access the disaggregation value using the placeholder"
+
+msgid "Disaggregated indicators name template"
+msgstr "Disaggregated indicators name template"
+
+msgid "Create new disaggregation"
+msgstr "Create new disaggregation"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Open Disaggregator"
+msgstr "Open Disaggregator"
+
+msgid "Add new"
+msgstr "Add new"
+
+msgid "Add value"
+msgstr "Add value"
+
+msgid "Select all"
+msgstr "Select all"
+
+msgid "Select none"
+msgstr "Select none"
+
+msgid "Option set"
+msgstr "Option set"
+
+msgid "Custom value"
+msgstr "Custom value"

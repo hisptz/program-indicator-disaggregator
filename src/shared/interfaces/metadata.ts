@@ -29,9 +29,10 @@ export interface Program extends DHIS2Resource {
     programStages?: ProgramStage[];
     programTrackedEntityAttributes?: {
         trackedEntityAttribute: TrackedEntityAttribute;
-        program: Program
-
-    };
+        program: Program,
+        id: string,
+        displayName: string
+    }[];
 }
 
 export interface TrackedEntityAttribute extends DHIS2Resource {
@@ -61,7 +62,10 @@ export interface DHIS2Resource {
 
 export type DHIS2AccessString = "rw------" | "r-------" | "-------" | "rwrw----"
 
-export type DHIS2ValueType = "LONG_TEXT" | ""
+export type DHIS2ValueType = "LONG_TEXT" | "TEXT" | "BOOLEAN" | "DATE" | "AGE" | "NUMBER"
+
+export type ProgramType = "WITH_REGISTRATION" | "WITHOUT_REGISTRATION"
+
 
 export interface DHIS2Access {
     read?: boolean;
