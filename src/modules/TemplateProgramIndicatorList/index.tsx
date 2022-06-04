@@ -5,7 +5,6 @@ import { useDataQuery } from "@dhis2/app-runtime";
 import { NoticeBox } from "@dhis2/ui";
 import { TemplateIndicatorsTable } from "./components";
 import { Pagination } from "../../shared/interfaces/pagination";
-
 const queryObject = {
   programIndicatorsQuery: {
     resource: "programIndicators",
@@ -49,8 +48,8 @@ export default function TemplateProgramIndicatorList(): React.ReactElement {
   const { programIndicators, pager: pagination } = queryData;
 
   return (
-    <>
-      <h1>Template indicator list</h1>
+    <div className="container">
+      <h2>{i18n.t("Template Program Indicator list")}</h2>
       <TemplateIndicatorsTable
         tableData={programIndicators ?? []}
         loadingData={loading}
@@ -61,6 +60,6 @@ export default function TemplateProgramIndicatorList(): React.ReactElement {
         }
         onOpenIndicatorTemplate={onOpenIndicatorTemplate}
       ></TemplateIndicatorsTable>
-    </>
+    </div>
   );
 }

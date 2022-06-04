@@ -14,9 +14,9 @@ import {
   TableCell,
   IconCheckmark24,
 } from "@dhis2/ui";
-import { ProgramIndicator } from "../../../shared/interfaces/metadata";
-import { Pagination as Pager } from "../../../shared/interfaces/pagination";
-import { getSanitizedDateString } from "../../../shared/utils";
+import { ProgramIndicator } from "../../../../shared/interfaces/metadata";
+import { Pagination as Pager } from "../../../../shared/interfaces/pagination";
+import { getSanitizedDateString } from "../../../../shared/utils";
 
 // property type
 type Props = {

@@ -5,8 +5,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-04T14:59:13.035Z\n"
-"PO-Revision-Date: 2022-06-04T14:59:13.035Z\n"
+"POT-Creation-Date: 2022-06-04T16:12:35.906Z\n"
+"PO-Revision-Date: 2022-06-04T16:12:35.906Z\n"
+
+msgid "Search by name, code or id"
+msgstr "Search by name, code or id"
 
 msgid "Name"
 msgstr "Name"
@@ -25,3 +28,6 @@ msgstr "Failed to load Program indicators!"
 
 msgid "Refresh the page to reload the indicators."
 msgstr "Refresh the page to reload the indicators."
+
+msgid "Template Program Indicator list"
+msgstr "Template Program Indicator list"
