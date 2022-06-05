@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-04T16:55:42.059Z\n"
-"PO-Revision-Date: 2022-06-04T16:55:42.059Z\n"
+"POT-Creation-Date: 2022-06-05T08:45:47.782Z\n"
+"PO-Revision-Date: 2022-06-05T08:45:47.782Z\n"
 
 msgid "Select options"
 msgstr "Select options"
@@ -55,6 +55,30 @@ msgstr "Save"
 
 msgid "Open Disaggregator"
 msgstr "Open Disaggregator"
+
+msgid "Search by name, code or id"
+msgstr "Search by name, code or id"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Program"
+msgstr "Program"
+
+msgid "Last Updated"
+msgstr "Last Updated"
+
+msgid "Disaggregated"
+msgstr "Disaggregated"
+
+msgid "Failed to load Program indicators!"
+msgstr "Failed to load Program indicators!"
+
+msgid "Refresh the page to reload the indicators."
+msgstr "Refresh the page to reload the indicators."
+
+msgid "Template Program Indicator list"
+msgstr "Template Program Indicator list"
 
 msgid "Add new"
 msgstr "Add new"
