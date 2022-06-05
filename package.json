@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "d2-app-scripts build",
-    "start": "d2-app-scripts start --proxy https://play.dhis2.org/2.38.0",
+    "start": "d2-app-scripts start ",
     "test": "d2-app-scripts test",
     "deploy": "d2-app-scripts deploy",
     "lint": "yarn d2-style check",
