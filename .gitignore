@@ -10,4 +10,4 @@ cypress.env.json
 .env
 
 # trial data files
-**/*.trial.*
+**/*.trial.*!/.env
