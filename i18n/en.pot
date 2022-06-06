@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-05T08:45:47.782Z\n"
-"PO-Revision-Date: 2022-06-05T08:45:47.782Z\n"
+"POT-Creation-Date: 2022-06-06T15:17:59.476Z\n"
+"PO-Revision-Date: 2022-06-06T15:17:59.476Z\n"
 
 msgid "Select options"
 msgstr "Select options"
@@ -50,11 +50,23 @@ msgstr "Create new disaggregation"
 msgid "Cancel"
 msgstr "Cancel"
 
+msgid "Saving..."
+msgstr "Saving..."
+
 msgid "Save"
 msgstr "Save"
 
-msgid "Open Disaggregator"
-msgstr "Open Disaggregator"
+msgid "Configuration saved successfully"
+msgstr "Configuration saved successfully"
+
+msgid "Error saving configuration"
+msgstr "Error saving configuration"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Disaggregate"
+msgstr "Disaggregate"
 
 msgid "Search by name, code or id"
 msgstr "Search by name, code or id"
@@ -71,8 +83,8 @@ msgstr "Last Updated"
 msgid "Disaggregated"
 msgstr "Disaggregated"
 
-msgid "Failed to load Program indicators!"
-msgstr "Failed to load Program indicators!"
+msgid "F   ailed to load Program indicators!"
+msgstr "F   ailed to load Program indicators!"
 
 msgid "Refresh the page to reload the indicators."
 msgstr "Refresh the page to reload the indicators."
