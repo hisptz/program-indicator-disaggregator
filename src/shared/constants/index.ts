@@ -1,5 +1,14 @@
 import i18n from "@dhis2/d2-i18n";
 
+
+export const PI_CONFIG_DATASTORE_KEY = "pit_config" // Program indicator config datastore key
+
+export enum DATA_TYPES {
+    'DATA_ELEMENT' = 'DATA_ELEMENT',
+    'TRACKED_ENTITY_ATTRIBUTE' = 'TRACKED_ENTITY_ATTRIBUTE',
+}
+
+
 export enum DISAGGREGATION_TYPES {
   OPTION_SET = "OPTION_SET",
   CUSTOM_VALUE = "CUSTOM_VALUE",
