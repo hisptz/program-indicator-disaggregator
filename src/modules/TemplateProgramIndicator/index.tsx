@@ -43,7 +43,8 @@ export default function TemplateProgramIndicator(): React.ReactElement {
             </div>
             {
                 open && (
-                    <DisaggregationForm open={open} onClose={() => setOpen(false)}/>
+                    <DisaggregationForm open={open}
+                                        onClose={() => setOpen(false)}/>
                 )
             }
         </div>

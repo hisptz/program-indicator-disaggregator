@@ -1,21 +1,18 @@
-import React, {useEffect} from 'react'
-import {CircularLoader} from '@dhis2/ui'
+import React, {useEffect, useMemo} from 'react'
 import i18n from '@dhis2/d2-i18n'
 import classes from "../../DisaggregationForm.module.css"
 import CustomSingleSelectField from "../../../../../../shared/components/InputFields/SingleSelectField";
 import CustomRadioField from "../../../../../../shared/components/InputFields/RadioField";
 import {useFormContext, useWatch} from "react-hook-form";
 import {
+    DATA_TYPES,
     DISAGGREGATION_TYPES,
     DISAGGREGATION_TYPES_OPTIONS,
-    PROGRAM_INDICATOR_QUERY,
     PROGRAM_TYPES,
     SUPPORTED_VALUE_TYPES
 } from "../../../../../../shared/constants";
 import MultipleOptionsField from "../../../../../../shared/components/InputFields/MultipleOptionsField";
 import CustomValueField from "../../../../../../shared/components/InputFields/CustomValueField";
-import {useDataQuery} from "@dhis2/app-runtime";
-import {useParams} from "react-router-dom";
 import {DataElement, ProgramIndicator, TrackedEntityAttribute} from "../../../../../../shared/interfaces/metadata";
 import CustomTextInputField from "../../../../../../shared/components/InputFields/TextInputField";
 
@@ -23,7 +20,7 @@ function OptionSetDisaggregationType({options}: { options: { label: string, valu
     const type = useWatch({name: "type"});
     return type === DISAGGREGATION_TYPES.OPTION_SET ? <div className="col-sm-12">
         <MultipleOptionsField
-            name="disaggregationValues"
+            name="values"
             label={i18n.t("Select options")}
             options={options}
         />
@@ -34,7 +31,7 @@ function CustomValueDisaggregationType({valueType}: { valueType: string }): Reac
     const type = useWatch({name: "type"});
     return type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? <div className="col gap-16 col-sm-12">
         <CustomValueField
-            type={valueType.toLowerCase()} name="disaggregationValues"
+            type={valueType.toLowerCase()} name="values"
             label={i18n.t("Add options")}/>
     </div> : null;
 }
@@ -57,7 +54,7 @@ function DataTypeSelector({pi}: { pi: ProgramIndicator }) {
 
     return <div className="row-gap-16">
         {
-            dataType === "dataElement" && <>
+            dataType === DATA_TYPES.DATA_ELEMENT && <>
                 <div className="col-sm-6">
                     <CustomSingleSelectField options={programStages ?? []} name="programStage"
                                              label={i18n.t("Program stage")}/>
@@ -71,7 +68,7 @@ function DataTypeSelector({pi}: { pi: ProgramIndicator }) {
             </>
         }
         {
-            dataType === "attribute" && <>
+            dataType === DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE && <>
                 <div className="col-sm-12">
                     <CustomSingleSelectField options={attributes} name="data" label={i18n.t("Attribute")}/>
                 </div>
@@ -81,42 +78,46 @@ function DataTypeSelector({pi}: { pi: ProgramIndicator }) {
 }
 
 function getSelectedData(pi: ProgramIndicator, data: string, dataType: string): DataElement | TrackedEntityAttribute | undefined {
-    if (dataType === "dataElement") {
+    if (dataType === DATA_TYPES.DATA_ELEMENT) {
         const programStage = pi.program.programStages?.find(ps => ps.programStageDataElements?.find(psde => psde.dataElement.id === data));
         return programStage?.programStageDataElements?.find(psde => psde.dataElement.id === data)?.dataElement;
     }
 
-    if (dataType === "attribute") {
+    if (dataType === DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE) {
         return pi.program.programTrackedEntityAttributes?.find(pta => pta.trackedEntityAttribute.id === data)?.trackedEntityAttribute;
     }
 }
 
 function DisaggregationOptions({pi}: { pi: ProgramIndicator }) {
     const [data, dataType] = useWatch({name: ["data", "dataType"]});
-    const {setValue} = useFormContext();
+    const {setValue, getFieldState} = useFormContext();
+    const dataFieldState = getFieldState("data");
     const dataSelected = getSelectedData(pi, data, dataType);
     const disaggregationOptions = DISAGGREGATION_TYPES_OPTIONS.filter(option => {
         if (dataSelected?.optionSet) {
             return option.value === DISAGGREGATION_TYPES.OPTION_SET;
         }
-        if (["TEXT", "NUMBER"].includes(dataSelected?.valueType ?? '')) {
+        if (SUPPORTED_VALUE_TYPES.includes(dataSelected?.valueType ?? '')) {
             return option.value === DISAGGREGATION_TYPES.CUSTOM_VALUE;
         }
         return false;
     });
-    const options = dataSelected?.optionSet?.options?.map(option => ({
+    const options = useMemo(() => dataSelected?.optionSet?.options?.map(option => ({
         label: option.displayName ?? "",
         value: option.code
-    })) ?? [];
+    })) ?? [], [dataSelected]);
 
     useEffect(() => {
         if (disaggregationOptions.length === 1) {
             setValue("type", disaggregationOptions[0].value);
         }
     }, [disaggregationOptions, setValue]);
+
     useEffect(() => {
-        setValue("disaggregationValues", []);
-    }, [data, setValue]);
+        if (dataFieldState.isDirty) {
+            setValue("values", []);
+        }
+    }, [data, dataFieldState.isDirty, options, setValue]); //DO NOT ADD VALUES TO THIS EFFECT!!!
 
 
     return data ? <div className={classes["form-group"]}>
@@ -139,21 +140,24 @@ function DisaggregationOptions({pi}: { pi: ProgramIndicator }) {
 
 function MainDataTypeSelector({pi}: { pi: ProgramIndicator }) {
     const dataType = useWatch({name: "dataType"});
-    const {setValue} = useFormContext();
+    const {setValue, getFieldState} = useFormContext();
+    const dataTypeFieldState = getFieldState("dataType");
     const isEventProgram = pi.program.programType === PROGRAM_TYPES.WITHOUT_REGISTRATION;
 
     //Clear data value on data type change
     useEffect(() => {
-        setValue("data", "");
-        if (dataType === "attribute") {
-            setValue("programStage", "");
+        if (dataTypeFieldState.isDirty) {
+            setValue("data", "");
+            if (dataType === DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE) {
+                setValue("programStage", "");
+            }
         }
-    }, [dataType, setValue]);
+    }, [dataType, dataTypeFieldState.isDirty, setValue]);
 
     //Auto assign data element for event programs
     useEffect(() => {
         if (isEventProgram) {
-            setValue("dataType", "dataElement");
+            setValue("dataType", DATA_TYPES.DATA_ELEMENT);
         }
     }, [isEventProgram, pi.program.programType, setValue]);
 
@@ -161,11 +165,13 @@ function MainDataTypeSelector({pi}: { pi: ProgramIndicator }) {
         <label>{i18n.t("Disaggregate by")}</label>
         <div className="row-gap-16">
             <div className="col-sm-6">
-                <CustomRadioField name="dataType" radioValue="dataElement" dataTest="data-element-radio-option"
+                <CustomRadioField name="dataType" radioValue={DATA_TYPES.DATA_ELEMENT}
+                                  dataTest="data-element-radio-option"
                                   label={i18n.t("Data element")}/>
             </div>
             <div className="col-sm-6">
-                <CustomRadioField disabled={isEventProgram} name="dataType" radioValue="attribute"
+                <CustomRadioField disabled={isEventProgram} name="dataType"
+                                  radioValue={DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE}
                                   dataTest="attribute-radio-option"
                                   label={i18n.t("Attribute")}/>
             </div>
@@ -192,34 +198,14 @@ function NameEditor({pi}: { pi: ProgramIndicator }) {
                     required
                     name={`nameTemplate`}
                     helpText={`${i18n.t("You can access the disaggregation value using the placeholder")} {{ disaggregationValue }}`}
-                    label={i18n.t("Disaggregated indicators name template")}/>
+                    label={i18n.t("Disaggregated indicators name template")}
+                />
             </div>
         </div>
     </div> : null;
 }
 
-export default function Form(): React.ReactElement {
-    const {id} = useParams<{ id: string }>();
-    const {loading, data, error} = useDataQuery(PROGRAM_INDICATOR_QUERY, {variables: {id}})
-
-    if (loading) {
-        return <div style={{
-            height: "100%",
-            width: "100%",
-            minHeight: 500,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-        }}>
-            <CircularLoader small/>
-        </div>
-    }
-
-    if (error) {
-        return <h3>{error.message}</h3>
-    }
-
-    const pi = data?.programIndicator as ProgramIndicator;
+export default function Form({pi}: { pi: ProgramIndicator }): React.ReactElement {
 
     return (
         <form>
