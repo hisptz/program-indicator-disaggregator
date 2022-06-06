@@ -18,7 +18,7 @@ export default function DisaggregationForm({
 
     const {error, loading, pi} = useSelectedProgramIndicator();
     const {save, saving, config} = useDisaggregationConfig(pi);
-    const defaultValues = config.disaggregationConfigs.find(dc => dc.id === disaggregationConfigId);
+    const defaultValues = config?.disaggregationConfigs?.find(dc => dc.id === disaggregationConfigId);
     const form = useForm<DisaggregationConfig>();
 
     useEffect(() => {
