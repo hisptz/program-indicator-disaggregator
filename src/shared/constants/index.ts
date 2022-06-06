@@ -70,3 +70,16 @@ export const PROGRAM_INDICATOR_QUERY = {
         }
     }
 }
+
+
+export const PROGRAM_INDICATOR_SCHEMA_MUTATION = {
+    type: "create",
+    resource: "schema/programIndicator",
+    data: ({data}: any): any => data
+}
+
+export const PROGRAM_INDICATOR_MUTATION = {
+    type: "create",
+    resource: "programIndicators",
+    data: ({data}: any): any => data
+}

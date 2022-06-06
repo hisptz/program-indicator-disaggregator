@@ -2,7 +2,9 @@ import {DateTime} from "luxon";
 import type {ProgramIndicator} from "@hisptz/dhis2-utils";
 import {uid} from "@hisptz/dhis2-utils";
 import {DisaggregationConfig} from "../interfaces";
-import {DATA_TYPES} from "../constants";
+import {DATA_TYPES, PROGRAM_INDICATOR_MUTATION} from "../constants";
+import {compact, isEmpty} from "lodash";
+import {asyncify, mapSeries} from "async"
 
 export const getSanitizedDateString = (date: string): string => {
     try {
@@ -49,4 +51,37 @@ export function generatePIConfigurationFromDisaggregationConfig(template: Progra
             filter
         }
     });
+}
+
+export async function uploadGeneratedProgramIndicators(engine: any, {programIndicator, disaggregationConfig}: {
+    programIndicator: ProgramIndicator,
+    disaggregationConfig: DisaggregationConfig
+}, {setProgress}: {
+    setProgress:
+        (setter: (prevState: number) => number) => void
+}): Promise<Array<{ id: string }>> {
+    const indicators = generatePIConfigurationFromDisaggregationConfig(programIndicator, disaggregationConfig);
+
+    if (isEmpty(indicators)) {
+        return [];
+    }
+
+    const responses = await mapSeries(indicators, asyncify(async (indicator: ProgramIndicator) => await uploadProgramIndicator(engine, indicator).then((value) => {
+        setProgress(prevState => prevState + 1);
+        return value;
+    })) as () => Promise<{ id: string }>);
+
+    return compact(responses) as Array<{ id: string }>;
+}
+
+export async function uploadProgramIndicator(engine: any, indicator: ProgramIndicator): Promise<{ id: string } | undefined> {
+    try {
+        const uploadResponse = await engine.mutate(PROGRAM_INDICATOR_MUTATION, {variables: {data: indicator}});
+        if (isEmpty(uploadResponse?.response?.errorReports)) {
+            return {id: uploadResponse?.response?.uid};
+        }
+        return;
+    } catch (e) {
+        return;
+    }
 }
