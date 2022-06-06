@@ -20,7 +20,7 @@ export default function IndicatorSearch({
         value={searchValue}
         onChange={({ value }: any) => {
           setSearchValue(value);
-          debounce((value) => onSearch(value), 3000)(value);
+          debounce((value) => onSearch(value), 500)(value);
         }}
         placeholder={i18n.t("Search by name, code or id")}
       />
