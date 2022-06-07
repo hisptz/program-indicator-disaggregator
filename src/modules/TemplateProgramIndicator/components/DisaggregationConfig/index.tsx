@@ -19,7 +19,6 @@ export default function DisaggregationConfig({
             <Card>
                 <div className="p-16 col gap-16">
                     <h4 className={classes.header}>{pi.displayName} {i18n.t("disaggregated by")} {dataSelected?.displayName}</h4>
-                    <div className={classes.data}><label>{i18n.t("Program")}:</label> {pi.program.displayName}</div>
                     {
                         config.dataType === DATA_TYPES.DATA_ELEMENT && <>
                             <div className={classes.data}><label>{i18n.t("Program Stage")}:</label> {pi.program.displayName}

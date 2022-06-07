@@ -7,5 +7,39 @@
 }
 
 .pi-item {
-    
+
+}
+
+.data {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.data > label {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.data > code {
+    background: aliceblue;
+    padding: 4px;
+}
+
+.data > span {
+    font-style: italic;
+}
+
+.header {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 16px;
 }

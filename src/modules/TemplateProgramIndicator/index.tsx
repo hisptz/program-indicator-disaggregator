@@ -35,7 +35,7 @@ export default function TemplateProgramIndicator(): React.ReactElement {
         return <h3>{error.message}</h3>;
     }
     return (
-        <div className="container-fluid h-100 w-100">
+        <div style={{marginBottom: 32}} className="container-fluid h-100 w-100">
             <div className="row-gap-16 space-between">
                 <Button onClick={() => navigate("/")}>{i18n.t("Back")}</Button>
             </div>
