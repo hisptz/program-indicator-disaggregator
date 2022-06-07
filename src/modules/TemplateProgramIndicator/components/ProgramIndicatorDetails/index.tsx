@@ -3,6 +3,7 @@ import {ProgramIndicator} from "../../../../shared/interfaces/metadata";
 import i18n from '@dhis2/d2-i18n'
 import classes from "./ProgramIndicatorDetails.module.css"
 import {useConfig} from "@dhis2/app-runtime";
+import {getIndicatorUrl} from "../../../../shared/utils";
 
 type Props = {
     programIndicator: ProgramIndicator;
@@ -12,7 +13,7 @@ export default function ProgramIndicatorDetails({
                                                     programIndicator,
                                                 }: Props): React.ReactElement {
     const {baseUrl} = useConfig();
-    const url = `${baseUrl}/dhis-web-maintenance/index.html#/edit/indicatorSection/programIndicator/${programIndicator.id}` //TODO: Find a better handling for variety of servers
+    const url = getIndicatorUrl(baseUrl, programIndicator.id);
     return (
         <div style={{paddingTop: "1vh", paddingBottom: "3vh"}} className="w-100">
             <h1>

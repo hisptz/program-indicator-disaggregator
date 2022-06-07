@@ -85,3 +85,8 @@ export async function uploadProgramIndicator(engine: any, indicator: ProgramIndi
         return;
     }
 }
+
+
+export function getIndicatorUrl(baseUrl: string, id: string): string {
+    return `${baseUrl}/dhis-web-maintenance/index.html#/edit/indicatorSection/programIndicator/${id}`;
+}
