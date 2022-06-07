@@ -2,20 +2,22 @@ import React from 'react'
 import {Controller} from "react-hook-form";
 import {Button, ButtonStrip, Checkbox, Field} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import {intersection, isEmpty} from "lodash";
+import {intersection, isEmpty, map} from "lodash";
 
 export default function MultipleOptionsField({
                                                  name,
                                                  label,
                                                  options,
+                                                 validations,
                                                  ...props
-                                             }: { name: string, label: string, options: { label: string, value: string }[], [key: string]: any }): React.ReactElement {
+                                             }: { name: string, validations?: Record<string, any>, label: string, options: { label: string, value: string }[], [key: string]: any }): React.ReactElement {
 
     return (
         <Controller
             name={name}
-            render={({field: {value, onChange, ref}}) => (
-                <Field {...props} label={label}>
+            rules={validations}
+            render={({field: {value, onChange, ref}, fieldState: {error}}) => (
+                <Field error={!!error} validationText={error?.message}  {...props} label={label}>
                     <div className="col gap-16">
                         <ButtonStrip>
                             <Button
@@ -27,9 +29,9 @@ export default function MultipleOptionsField({
                                 onChange([])
                             }}>{i18n.t("Select none")}</Button>
                         </ButtonStrip>
-                        <div ref={ref} className="row-gap-8 flex-wrap">
+                        <div ref={ref} style={{maxHeight: 200, overflow: "auto"}} className="row-gap-8 flex-wrap">
                             {
-                                options.map(({label, value: optionValue}) => (
+                                map(options, ({label, value: optionValue}) => (
                                     <Checkbox
                                         checked={value?.includes(optionValue)}
                                         onChange={({checked}: { checked: boolean }) => {

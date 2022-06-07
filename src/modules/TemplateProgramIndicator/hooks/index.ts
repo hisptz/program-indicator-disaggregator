@@ -1,53 +1,41 @@
 import {DisaggregationConfig, ProgramIndicatorTemplate} from "../../../shared/interfaces";
 import {useSavedObject} from "@dhis2/app-service-datastore"
 import type {ProgramIndicator} from "@hisptz/dhis2-utils";
-import {generateNewConfig} from "../utils";
+import {saveConfig} from "../utils";
 import {useState} from "react";
-import {useAlert} from "@dhis2/app-runtime";
-import i18n from '@dhis2/d2-i18n'
+import {useAlert, useDataEngine} from "@dhis2/app-runtime";
 
 export function useDisaggregationConfig(programIndicator: ProgramIndicator): {
-    save: (disaggregationConfig: DisaggregationConfig) => void,
+    save: (disaggregationConfig: DisaggregationConfig) => Promise<boolean>,
     saving: boolean,
-    config: ProgramIndicatorTemplate
+    config: ProgramIndicatorTemplate,
+    progress: number,
+    uploading: boolean
+    count: number
 } {
     const [config, {replace}] = useSavedObject(programIndicator.id);
-    const [saving, setSaving] = useState(false);
+    const engine = useDataEngine();
+    const [saving, setSaving] = useState<boolean>(false);
+    const [uploading, setUploading] = useState<boolean>(false);
+    const [progress, setProgress] = useState<number>(0);
+    const [count, setCount] = useState<number>(0);
     const {show} = useAlert(({message}) => message, ({type}) => ({...type, duration: 3000}));
-    const save = async (disaggregationConfig: DisaggregationConfig) => {
-        try {
-            if (config) {
-                setSaving(true)
-                const configs = config.disaggregationConfigs ?? [];
-                const index = configs.findIndex((config: DisaggregationConfig) => config.id === disaggregationConfig.id);
-                if (index === -1) {
-                    configs.push(disaggregationConfig);
-                } else {
-                    configs[index] = disaggregationConfig;
-                }
-                await replace({...config, disaggregationConfigs: configs});
-            } else {
-                const newConfig = generateNewConfig(programIndicator, disaggregationConfig);
-                await replace(newConfig);
-                show({
-                    message: i18n.t("Configuration saved successfully"),
-                    type: {success: true}
-                })
-            }
-        } catch (e) {
-            // eslint-disable-next-line no-console
-            show({
-                message: i18n.t("Error saving configuration"),
-                type: {info: true}
-            })
-            console.error(e);
-        } finally {
-            setSaving(false)
-        }
+    const save = async (disaggregationConfig: DisaggregationConfig): Promise<boolean> => {
+        setCount(disaggregationConfig.values.length);
+        return await saveConfig(engine, {config, disaggregationConfig, programIndicator}, {
+            replace,
+            show,
+            setSaving,
+            setProgress,
+            setUploading
+        });
     }
     return {
         save,
         saving,
-        config
+        uploading,
+        config,
+        progress,
+        count
     }
 }
