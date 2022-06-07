@@ -6,4 +6,22 @@
     flex-direction: column;
     padding: 32px;
     font-size: 1rem;
+    overflow: auto;
+
 }
+
+
+@media screen and (min-width: 2000px) and (max-width: 3200px) {
+    .main-container {
+        padding: 32px 512px;
+    }
+}
+
+@media screen and (min-width: 1000px ) and (max-width: 2000px) {
+    .main-container {
+        padding: 32px 128px;
+    }
+}
+
+
+

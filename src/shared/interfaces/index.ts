@@ -13,7 +13,8 @@ export interface DisaggregationConfig {
     programStage?: {
         id: string
     },
-    values: Array<string>
+    values: Array<string>,
+    indicators: { id: string, value: string }[]
 }
 
 

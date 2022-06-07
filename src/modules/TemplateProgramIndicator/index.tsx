@@ -1,59 +1,84 @@
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, CircularLoader } from "@dhis2/ui";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {Button, CircularLoader, Divider, IconAdd24} from "@dhis2/ui";
 import DisaggregationForm from "./components/DisaggregationForm";
 import i18n from "@dhis2/d2-i18n";
-import { useDataQuery } from "@dhis2/app-runtime";
-import { PROGRAM_INDICATOR_QUERY } from "../../shared/constants";
-import { ProgramIndicator } from "../../shared/interfaces/metadata";
 
 import ProgramIndicatorDetails from "./components/ProgramIndicatorDetails";
+import {useSelectedProgramIndicator} from "../../shared/hooks";
+import {useProgramIndicatorTemplate} from "./hooks";
+import DisaggregationConfig from "./components/DisaggregationConfig";
+import {isEmpty} from "lodash";
 
 export default function TemplateProgramIndicator(): React.ReactElement {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const { loading, data, error } = useDataQuery(PROGRAM_INDICATOR_QUERY, {
-    variables: { id },
-  });
+    const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    const {pi, error, loading} = useSelectedProgramIndicator();
+    const config = useProgramIndicatorTemplate();
 
-  if (loading) {
+
+    const onOpen = () => setOpen((prevState) => !prevState)
+
+    if (loading) {
+        return (
+            <div
+                style={{
+                    height: "100%",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <CircularLoader small/>
+            </div>
+        );
+    }
+
+    if (error) {
+        return <h3>{error.message}</h3>;
+    }
+
+    const configurationsEmpty = isEmpty(config?.disaggregationConfigs);
+
     return (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CircularLoader small />
-      </div>
+        <div style={{marginBottom: 32}} className="container-fluid w-100">
+            <div className="row-gap-16 space-between">
+                <Button onClick={() => navigate("/")}>{i18n.t("Back")}</Button>
+            </div>
+            <div className="row-gap-16">
+                <ProgramIndicatorDetails programIndicator={pi}/>
+            </div>
+            <div className="col">
+                <div className="w-100">
+                    <div className="row-gap-16 space-between align-middle">
+                        <h3>{i18n.t("Disaggregation configurations")}</h3>
+                        {
+                            !configurationsEmpty ? <Button icon={<IconAdd24/>} primary onClick={onOpen}>
+                                {i18n.t("Add new")}
+                            </Button> : null
+                        }
+                    </div>
+                    <Divider/>
+                    <div className="w-100 col gap-32">
+                        {
+                            config?.disaggregationConfigs?.map(disaggregationConfig => <DisaggregationConfig pi={pi}
+                                                                                                             key={`${disaggregationConfig.id}-list`}
+                                                                                                             config={disaggregationConfig}/>)
+                        }
+                    </div>
+                    {
+                        configurationsEmpty ?
+                            <div style={{minHeight: 300}} className="h-100 w-100 col align-middle center flex-1 ">
+                                <h2 style={{color: "#4A5768"}}>{i18n.t("Start by adding a new disaggregation configuration")}</h2>
+                                <Button icon={<IconAdd24/>} onClick={onOpen}>{i18n.t("Add new")}</Button>
+                            </div> : null
+                    }
+                </div>
+            </div>
+            {open && (
+                <DisaggregationForm open={open} onClose={() => setOpen(false)}/>
+            )}
+        </div>
     );
-  }
-
-  if (error) {
-    return <h3>{error.message}</h3>;
-  }
-
-  const pi: ProgramIndicator =
-    (data?.programIndicator as ProgramIndicator) ?? {};
-
-  return (
-    <div className="container-fluid h-100 w-100">
-      <div className="row-gap-16 space-between">
-        <Button onClick={() => navigate("/")}>{i18n.t("Back")}</Button>
-        <Button primary onClick={() => setOpen((prevState) => !prevState)}>
-          {i18n.t("Disaggregate")}
-        </Button>
-      </div>
-      <div className="row-gap-16">
-        <ProgramIndicatorDetails programIndicator={pi} />
-      </div>
-      {open && (
-        <DisaggregationForm open={open} onClose={() => setOpen(false)} />
-      )}
-    </div>
-  );
 }

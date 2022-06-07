@@ -5,17 +5,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-07T04:20:20.414Z\n"
-"PO-Revision-Date: 2022-06-07T04:20:20.414Z\n"
+"POT-Creation-Date: 2022-06-07T14:57:33.162Z\n"
+"PO-Revision-Date: 2022-06-07T14:57:33.162Z\n"
 
-msgid "Select options"
-msgstr "Select options"
+msgid "disaggregated by"
+msgstr "disaggregated by"
 
-msgid "Add options"
-msgstr "Add options"
-
-msgid "Program stage"
-msgstr "Program stage"
+msgid "Program Stage"
+msgstr "Program Stage"
 
 msgid "Data Element"
 msgstr "Data Element"
@@ -23,8 +20,35 @@ msgstr "Data Element"
 msgid "Attribute"
 msgstr "Attribute"
 
+msgid "Disaggregated values"
+msgstr "Disaggregated values"
+
+msgid "View disaggregations"
+msgstr "View disaggregations"
+
+msgid "Please enter at least one value"
+msgstr "Please enter at least one value"
+
+msgid "Add options"
+msgstr "Add options"
+
+msgid "Program stage is required"
+msgstr "Program stage is required"
+
+msgid "Program stage"
+msgstr "Program stage"
+
+msgid "Data element is required"
+msgstr "Data element is required"
+
+msgid "Attribute is required"
+msgstr "Attribute is required"
+
 msgid "Disaggregation options"
 msgstr "Disaggregation options"
+
+msgid "Disaggregation type is required"
+msgstr "Disaggregation type is required"
 
 msgid "Disaggregation type"
 msgstr "Disaggregation type"
@@ -44,6 +68,12 @@ msgstr "You can access the disaggregation value using the placeholder"
 msgid "Disaggregated indicators name template"
 msgstr "Disaggregated indicators name template"
 
+msgid "Please select at least one option"
+msgstr "Please select at least one option"
+
+msgid "Select options"
+msgstr "Select options"
+
 msgid "Create new disaggregation"
 msgstr "Create new disaggregation"
 
@@ -59,11 +89,53 @@ msgstr "Saving configuration..."
 msgid "Save"
 msgstr "Save"
 
+msgid "Display name"
+msgstr "Display name"
+
+msgid "Program"
+msgstr "Program"
+
+msgid "Disaggregation value"
+msgstr "Disaggregation value"
+
+msgid "Last updated"
+msgstr "Last updated"
+
+msgid "View in maintenance"
+msgstr "View in maintenance"
+
+msgid "disaggregations"
+msgstr "disaggregations"
+
+msgid "Hide"
+msgstr "Hide"
+
+msgid "Expression"
+msgstr "Expression"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "No filters"
+msgstr "No filters"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "No description provided"
+msgstr "No description provided"
+
 msgid "Back"
 msgstr "Back"
 
-msgid "Disaggregate"
-msgstr "Disaggregate"
+msgid "Disaggregation configurations"
+msgstr "Disaggregation configurations"
+
+msgid "Add new"
+msgstr "Add new"
+
+msgid "Start by adding a new disaggregation configuration"
+msgstr "Start by adding a new disaggregation configuration"
 
 msgid "Successfully uploaded {{ no }} indicators"
 msgstr "Successfully uploaded {{ no }} indicators"
@@ -83,26 +155,20 @@ msgstr "Search by name, code or id"
 msgid "Name"
 msgstr "Name"
 
-msgid "Program"
-msgstr "Program"
-
 msgid "Last Updated"
 msgstr "Last Updated"
 
 msgid "Disaggregated"
 msgstr "Disaggregated"
 
-msgid "F   ailed to load Program indicators!"
-msgstr "F   ailed to load Program indicators!"
+msgid "Failed to load Program indicators!"
+msgstr "Failed to load Program indicators!"
 
 msgid "Refresh the page to reload the indicators."
 msgstr "Refresh the page to reload the indicators."
 
 msgid "Template Program Indicator list"
 msgstr "Template Program Indicator list"
-
-msgid "Add new"
-msgstr "Add new"
 
 msgid "Add value"
 msgstr "Add value"

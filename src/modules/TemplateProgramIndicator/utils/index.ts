@@ -26,14 +26,13 @@ export async function saveConfig(engine: any, {
                                      setUploading
                                  }: { replace: (config: ProgramIndicatorTemplate) => Promise<void>, show: (props?: any) => void, setSaving: (value: (((prevState: boolean) => boolean) | boolean)) => void, setUploading: (value: (((prevState: boolean) => boolean) | boolean)) => void, setProgress: (value: (((prevState: number) => number))) => void }): Promise<boolean> {
     try {
+        setUploading(true);
+        const uploadedIndicators = await uploadGeneratedProgramIndicators(engine, {
+            programIndicator,
+            disaggregationConfig
+        }, {setProgress});
+        setUploading(false);
         if (config) {
-            setUploading(true);
-            const uploadedIndicators = await uploadGeneratedProgramIndicators(engine, {
-                programIndicator,
-                disaggregationConfig
-            }, {setProgress});
-            setUploading(false);
-
             if (!isEmpty(uploadedIndicators)) {
                 show({
                     message: i18n.t("Successfully uploaded {{ no }} indicators", {no: uploadedIndicators.length}),
@@ -62,8 +61,12 @@ export async function saveConfig(engine: any, {
             }
             return false;
         } else {
+            const updatedDisaggregationConfig = {
+                ...disaggregationConfig,
+                indicators: uploadedIndicators
+            };
             const newConfig = generateNewConfig(programIndicator, disaggregationConfig);
-            await replace(newConfig);
+            await replace({...newConfig, disaggregationConfigs: [updatedDisaggregationConfig]});
             show({
                 message: i18n.t("Configuration saved successfully"),
                 type: {success: true}
@@ -71,12 +74,10 @@ export async function saveConfig(engine: any, {
             return true;
         }
     } catch (e) {
-        // eslint-disable-next-line no-console
         show({
             message: i18n.t("Error saving configuration"),
             type: {info: true}
         })
-        console.error(e);
         return false;
     } finally {
         setSaving(false);
