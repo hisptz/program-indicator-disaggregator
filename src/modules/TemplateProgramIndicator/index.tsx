@@ -6,14 +6,14 @@ import i18n from "@dhis2/d2-i18n";
 
 import ProgramIndicatorDetails from "./components/ProgramIndicatorDetails";
 import {useSelectedProgramIndicator} from "../../shared/hooks";
-import {useDisaggregationConfig} from "./hooks";
+import {useProgramIndicatorTemplate} from "./hooks";
 import DisaggregationConfig from "./components/DisaggregationConfig";
 
 export default function TemplateProgramIndicator(): React.ReactElement {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const {pi, error, loading} = useSelectedProgramIndicator();
-    const {config,} = useDisaggregationConfig(pi);
+    const config = useProgramIndicatorTemplate();
 
     if (loading) {
         return (
@@ -34,9 +34,6 @@ export default function TemplateProgramIndicator(): React.ReactElement {
     if (error) {
         return <h3>{error.message}</h3>;
     }
-
-    console.log({config, pi})
-
     return (
         <div className="container-fluid h-100 w-100">
             <div className="row-gap-16 space-between">

@@ -4,8 +4,9 @@ import type {ProgramIndicator} from "@hisptz/dhis2-utils";
 import {saveConfig} from "../utils";
 import {useState} from "react";
 import {useAlert, useDataEngine} from "@dhis2/app-runtime";
+import {useParams} from "react-router-dom";
 
-export function useDisaggregationConfig(programIndicator: ProgramIndicator): {
+export function useManageProgramIndicatorTemplate(programIndicator: ProgramIndicator): {
     save: (disaggregationConfig: DisaggregationConfig) => Promise<boolean>,
     saving: boolean,
     config: ProgramIndicatorTemplate,
@@ -30,7 +31,6 @@ export function useDisaggregationConfig(programIndicator: ProgramIndicator): {
             setUploading
         });
     }
-
     return {
         save,
         saving,
@@ -39,4 +39,11 @@ export function useDisaggregationConfig(programIndicator: ProgramIndicator): {
         progress,
         count
     }
+}
+
+
+export function useProgramIndicatorTemplate(): ProgramIndicatorTemplate {
+    const {id} = useParams();
+    const [config] = useSavedObject(id, {global: true, ignoreUpdates: false});
+    return config;
 }

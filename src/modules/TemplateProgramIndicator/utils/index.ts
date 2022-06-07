@@ -61,8 +61,12 @@ export async function saveConfig(engine: any, {
             }
             return false;
         } else {
+            const updatedDisaggregationConfig = {
+                ...disaggregationConfig,
+                indicators: uploadedIndicators
+            };
             const newConfig = generateNewConfig(programIndicator, disaggregationConfig);
-            await replace(newConfig);
+            await replace({...newConfig, disaggregationConfigs: [updatedDisaggregationConfig]});
             show({
                 message: i18n.t("Configuration saved successfully"),
                 type: {success: true}

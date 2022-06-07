@@ -4,7 +4,7 @@ import i18n from '@dhis2/d2-i18n';
 import Form from "./components/Form";
 import {FormProvider, useForm} from "react-hook-form";
 import {DisaggregationConfig} from "../../../../shared/interfaces";
-import {useDisaggregationConfig} from "../../hooks";
+import {useManageProgramIndicatorTemplate} from "../../hooks";
 import {useSelectedProgramIndicator} from "../../../../shared/hooks";
 import {DevTool} from "@hookform/devtools";
 import {uid} from "@hisptz/dhis2-utils";
@@ -17,7 +17,7 @@ export default function DisaggregationForm({
                                            }: { open: boolean, onClose: () => void, disaggregationConfigId?: string }): React.ReactElement {
 
     const {error, loading, pi} = useSelectedProgramIndicator();
-    const {save, saving, config, uploading, progress, count} = useDisaggregationConfig(pi);
+    const {save, saving, config, uploading, progress, count} = useManageProgramIndicatorTemplate(pi);
     const defaultValues = config?.disaggregationConfigs?.find(dc => dc.id === disaggregationConfigId);
     const form = useForm<DisaggregationConfig>();
 
