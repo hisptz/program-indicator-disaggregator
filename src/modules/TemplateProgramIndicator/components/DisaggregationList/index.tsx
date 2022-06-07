@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import {Button, Modal, ModalActions, ModalContent, ModalTitle} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import {DisaggregationConfig} from "../../../../shared/interfaces";
@@ -57,18 +57,16 @@ export default function DisaggregationList({
     const {baseUrl} = useConfig();
     const {data, loading, error, refetch} = useDataQuery(indicatorQuery, {
         variables: {
-            ids: indicatorConfigs?.map(({id}) => id)
+            ids: indicatorConfigs?.map(({id}) => id),
+            page: 1,
+            pageSize: 10
         }
     });
 
 
-    if (error) {
-        return <h3>{error.message}</h3>
-    }
-
     const {programIndicators}: any = data?.pis ?? {};
 
-    const tableData = programIndicators?.map((pi: { displayName: any; program: { displayName: any; }; lastUpdated: string; id: any; }) => {
+    const tableData = useMemo(() => programIndicators?.map((pi: { displayName: any; program: { displayName: any; }; lastUpdated: string; id: any; }) => {
         const url = getIndicatorUrl(baseUrl, pi.id)
         return {
             displayName: pi.displayName,
@@ -77,7 +75,11 @@ export default function DisaggregationList({
             value: find(indicatorConfigs, {id: pi.id})?.value,
             action: <a href={url}>{i18n.t("View in maintenance")}</a>
         }
-    });
+    }), [baseUrl, indicatorConfigs, programIndicators]);
+
+    if (error) {
+        return <h3>{error.message}</h3>
+    }
 
     return (
         <Modal large open={open} position="middle">

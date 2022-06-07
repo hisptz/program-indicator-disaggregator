@@ -5,8 +5,26 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-07T11:17:20.797Z\n"
-"PO-Revision-Date: 2022-06-07T11:17:20.797Z\n"
+"POT-Creation-Date: 2022-06-07T14:57:33.162Z\n"
+"PO-Revision-Date: 2022-06-07T14:57:33.162Z\n"
+
+msgid "disaggregated by"
+msgstr "disaggregated by"
+
+msgid "Program Stage"
+msgstr "Program Stage"
+
+msgid "Data Element"
+msgstr "Data Element"
+
+msgid "Attribute"
+msgstr "Attribute"
+
+msgid "Disaggregated values"
+msgstr "Disaggregated values"
+
+msgid "View disaggregations"
+msgstr "View disaggregations"
 
 msgid "Please enter at least one value"
 msgstr "Please enter at least one value"
@@ -23,14 +41,8 @@ msgstr "Program stage"
 msgid "Data element is required"
 msgstr "Data element is required"
 
-msgid "Data Element"
-msgstr "Data Element"
-
 msgid "Attribute is required"
 msgstr "Attribute is required"
-
-msgid "Attribute"
-msgstr "Attribute"
 
 msgid "Disaggregation options"
 msgstr "Disaggregation options"
@@ -77,14 +89,41 @@ msgstr "Saving configuration..."
 msgid "Save"
 msgstr "Save"
 
-msgid "Name"
-msgstr "Name"
+msgid "Display name"
+msgstr "Display name"
 
 msgid "Program"
 msgstr "Program"
 
+msgid "Disaggregation value"
+msgstr "Disaggregation value"
+
+msgid "Last updated"
+msgstr "Last updated"
+
+msgid "View in maintenance"
+msgstr "View in maintenance"
+
+msgid "disaggregations"
+msgstr "disaggregations"
+
+msgid "Hide"
+msgstr "Hide"
+
 msgid "Expression"
 msgstr "Expression"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "No filters"
+msgstr "No filters"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "No description provided"
+msgstr "No description provided"
 
 msgid "Back"
 msgstr "Back"
@@ -94,6 +133,9 @@ msgstr "Disaggregation configurations"
 
 msgid "Add new"
 msgstr "Add new"
+
+msgid "Start by adding a new disaggregation configuration"
+msgstr "Start by adding a new disaggregation configuration"
 
 msgid "Successfully uploaded {{ no }} indicators"
 msgstr "Successfully uploaded {{ no }} indicators"
@@ -109,6 +151,9 @@ msgstr "Error saving configuration"
 
 msgid "Search by name, code or id"
 msgstr "Search by name, code or id"
+
+msgid "Name"
+msgstr "Name"
 
 msgid "Last Updated"
 msgstr "Last Updated"
