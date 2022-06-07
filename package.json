@@ -13,7 +13,7 @@
     "lint:staged": "yarn lint --staged",
     "format": "yarn d2-style apply",
     "format:staged": "yarn format --staged",
-    "test:e2e": "cypress open"
+    "test:open": "cypress open"
   },
   "devDependencies": {
     "@dhis2/cli-app-scripts": "^9.0.0",
