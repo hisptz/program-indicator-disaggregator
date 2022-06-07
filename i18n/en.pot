@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-06T17:17:04.755Z\n"
-"PO-Revision-Date: 2022-06-06T17:17:04.755Z\n"
+"POT-Creation-Date: 2022-06-07T04:20:20.414Z\n"
+"PO-Revision-Date: 2022-06-07T04:20:20.414Z\n"
 
 msgid "Select options"
 msgstr "Select options"
@@ -50,26 +50,14 @@ msgstr "Create new disaggregation"
 msgid "Cancel"
 msgstr "Cancel"
 
-msgid "Saving..."
-msgstr "Saving..."
+msgid "Creating..."
+msgstr "Creating..."
+
+msgid "Saving configuration..."
+msgstr "Saving configuration..."
 
 msgid "Save"
 msgstr "Save"
-
-msgid "Name"
-msgstr "Name"
-
-msgid "Program"
-msgstr "Program"
-
-msgid "Expression"
-msgstr "Expression"
-
-msgid "Configuration saved successfully"
-msgstr "Configuration saved successfully"
-
-msgid "Error saving configuration"
-msgstr "Error saving configuration"
 
 msgid "Back"
 msgstr "Back"
@@ -77,8 +65,26 @@ msgstr "Back"
 msgid "Disaggregate"
 msgstr "Disaggregate"
 
+msgid "Successfully uploaded {{ no }} indicators"
+msgstr "Successfully uploaded {{ no }} indicators"
+
+msgid "Configuration updated successfully"
+msgstr "Configuration updated successfully"
+
+msgid "Configuration saved successfully"
+msgstr "Configuration saved successfully"
+
+msgid "Error saving configuration"
+msgstr "Error saving configuration"
+
 msgid "Search by name, code or id"
 msgstr "Search by name, code or id"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Program"
+msgstr "Program"
 
 msgid "Last Updated"
 msgstr "Last Updated"
@@ -86,8 +92,8 @@ msgstr "Last Updated"
 msgid "Disaggregated"
 msgstr "Disaggregated"
 
-msgid "Failed to load Program indicators!"
-msgstr "Failed to load Program indicators!"
+msgid "F   ailed to load Program indicators!"
+msgstr "F   ailed to load Program indicators!"
 
 msgid "Refresh the page to reload the indicators."
 msgstr "Refresh the page to reload the indicators."

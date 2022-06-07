@@ -17,8 +17,8 @@ export default function DisaggregationForm({
                                            }: { open: boolean, onClose: () => void, disaggregationConfigId?: string }): React.ReactElement {
 
     const {error, loading, pi} = useSelectedProgramIndicator();
-    const {save, saving, config} = useDisaggregationConfig(pi);
-    const defaultValues = config.disaggregationConfigs.find(dc => dc.id === disaggregationConfigId);
+    const {save, saving, config, uploading, progress, count} = useDisaggregationConfig(pi);
+    const defaultValues = config?.disaggregationConfigs?.find(dc => dc.id === disaggregationConfigId);
     const form = useForm<DisaggregationConfig>();
 
     useEffect(() => {
@@ -28,8 +28,11 @@ export default function DisaggregationForm({
         };
     }, [defaultValues, form]);
 
-    const onFormSubmit = (data: DisaggregationConfig) => {
-        save({...data, id: disaggregationConfigId ?? `${data.data}.${uid()}`});
+    const onFormSubmit = async (data: DisaggregationConfig) => {
+        const isSuccess = await save({...data, id: disaggregationConfigId ?? `${data.data}.${uid()}`});
+        if (isSuccess) {
+            onClose();
+        }
     }
 
     if (loading) {
@@ -63,8 +66,8 @@ export default function DisaggregationForm({
             <ModalActions>
                 <ButtonStrip>
                     <Button onClick={onClose}>{i18n.t("Cancel")}</Button>
-                    <Button loading={saving} onClick={form.handleSubmit(onFormSubmit)}
-                            primary>{saving ? i18n.t("Saving...") : i18n.t("Save")}</Button>
+                    <Button loading={saving || uploading} onClick={form.handleSubmit(onFormSubmit)}
+                            primary>{uploading ? `${i18n.t("Creating...")} (${progress}/${count})` : saving ? i18n.t("Saving configuration...") : i18n.t("Save")}</Button>
                 </ButtonStrip>
             </ModalActions>
         </Modal>

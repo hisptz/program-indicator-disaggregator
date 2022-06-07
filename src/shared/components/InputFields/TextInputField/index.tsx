@@ -4,15 +4,19 @@ import {InputField} from '@dhis2/ui'
 
 export default function CustomTextInputField({
                                                  name,
+                                                 validations,
                                                  ...props
-                                             }: { name: string; [key: string]: any }): React.ReactElement {
+                                             }: { name: string; validations?: Record<string, any>, [key: string]: any }): React.ReactElement {
 
 
     return (
         <Controller
             name={name}
-            render={({field: {value, onChange, ref, onBlur}}) => (
+            rules={validations}
+            render={({field: {value, onChange, ref, onBlur}, fieldState: {error}}) => (
                 <InputField
+                    validationText={error?.message}
+                    error={!!error}
                     {...props}
                     onBlur={onBlur}
                     ref={ref}
