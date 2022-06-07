@@ -1,0 +1,21 @@
+.data {
+    display: flex;
+    gap: 8px;
+}
+
+.data > label {
+    font-weight: bold;
+}
+
+.header {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 16px;
+}
