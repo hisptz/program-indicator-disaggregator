@@ -13,7 +13,7 @@ export function useDisaggregationConfig(programIndicator: ProgramIndicator): {
     uploading: boolean
     count: number
 } {
-    const [config, {replace}] = useSavedObject(programIndicator.id);
+    const [config, {replace}] = useSavedObject(programIndicator?.id, {global: true});
     const engine = useDataEngine();
     const [saving, setSaving] = useState<boolean>(false);
     const [uploading, setUploading] = useState<boolean>(false);
@@ -30,6 +30,7 @@ export function useDisaggregationConfig(programIndicator: ProgramIndicator): {
             setUploading
         });
     }
+
     return {
         save,
         saving,

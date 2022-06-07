@@ -5,26 +5,38 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-07T04:20:20.414Z\n"
-"PO-Revision-Date: 2022-06-07T04:20:20.414Z\n"
+"POT-Creation-Date: 2022-06-07T11:17:20.797Z\n"
+"PO-Revision-Date: 2022-06-07T11:17:20.797Z\n"
 
-msgid "Select options"
-msgstr "Select options"
+msgid "Please enter at least one value"
+msgstr "Please enter at least one value"
 
 msgid "Add options"
 msgstr "Add options"
 
+msgid "Program stage is required"
+msgstr "Program stage is required"
+
 msgid "Program stage"
 msgstr "Program stage"
 
+msgid "Data element is required"
+msgstr "Data element is required"
+
 msgid "Data Element"
 msgstr "Data Element"
+
+msgid "Attribute is required"
+msgstr "Attribute is required"
 
 msgid "Attribute"
 msgstr "Attribute"
 
 msgid "Disaggregation options"
 msgstr "Disaggregation options"
+
+msgid "Disaggregation type is required"
+msgstr "Disaggregation type is required"
 
 msgid "Disaggregation type"
 msgstr "Disaggregation type"
@@ -44,6 +56,12 @@ msgstr "You can access the disaggregation value using the placeholder"
 msgid "Disaggregated indicators name template"
 msgstr "Disaggregated indicators name template"
 
+msgid "Please select at least one option"
+msgstr "Please select at least one option"
+
+msgid "Select options"
+msgstr "Select options"
+
 msgid "Create new disaggregation"
 msgstr "Create new disaggregation"
 
@@ -59,11 +77,23 @@ msgstr "Saving configuration..."
 msgid "Save"
 msgstr "Save"
 
+msgid "Name"
+msgstr "Name"
+
+msgid "Program"
+msgstr "Program"
+
+msgid "Expression"
+msgstr "Expression"
+
 msgid "Back"
 msgstr "Back"
 
-msgid "Disaggregate"
-msgstr "Disaggregate"
+msgid "Disaggregation configurations"
+msgstr "Disaggregation configurations"
+
+msgid "Add new"
+msgstr "Add new"
 
 msgid "Successfully uploaded {{ no }} indicators"
 msgstr "Successfully uploaded {{ no }} indicators"
@@ -80,29 +110,20 @@ msgstr "Error saving configuration"
 msgid "Search by name, code or id"
 msgstr "Search by name, code or id"
 
-msgid "Name"
-msgstr "Name"
-
-msgid "Program"
-msgstr "Program"
-
 msgid "Last Updated"
 msgstr "Last Updated"
 
 msgid "Disaggregated"
 msgstr "Disaggregated"
 
-msgid "F   ailed to load Program indicators!"
-msgstr "F   ailed to load Program indicators!"
+msgid "Failed to load Program indicators!"
+msgstr "Failed to load Program indicators!"
 
 msgid "Refresh the page to reload the indicators."
 msgstr "Refresh the page to reload the indicators."
 
 msgid "Template Program Indicator list"
 msgstr "Template Program Indicator list"
-
-msgid "Add new"
-msgstr "Add new"
 
 msgid "Add value"
 msgstr "Add value"
