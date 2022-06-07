@@ -13,7 +13,7 @@ import CustomSingleSelectField from "../../../../../../../shared/components/Inpu
 import {OptionSetDisaggregationType} from "./OptionSetDisaggregationType";
 import {CustomValueDisaggregationType} from "./CustomValueDisaggregationType";
 
-export function DisaggregationOptions({pi}: { pi: ProgramIndicator }) {
+export function DisaggregationOptions({pi}: { pi: ProgramIndicator }): React.ReactElement | null {
     const [data, dataType] = useWatch({name: ["data", "dataType"]});
     const {setValue, getFieldState} = useFormContext();
     const dataFieldState = getFieldState("data");
@@ -49,8 +49,11 @@ export function DisaggregationOptions({pi}: { pi: ProgramIndicator }) {
         <label>{i18n.t("Disaggregation options")}</label>
         <div className="row-gap-16">
             <div className="col gap-16 col-sm-12">
-                <CustomSingleSelectField disabled={options.length > 0} options={disaggregationOptions} name="type"
-                                         label={i18n.t("Disaggregation type")}/>
+                <CustomSingleSelectField
+                    validations={{required: `${i18n.t("Disaggregation type is required")}`}}
+                    disabled={options.length > 0} options={disaggregationOptions} name="type"
+                    label={i18n.t("Disaggregation type")}
+                />
             </div>
         </div>
         <div className="row-gap-16">

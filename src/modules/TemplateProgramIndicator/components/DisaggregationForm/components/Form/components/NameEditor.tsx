@@ -5,7 +5,7 @@ import classes from "../../../DisaggregationForm.module.css";
 import i18n from "@dhis2/d2-i18n";
 import CustomTextInputField from "../../../../../../../shared/components/InputFields/TextInputField";
 
-export function NameEditor({pi}: { pi: ProgramIndicator }) {
+export function NameEditor({pi}: { pi: ProgramIndicator }): React.ReactElement | null {
     const [data, nameTemplate] = useWatch({name: ["data", "nameTemplate"]});
     const {setValue} = useFormContext();
 

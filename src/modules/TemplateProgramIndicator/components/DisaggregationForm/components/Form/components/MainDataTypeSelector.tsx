@@ -7,7 +7,7 @@ import i18n from "@dhis2/d2-i18n";
 import CustomRadioField from "../../../../../../../shared/components/InputFields/RadioField";
 import {DataTypeSelector} from "./DataTypeSelector";
 
-export function MainDataTypeSelector({pi}: { pi: ProgramIndicator }) {
+export function MainDataTypeSelector({pi}: { pi: ProgramIndicator }): React.ReactElement {
     const dataType = useWatch({name: "dataType"});
     const {setValue, getFieldState} = useFormContext();
     const dataTypeFieldState = getFieldState("dataType");

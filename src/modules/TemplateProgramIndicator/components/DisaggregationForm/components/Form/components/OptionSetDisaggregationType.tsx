@@ -8,6 +8,10 @@ export function OptionSetDisaggregationType({options}: { options: { label: strin
     const type = useWatch({name: "type"});
     return type === DISAGGREGATION_TYPES.OPTION_SET ? <div className="col-sm-12">
         <MultipleOptionsField
+            validations={{
+                required: `${i18n.t("Please select at least one option")}`,
+                validate: (value: Array<string>) => value.length > 0 || `${i18n.t("Please select at least one option")}`
+            }}
             name="values"
             label={i18n.t("Select options")}
             options={options}

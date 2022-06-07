@@ -5,7 +5,7 @@ import CustomSingleSelectField from "../../../../../../../shared/components/Inpu
 import i18n from "@dhis2/d2-i18n";
 import React from "react";
 
-export function DataTypeSelector({pi}: { pi: ProgramIndicator }) {
+export function DataTypeSelector({pi}: { pi: ProgramIndicator }): React.ReactElement {
     const dataType = useWatch({name: "dataType"});
 
     const programStages = pi.program.programStages?.map(ps => ({label: ps.displayName ?? '', value: ps.id}));
@@ -25,11 +25,16 @@ export function DataTypeSelector({pi}: { pi: ProgramIndicator }) {
         {
             dataType === DATA_TYPES.DATA_ELEMENT && <>
                 <div className="col-sm-6">
-                    <CustomSingleSelectField options={programStages ?? []} name="programStage"
+                    <CustomSingleSelectField required validations={{required: `${i18n.t("Program stage is required")}`}}
+                                             options={programStages ?? []} name="programStage"
                                              label={i18n.t("Program stage")}/>
                 </div>
                 <div className="col-sm-6">
                     <CustomSingleSelectField
+                        required
+                        validations={{
+                            required: `${i18n.t("Data element is required")}`,
+                        }}
                         disabled={!selectedProgramStage}
                         options={dataElements} name="data"
                         label={i18n.t("Data Element")}/>
@@ -39,7 +44,11 @@ export function DataTypeSelector({pi}: { pi: ProgramIndicator }) {
         {
             dataType === DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE && <>
                 <div className="col-sm-12">
-                    <CustomSingleSelectField options={attributes} name="data" label={i18n.t("Attribute")}/>
+                    <CustomSingleSelectField
+                        required
+                        validations={{required: `${i18n.t("Attribute is required")}`}}
+                        options={attributes} name="data" label={i18n.t("Attribute")}
+                    />
                 </div>
             </>
         }

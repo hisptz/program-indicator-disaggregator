@@ -7,8 +7,9 @@ export default function CustomValueField({
                                              name,
                                              label,
                                              type,
+                                             validations,
                                              ...props
-                                         }: { name: string, label: string, type?: string, [key: string]: any }): React.ReactElement {
+                                         }: { name: string, validations?: Record<string, any>, label: string, type?: string, [key: string]: any }): React.ReactElement {
 
     const [inputValue, setInputValue] = useState("");
 
@@ -16,8 +17,9 @@ export default function CustomValueField({
     return (
         <Controller
             name={name}
-            render={({field: {value, onChange, ref}}) => (
-                <Field {...props} label={label}>
+            rules={validations}
+            render={({field: {value, onChange, ref}, fieldState: {error}}) => (
+                <Field validationText={error?.message} error={!!error} {...props} label={label}>
                     <div ref={ref} className="col gap-16">
                         <div className="row-gap-8 flex-wrap">
                             {

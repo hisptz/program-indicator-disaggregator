@@ -5,15 +5,19 @@ import {Radio} from '@dhis2/ui'
 export default function CustomRadioField({
                                              name,
                                              radioValue,
+                                             validations,
                                              ...props
-                                         }: { name: string, radioValue: string, [key: string]: any }): React.ReactElement {
+                                         }: { name: string, validations?: Record<string, any>, radioValue: string, [key: string]: any }): React.ReactElement {
 
 
     return (
         <Controller
             name={name}
-            render={({field: {value, onBlur, onChange, name, ref}}) => (
+            rules={validations}
+            render={({field: {value, onBlur, onChange, name, ref}, fieldState: {error}}) => (
                 <Radio
+                    validationText={error?.message}
+                    error={!!error}
                     {...props}
                     value={radioValue}
                     name={name}
