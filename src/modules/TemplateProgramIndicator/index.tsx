@@ -8,12 +8,16 @@ import ProgramIndicatorDetails from "./components/ProgramIndicatorDetails";
 import {useSelectedProgramIndicator} from "../../shared/hooks";
 import {useProgramIndicatorTemplate} from "./hooks";
 import DisaggregationConfig from "./components/DisaggregationConfig";
+import {isEmpty} from "lodash";
 
 export default function TemplateProgramIndicator(): React.ReactElement {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const {pi, error, loading} = useSelectedProgramIndicator();
     const config = useProgramIndicatorTemplate();
+
+
+    const onOpen = () => setOpen((prevState) => !prevState)
 
     if (loading) {
         return (
@@ -34,6 +38,9 @@ export default function TemplateProgramIndicator(): React.ReactElement {
     if (error) {
         return <h3>{error.message}</h3>;
     }
+
+    const configurationsEmpty = isEmpty(config?.disaggregationConfigs);
+
     return (
         <div style={{marginBottom: 32}} className="container-fluid w-100">
             <div className="row-gap-16 space-between">
@@ -42,13 +49,15 @@ export default function TemplateProgramIndicator(): React.ReactElement {
             <div className="row-gap-16">
                 <ProgramIndicatorDetails programIndicator={pi}/>
             </div>
-            <div>
+            <div className="col">
                 <div className="w-100">
                     <div className="row-gap-16 space-between align-middle">
                         <h3>{i18n.t("Disaggregation configurations")}</h3>
-                        <Button icon={<IconAdd24/>} primary onClick={() => setOpen((prevState) => !prevState)}>
-                            {i18n.t("Add new")}
-                        </Button>
+                        {
+                            !configurationsEmpty ? <Button icon={<IconAdd24/>} primary onClick={onOpen}>
+                                {i18n.t("Add new")}
+                            </Button> : null
+                        }
                     </div>
                     <Divider/>
                     <div className="w-100 col gap-32">
@@ -58,6 +67,13 @@ export default function TemplateProgramIndicator(): React.ReactElement {
                                                                                                              config={disaggregationConfig}/>)
                         }
                     </div>
+                    {
+                        configurationsEmpty ?
+                            <div style={{minHeight: 300}} className="h-100 w-100 col align-middle center flex-1 ">
+                                <h2 style={{color: "#4A5768"}}>{i18n.t("Start by adding a new disaggregation configuration")}</h2>
+                                <Button icon={<IconAdd24/>} onClick={onOpen}>{i18n.t("Add new")}</Button>
+                            </div> : null
+                    }
                 </div>
             </div>
             {open && (

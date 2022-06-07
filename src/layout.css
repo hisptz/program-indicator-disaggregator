@@ -991,6 +991,14 @@
     justify-content: space-between;
 }
 
+.center {
+    justify-content: center;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
 .p-16 {
     padding: 16px;
 }

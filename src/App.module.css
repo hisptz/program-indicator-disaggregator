@@ -7,7 +7,7 @@
     padding: 32px;
     font-size: 1rem;
     overflow: auto;
-    
+
 }
 
 
@@ -17,7 +17,7 @@
     }
 }
 
-@media screen and (min-width: 768px ) and (max-width: 2000px) {
+@media screen and (min-width: 1000px ) and (max-width: 2000px) {
     .main-container {
         padding: 32px 128px;
     }

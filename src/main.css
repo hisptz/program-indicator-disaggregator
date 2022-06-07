@@ -3,4 +3,9 @@ body {
     background: #F8F9FA;
 }
 
-
+a {
+    text-decoration: underline;
+    color: #0d47a1;
+    font-style: italic;
+    cursor: pointer;
+}
