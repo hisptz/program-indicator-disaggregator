@@ -25,7 +25,7 @@ function generateFilter(disaggregationConfig: DisaggregationConfig, value: strin
     return "";
 }
 
-export function generatePIConfigurationFromDisaggregationConfig(template: ProgramIndicator, disaggregationConfig: DisaggregationConfig): ProgramIndicator[] {
+export function generatePIConfigurationFromDisaggregationConfig(template: ProgramIndicator, disaggregationConfig: DisaggregationConfig): { value: string, indicator: ProgramIndicator }[] {
     const {values} = disaggregationConfig;
     return values.map(value => {
         const name = disaggregationConfig.nameTemplate.replace("{{ disaggregationValue }}", value);
@@ -39,16 +39,19 @@ export function generatePIConfigurationFromDisaggregationConfig(template: Progra
         }
 
         return {
-            ...template,
-            id: uid(),
-            name,
-            program: {
-                id: template.program.id
-            },
-            displayName: name,
-            shortName: name,
-            displayShortName: name,
-            filter
+            value,
+            indicator: {
+                ...template,
+                id: uid(),
+                name,
+                program: {
+                    id: template.program.id
+                },
+                displayName: `${template.displayName} ${name}`,
+                shortName: `${template.shortName} ${name}`,
+                displayShortName: `${template.displayShortName} ${name}`,
+                filter
+            }
         }
     });
 }
@@ -59,26 +62,29 @@ export async function uploadGeneratedProgramIndicators(engine: any, {programIndi
 }, {setProgress}: {
     setProgress:
         (setter: (prevState: number) => number) => void
-}): Promise<Array<{ id: string }>> {
+}): Promise<Array<{ id: string; value: string }>> {
     const indicators = generatePIConfigurationFromDisaggregationConfig(programIndicator, disaggregationConfig);
 
     if (isEmpty(indicators)) {
         return [];
     }
 
-    const responses = await mapSeries(indicators, asyncify(async (indicator: ProgramIndicator) => await uploadProgramIndicator(engine, indicator).then((value) => {
+    const responses = await mapSeries(indicators, asyncify(async (indicator: { value: string, indicator: ProgramIndicator }) => await uploadProgramIndicator(engine, indicator).then((value) => {
         setProgress(prevState => prevState + 1);
         return value;
     })) as () => Promise<{ id: string }>);
 
-    return compact(responses) as Array<{ id: string }>;
+    return compact(responses) as Array<{ id: string; value: string }>;
 }
 
-export async function uploadProgramIndicator(engine: any, indicator: ProgramIndicator): Promise<{ id: string } | undefined> {
+export async function uploadProgramIndicator(engine: any, {
+    value,
+    indicator
+}: { value: string, indicator: ProgramIndicator }): Promise<{ id: string, value: string } | undefined> {
     try {
         const uploadResponse = await engine.mutate(PROGRAM_INDICATOR_MUTATION, {variables: {data: indicator}});
         if (isEmpty(uploadResponse?.response?.errorReports)) {
-            return {id: uploadResponse?.response?.uid};
+            return {id: uploadResponse?.response?.uid, value};
         }
         return;
     } catch (e) {
