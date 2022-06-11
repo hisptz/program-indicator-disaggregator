@@ -50,6 +50,7 @@ export function DisaggregationOptions({pi}: { pi: ProgramIndicator }): React.Rea
         <div className="row-gap-16">
             <div className="col gap-16 col-sm-12">
                 <CustomSingleSelectField
+                    required
                     validations={{required: `${i18n.t("Disaggregation type is required")}`}}
                     disabled={options.length > 0} options={disaggregationOptions} name="type"
                     label={i18n.t("Disaggregation type")}
