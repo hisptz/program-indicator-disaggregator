@@ -9,6 +9,7 @@ export function CustomValueDisaggregationType({valueType}: { valueType: string }
     const type = useWatch({name: "type"});
     return type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? <div className="col gap-16 col-sm-12">
         <CustomValueField
+            required
             validations={{
                 required: `${i18n.t("Please enter at least one value")}`,
                 validate: {
