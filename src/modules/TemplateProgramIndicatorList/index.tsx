@@ -44,7 +44,7 @@ export default function TemplateProgramIndicatorList(): React.ReactElement {
 
     return (
         <div>
-            <h2>{i18n.t("Generic Indicators")}</h2>
+            <h2>{i18n.t("Program Indicators")}</h2>
             <IndicatorSearch
                 onFilter={(program) => onFilterIndicator(program, refetch)}
                 onSearch={(searchValue) => onSearchIndicators(searchValue, refetch)}
