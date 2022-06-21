@@ -33,8 +33,8 @@ export function NameEditor({pi}: { pi: ProgramIndicator }): React.ReactElement |
                         }
                     }}
                     name={`nameTemplate`}
-                    helpText={`${i18n.t("This will be prefixed to name, and short name.")} \n ${i18n.t("You can access the disaggregation value using the placeholder")} {{ disaggregationValue }}. For option set values, the value will be the option name.`}
-                    label={i18n.t("Disaggregated indicators name prefix template")}
+                    helpText={`${i18n.t("This will be prefixed to name, and short name.")} \n ${i18n.t("You can access the disaggregation value using the placeholder")} {{ disaggregationValue }}.`}
+                    label={i18n.t("Name prefix")}
                 />
             </div>
         </div>

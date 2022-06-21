@@ -37,9 +37,10 @@ export default function DisaggregationForm({
                 onClose();
             }
         } else {
+            const chars = (50 - (pi?.shortName?.length ?? 0));
             form.setError("nameTemplate", {
                 message: i18n.t("Name prefix must be less than {{ chars }} characters for all values. {{ value }} exceeds this limit.", {
-                    chars: (50 - (pi?.shortName?.length ?? 0)),
+                    chars,
                     value: valueWithExtraChars
                 })
             }, {shouldFocus: true});
