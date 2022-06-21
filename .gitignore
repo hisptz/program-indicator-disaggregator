@@ -5,7 +5,7 @@ src/locales
 build!/cypress.env.json
 cypress.env.json
 
-
+build
 #  enviroment files
 .env
 
