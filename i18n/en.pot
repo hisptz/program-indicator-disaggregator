@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-07T14:57:33.162Z\n"
-"PO-Revision-Date: 2022-06-07T14:57:33.162Z\n"
+"POT-Creation-Date: 2022-06-21T12:43:31.681Z\n"
+"PO-Revision-Date: 2022-06-21T12:43:31.681Z\n"
 
 msgid "disaggregated by"
 msgstr "disaggregated by"
@@ -28,6 +28,9 @@ msgstr "View disaggregations"
 
 msgid "Please enter at least one value"
 msgstr "Please enter at least one value"
+
+msgid "Please enter valid values"
+msgstr "Please enter valid values"
 
 msgid "Add options"
 msgstr "Add options"
@@ -59,14 +62,26 @@ msgstr "Disaggregate by"
 msgid "Data element"
 msgstr "Data element"
 
-msgid "Disaggregation name"
-msgstr "Disaggregation name"
+msgid "Disaggregation name prefix"
+msgstr "Disaggregation name prefix"
+
+msgid "Disaggregation name is required"
+msgstr "Disaggregation name is required"
+
+msgid "Field must contain "
+msgstr "Field must contain "
+
+msgid "Field must be less than {{ chars }} characters"
+msgstr "Field must be less than {{ chars }} characters"
+
+msgid "This will be prefixed to name, and short name."
+msgstr "This will be prefixed to name, and short name."
 
 msgid "You can access the disaggregation value using the placeholder"
 msgstr "You can access the disaggregation value using the placeholder"
 
-msgid "Disaggregated indicators name template"
-msgstr "Disaggregated indicators name template"
+msgid "Disaggregated indicators name prefix template"
+msgstr "Disaggregated indicators name prefix template"
 
 msgid "Please select at least one option"
 msgstr "Please select at least one option"

@@ -1,9 +1,14 @@
+import {compact} from "lodash";
+
 export const queryObject = {
     programIndicatorsQuery: {
         resource: "programIndicators",
-        params: ({page, pageSize, identifiable}: any) => ({
+        params: ({page, pageSize, identifiable, program}: any) => ({
+            filter: compact([
+                identifiable ? `identifiable:token:${identifiable || " "}` : undefined,
+                program ? `program.id:eq:${program ?? ""}` : undefined
+            ]),
             fields: ["id", "displayName", "lastUpdated", "program[id,displayName]"],
-            filter: `identifiable:token:${identifiable || " "}`,
             page: page ?? 1,
             pageSize: pageSize ?? 10,
         }),
