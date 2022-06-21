@@ -3,7 +3,7 @@ import type {ProgramIndicator} from "@hisptz/dhis2-utils";
 import {uid} from "@hisptz/dhis2-utils";
 import {DisaggregationConfig} from "../interfaces";
 import {DATA_TYPES, PROGRAM_INDICATOR_MUTATION} from "../constants";
-import {compact, isEmpty} from "lodash";
+import {compact, isEmpty, reduce} from "lodash";
 import {asyncify, mapSeries} from "async"
 
 export const getSanitizedDateString = (date: string): string => {
@@ -14,6 +14,22 @@ export const getSanitizedDateString = (date: string): string => {
         return "N/A";
     }
 };
+
+
+export function validateNameLength(data: DisaggregationConfig, pi: ProgramIndicator): { valid: boolean, valueWithExtraChars: string } {
+    const originalShortName = pi.shortName;
+    let valueWithExtraChars = '';
+    const valid = reduce(data.values, (acc, value) => {
+        const valid = acc && `${originalShortName} ${value}`.length <= 50;
+        if (!valid) {
+            valueWithExtraChars = `${value}`;
+        }
+        return valid;
+    }, true);
+
+    return {valid, valueWithExtraChars};
+}
+
 
 function generateFilter(disaggregationConfig: DisaggregationConfig, value: string): string {
     if (disaggregationConfig.dataType === DATA_TYPES.DATA_ELEMENT) {
@@ -28,7 +44,7 @@ function generateFilter(disaggregationConfig: DisaggregationConfig, value: strin
 export function generatePIConfigurationFromDisaggregationConfig(template: ProgramIndicator, disaggregationConfig: DisaggregationConfig): { value: string, indicator: ProgramIndicator }[] {
     const {values} = disaggregationConfig;
     return values.map(value => {
-        const name = disaggregationConfig.nameTemplate.replace("{{ disaggregationValue }}", value);
+        const prefix = disaggregationConfig.nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, value);
 
         let filter = template.filter;
 
@@ -43,13 +59,13 @@ export function generatePIConfigurationFromDisaggregationConfig(template: Progra
             indicator: {
                 ...template,
                 id: uid(),
-                name,
+                name: `${template.name} ${prefix}`,
                 program: {
                     id: template.program.id
                 },
-                displayName: `${template.displayName} ${name}`,
-                shortName: `${template.shortName} ${name}`,
-                displayShortName: `${template.displayShortName} ${name}`,
+                displayName: `${template.displayName} ${prefix}`,
+                shortName: `${template.shortName} ${prefix}`,
+                displayShortName: `${template.displayShortName} ${prefix}`,
                 filter
             }
         }

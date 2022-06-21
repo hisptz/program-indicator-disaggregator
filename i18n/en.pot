@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-21T12:43:31.681Z\n"
-"PO-Revision-Date: 2022-06-21T12:43:31.681Z\n"
+"POT-Creation-Date: 2022-06-21T16:32:46.110Z\n"
+"PO-Revision-Date: 2022-06-21T16:32:46.110Z\n"
 
 msgid "disaggregated by"
 msgstr "disaggregated by"
@@ -71,23 +71,27 @@ msgstr "Disaggregation name is required"
 msgid "Field must contain "
 msgstr "Field must contain "
 
-msgid "Field must be less than {{ chars }} characters"
-msgstr "Field must be less than {{ chars }} characters"
-
 msgid "This will be prefixed to name, and short name."
 msgstr "This will be prefixed to name, and short name."
 
 msgid "You can access the disaggregation value using the placeholder"
 msgstr "You can access the disaggregation value using the placeholder"
 
-msgid "Disaggregated indicators name prefix template"
-msgstr "Disaggregated indicators name prefix template"
+msgid "Name prefix"
+msgstr "Name prefix"
 
 msgid "Please select at least one option"
 msgstr "Please select at least one option"
 
 msgid "Select options"
 msgstr "Select options"
+
+msgid ""
+"Name prefix must be less than {{ chars }} characters for all values. {{ "
+"value }} exceeds this limit."
+msgstr ""
+"Name prefix must be less than {{ chars }} characters for all values. {{ "
+"value }} exceeds this limit."
 
 msgid "Create new disaggregation"
 msgstr "Create new disaggregation"
@@ -167,6 +171,9 @@ msgstr "Error saving configuration"
 msgid "Search by name, code or id"
 msgstr "Search by name, code or id"
 
+msgid "Select program"
+msgstr "Select program"
+
 msgid "Name"
 msgstr "Name"
 
@@ -182,8 +189,8 @@ msgstr "Failed to load Program indicators!"
 msgid "Refresh the page to reload the indicators."
 msgstr "Refresh the page to reload the indicators."
 
-msgid "Template Program Indicator list"
-msgstr "Template Program Indicator list"
+msgid "Generic Indicators"
+msgstr "Generic Indicators"
 
 msgid "Add value"
 msgstr "Add value"
