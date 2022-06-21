@@ -12,3 +12,8 @@ export const onSearchIndicators = (searchValue: string, refetch: any): void => {
 export const onOpenIndicatorTemplate = (navigate: any) => (indicator: ProgramIndicator): void => {
     navigate(`/pi/${indicator.id}`)
 };
+
+
+export const onFilterIndicator = (program: string, refetch: any): void => {
+    refetch({program: program});
+}
