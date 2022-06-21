@@ -8,6 +8,7 @@ import {useManageProgramIndicatorTemplate} from "../../hooks";
 import {useSelectedProgramIndicator} from "../../../../shared/hooks";
 import {DevTool} from "@hookform/devtools";
 import {uid} from "@hisptz/dhis2-utils";
+import {validateNameLength} from "../../../../shared/utils";
 
 
 export default function DisaggregationForm({
@@ -29,9 +30,19 @@ export default function DisaggregationForm({
     }, [defaultValues, form]);
 
     const onFormSubmit = async (data: DisaggregationConfig) => {
-        const isSuccess = await save({...data, id: disaggregationConfigId ?? `${data.data}.${uid()}`});
-        if (isSuccess) {
-            onClose();
+        const {valid, valueWithExtraChars} = validateNameLength(data, pi);
+        if (valid) {
+            const isSuccess = await save({...data, id: disaggregationConfigId ?? `${data.data}.${uid()}`});
+            if (isSuccess) {
+                onClose();
+            }
+        } else {
+            form.setError("nameTemplate", {
+                message: i18n.t("Name prefix must be less than {{ chars }} characters for all values. {{ value }} exceeds this limit.", {
+                    chars: (50 - (pi?.shortName?.length ?? 0)),
+                    value: valueWithExtraChars
+                })
+            }, {shouldFocus: true});
         }
     }
 

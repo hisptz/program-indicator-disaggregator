@@ -14,7 +14,7 @@ export function NameEditor({pi}: { pi: ProgramIndicator }): React.ReactElement |
 
     useEffect(() => {
         if (selectedData) {
-            setValue("nameTemplate", `${selectedData?.displayName ?? ""} - {{ disaggregationValue }}`);
+            setValue("nameTemplate", `- ${selectedData?.displayName ?? ""} - {{ disaggregationValue }}`);
         }
     }, [pi.displayName, setValue, data, dataType, selectedData]);
 
@@ -28,16 +28,12 @@ export function NameEditor({pi}: { pi: ProgramIndicator }): React.ReactElement |
                         required: `${i18n.t("Disaggregation name is required")}`,
                         validate: {
                             hasValueIncluded: (value: string) => {
-                                return value.includes("{{ disaggregationValue }}") || `${i18n.t("Field must contain ")} {{ disaggregationValue }}`;
+                                return value?.match(/({{ disaggregationValue }})|({{disaggregationValue}})/) || `${i18n.t("Field must contain ")} {{ disaggregationValue }}`;
                             },
-                            isNotTooLong: (value: string) => {
-                                const shortNameLength = (pi.shortName?.length ?? 0) + value.length;
-                                return shortNameLength <= 50 || i18n.t("Field must be less than {{ chars }} characters", {chars: 50 - (pi.shortName?.length ?? 0)});
-                            }
                         }
                     }}
                     name={`nameTemplate`}
-                    helpText={`${i18n.t("This will be prefixed to name, and short name.")} \n ${i18n.t("You can access the disaggregation value using the placeholder")} {{ disaggregationValue }}`}
+                    helpText={`${i18n.t("This will be prefixed to name, and short name.")} \n ${i18n.t("You can access the disaggregation value using the placeholder")} {{ disaggregationValue }}. For option set values, the value will be the option name.`}
                     label={i18n.t("Disaggregated indicators name prefix template")}
                 />
             </div>
