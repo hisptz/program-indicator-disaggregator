@@ -1,0 +1,11 @@
+.row:hover{
+  background-color: #fbfcfd !important;
+}
+
+.row{
+    cursor: pointer;
+}
+
+.row-selected{
+    background-color: #D5DDE5 !important;
+}

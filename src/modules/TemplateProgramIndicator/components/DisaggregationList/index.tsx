@@ -64,7 +64,7 @@ export default function DisaggregationList({
     });
 
 
-    const {programIndicators}: any = data?.pis ?? {};
+    const {programIndicators, pager: pagination}: any = data?.pis ?? {};
 
     const tableData = useMemo(() => programIndicators?.map((pi: { displayName: any; program: { displayName: any; }; lastUpdated: string; id: any; }) => {
         const url = getIndicatorUrl(baseUrl, pi.id)
@@ -89,12 +89,14 @@ export default function DisaggregationList({
                     maxHeight: 400
                 }} className="w-100">
                     <CustomTable
-                        onPageSizeChange={(newPageSize: number) =>
-                            onPageSizeChange(newPageSize, refetch)
-                        }
-                        onPageChange={(newPage: number) => onPageChange(newPage, refetch)}
-                        loadingData={loading} columns={columns} tableData={tableData}
-                    />
+                        data={tableData}
+                        pagination={pagination ? {
+                            ...pagination,
+                            onPageChange: (newPage: number) => onPageChange(newPage, refetch),
+                            onPageSizeChange: (newPageSize: number) =>
+                                onPageSizeChange(newPageSize, refetch)
+                        } : undefined}
+                        loading={loading} columns={columns}/>
                 </div>
             </ModalContent>
             <ModalActions>

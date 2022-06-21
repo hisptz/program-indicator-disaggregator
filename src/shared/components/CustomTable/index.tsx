@@ -1,5 +1,4 @@
-import React from "react";
-import {Pagination as Pager} from "../../interfaces/pagination"
+import React, {useEffect, useRef} from "react";
 import {
     CircularLoader,
     Pagination,
@@ -10,91 +9,104 @@ import {
     TableFoot,
     TableHead,
     TableRow,
-    TableRowHead,
-} from "@dhis2/ui";
-// property type
-type Props = {
-    pagination?: Pager;
-    loadingData: boolean;
-    tableData: Record<string, any>[];
-    columns: Record<string, string>[]
-    onPageChange: (newPage: number) => void;
-    onPageSizeChange: (newPageSize: number) => void;
-};
+    TableRowHead
+} from '@dhis2/ui'
+import {Column, CustomTableProps} from "./interfaces";
+import {uid} from "@hisptz/dhis2-utils";
+import classes from "./CustomTable.module.css";
+import {get} from "lodash";
 
-const defaultPagination: Pager = {
-    page: 1,
-    pageSize: 10,
-};
+
+function CustomTableRow({
+                            columns,
+                            row,
+                            onClick,
+                            selected
+                        }: { onClick: () => void, row: Record<string, any>, columns: Column[], selected?: boolean }) {
+    const tableId = useRef(uid());
+    const rowRef = useRef<string>(uid());
+
+    useEffect(() => {
+        if (rowRef.current) {
+            //A hack to get the table row to be clickable
+            const row = document.querySelector(`[data-test="${rowRef.current}-row"]`);
+            if (row) {
+                row.addEventListener("click", onClick);
+            }
+        }
+    })
+
+    return <TableRow className={selected ? classes['row-selected'] : classes.row} dataTest={`${rowRef.current}-row`}
+                     onClick={onClick}>
+        {columns.map(({key, mapperFn}) => (
+            <TableCell key={`${tableId.current}-${key}-column`}>{mapperFn ? mapperFn(row) : get(row, key)}</TableCell>
+        ))}
+    </TableRow>;
+}
 
 export default function CustomTable({
-                                        pagination = defaultPagination,
-                                        tableData = [],
                                         columns,
-                                        onPageChange,
-                                        onPageSizeChange,
-                                        loadingData,
-                                    }: Props): React.ReactElement {
+                                        data,
+                                        pagination,
+                                        onRowClick,
+                                        selectedRows,
+                                        loading,
+                                        suppressZebraStripping
+                                    }: CustomTableProps): React.ReactElement {
+    const tableId = useRef(uid());
     return (
-        <div>
-            <Table>
-                <TableHead>
-                    <TableRowHead>
-                        {
-                            columns.map(({label, key}) => (
-                                <TableCellHead key={`${key}-key`}>{label}</TableCellHead>
-                            ))
-                        }
-                    </TableRowHead>
-                </TableHead>
-                {loadingData ? (
-                    <>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell colSpan="12">
-                                    <div
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            minHeight: 500,
-                                        }}
-                                    >
-                                        <CircularLoader small/>
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </>
-                ) : (
-                    <TableBody>
-                        {tableData.map((data, index) => (
-                            <TableRow key={`${index}-row`}>
-                                {
-                                    columns.map(({key}) => (<TableCell key={`${key}-${index}`}>
-                                        {data[key]}
-                                    </TableCell>))
-                                }
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                )}
-                <TableFoot>
+        <Table suppressZebraStripping={suppressZebraStripping}>
+            <TableHead>
+                <TableRowHead>
+                    {
+                        columns.map(({key, label}) => (
+                            <TableCellHead dataTest={`${label}-column`}
+                                           key={`${tableId.current}-${key}-column-header`}>{label}</TableCellHead>
+                        ))
+                    }
+                </TableRowHead>
+            </TableHead>
+            <TableBody>
+                {
+                    loading ? (
+                            <>
+                                <TableRow>
+                                    <TableCell colSpan="12">
+                                        <div
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                minHeight: 500,
+                                            }}
+                                        >
+                                            <CircularLoader small/>
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            </>
+                        ) :
+                        data.map((row, index) => (
+                            <CustomTableRow
+                                selected={selectedRows?.includes(index)}
+                                key={`${tableId.current}-${index}-row`}
+                                onClick={() => onRowClick ? onRowClick(row) : null}
+                                row={row} columns={columns}
+                            />
+                        ))
+                }
+            </TableBody>
+            {
+                pagination ? <TableFoot>
                     <TableRow>
-                        <TableCell colSpan={columns.length}>
-                            {pagination && (
-                                <Pagination
-                                    {...pagination}
-                                    onPageChange={onPageChange}
-                                    onPageSizeChange={onPageSizeChange}
-                                />
-                            )}
+                        <TableCell colSpan={`${columns.length}`}>
+                            <Pagination {...pagination} hidePageSizeSelect={(!pagination.onPageSizeChange)}/>
                         </TableCell>
                     </TableRow>
-                </TableFoot>
-            </Table>
-        </div>
-    );
+                </TableFoot> : null
+            }
+        </Table>
+    )
 }

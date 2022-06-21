@@ -1,120 +1,70 @@
 import i18n from "@dhis2/d2-i18n";
 import React from "react";
-
-import {
-  CircularLoader,
-  IconCheckmark24,
-  Pagination,
-  Table,
-  TableBody,
-  TableCell,
-  TableCellHead,
-  TableFoot,
-  TableHead,
-  TableRow,
-  TableRowHead,
-} from "@dhis2/ui";
+import {IconCheckmark16} from '@dhis2/ui'
 import {ProgramIndicator} from "../../../../shared/interfaces/metadata";
-import {Pagination as Pager} from "../../../../shared/interfaces/pagination";
-import {getSanitizedDateString} from "../../../../shared/utils";
+import {Column, Pagination as Pager} from "../../../../shared/components/CustomTable/interfaces";
+import CustomTable from "../../../../shared/components/CustomTable";
+import {DateTime} from "luxon";
 
 // property type
 type Props = {
     pagination?: Pager;
     loadingData: boolean;
     tableData: ProgramIndicator[];
-    onPageChange: (newPage: number) => void;
-    onPageSizeChange: (newPageSize: number) => void;
     onOpenIndicatorTemplate: (indicator: ProgramIndicator) => void;
 };
 
 const defaultPagination: Pager = {
     page: 1,
     pageSize: 10,
+    total: 0,
+
 };
+
+
+const columns: Column[] = [
+    {
+        label: i18n.t("Name"),
+        key: "displayName",
+    },
+    {
+        label: i18n.t("Program"),
+        key: "program.displayName"
+    },
+    {
+        label: i18n.t("Last Updated"),
+        key: "lastUpdated",
+        mapperFn: (row: ProgramIndicator) => {
+            return DateTime.fromISO(row.lastUpdated as string).toFormat("dd-MM-yyyy");
+        }
+    },
+    {
+        label: i18n.t("Disaggregated"),
+        key: "disaggregated",
+        mapperFn: (row: any) => {
+            return row?.disaggregated ? <IconCheckmark16/> : null;
+        }
+    }
+]
+
 
 export default function TemplateIndicatorsTable({
                                                     pagination = defaultPagination,
                                                     tableData = [],
-                                                    onPageChange,
-                                                    onPageSizeChange,
                                                     onOpenIndicatorTemplate,
                                                     loadingData,
                                                 }: Props): React.ReactElement {
     return (
-        <div>
-            <Table>
-                <TableHead>
-                    <TableRowHead>
-                        <TableCellHead>{i18n.t("Name")}</TableCellHead>
-                        <TableCellHead>{i18n.t("Program")}</TableCellHead>
-                        <TableCellHead>{i18n.t("Last Updated")}</TableCellHead>
-                        <TableCellHead>{i18n.t("Disaggregated")}</TableCellHead>
-                    </TableRowHead>
-                </TableHead>
-                {loadingData ? (
-                    <>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell colSpan="12">
-                                    <div
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            minHeight: 500,
-                                        }}
-                                    >
-                                        <CircularLoader small/>
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </>
-                ) : (
-                    <TableBody>
-                        {tableData.map((indicator) => (
-                            <TableRow key={indicator.id}>
-                                <TableCell>
-                                    <div onClick={() => onOpenIndicatorTemplate(indicator)}>
-                                        {indicator.displayName}
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <div onClick={() => onOpenIndicatorTemplate(indicator)}>
-                                        {indicator.program.displayName}
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <div onClick={() => onOpenIndicatorTemplate(indicator)}>
-                                        {getSanitizedDateString(indicator.lastUpdated ?? "")}
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <div onClick={() => onOpenIndicatorTemplate(indicator)}>
-                                        {indicator.disaggregated ? <IconCheckmark24/> : ""}
-                                    </div>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                )}
-                <TableFoot>
-                    <TableRow>
-                        <TableCell colSpan="4">
-                            {pagination && (
-                                <Pagination
-                                    {...pagination}
-                                    onPageChange={onPageChange}
-                                    onPageSizeChange={onPageSizeChange}
-                                />
-                            )}
-                        </TableCell>
-                    </TableRow>
-                </TableFoot>
-            </Table>
-        </div>
+        <>
+
+            <CustomTable
+                pagination={pagination}
+                columns={columns}
+                data={tableData}
+                loading={loadingData}
+                onRowClick={(indicator: ProgramIndicator) => onOpenIndicatorTemplate(indicator)}
+            />
+
+        </>
     );
 }

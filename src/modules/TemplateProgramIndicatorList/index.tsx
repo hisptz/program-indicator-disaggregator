@@ -51,13 +51,16 @@ export default function TemplateProgramIndicatorList(): React.ReactElement {
             />
             <div className={styles["table-container"]}>
                 <TemplateIndicatorsTable
+
                     tableData={programIndicators ?? []}
                     loadingData={loading}
-                    pagination={pagination}
-                    onPageChange={(newPage: number) => onPageChange(newPage, refetch)}
-                    onPageSizeChange={(newPageSize: number) =>
-                        onPageSizeChange(newPageSize, refetch)
-                    }
+                    pagination={pagination ? {
+                        ...(pagination as any),
+                        onPageChange: (newPage: number) => onPageChange(newPage, refetch),
+                        onPageSizeChange: (newPageSize: number) =>
+                            onPageSizeChange(newPageSize, refetch)
+                    } : undefined}
+
                     onOpenIndicatorTemplate={onOpenIndicatorTemplate(navigate)}
                 />
             </div>
