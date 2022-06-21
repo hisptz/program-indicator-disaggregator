@@ -7,8 +7,8 @@ import i18n from "@dhis2/d2-i18n";
 import ProgramIndicatorDetails from "./components/ProgramIndicatorDetails";
 import {useSelectedProgramIndicator} from "../../shared/hooks";
 import {useProgramIndicatorTemplate} from "./hooks";
-import DisaggregationConfig from "./components/DisaggregationConfig";
 import {isEmpty} from "lodash";
+import DisaggregationConfigList from "./components/DisaggregationConfigList";
 
 export default function TemplateProgramIndicator(): React.ReactElement {
     const navigate = useNavigate();
@@ -60,13 +60,10 @@ export default function TemplateProgramIndicator(): React.ReactElement {
                         }
                     </div>
                     <Divider/>
-                    <div className="w-100 col gap-32">
-                        {
-                            config?.disaggregationConfigs?.map(disaggregationConfig => <DisaggregationConfig pi={pi}
-                                                                                                             key={`${disaggregationConfig.id}-list`}
-                                                                                                             config={disaggregationConfig}/>)
-                        }
-                    </div>
+                    {
+                        !configurationsEmpty ?
+                            <DisaggregationConfigList pi={pi} configs={config.disaggregationConfigs}/> : null
+                    }
                     {
                         configurationsEmpty ?
                             <div style={{minHeight: 300}} className="h-100 w-100 col align-middle center flex-1 ">
