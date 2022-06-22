@@ -7,26 +7,26 @@ export enum DATA_TYPES {
 }
 
 export enum DISAGGREGATION_TYPES {
-  OPTION_SET = "OPTION_SET",
-  CUSTOM_VALUE = "CUSTOM_VALUE",
+    OPTION_SET = "OPTION_SET",
+    CUSTOM_VALUE = "CUSTOM_VALUE",
 }
 
 export const SUPPORTED_VALUE_TYPES = ["NUMBER", "TEXT"];
 
 export const DISAGGREGATION_TYPES_OPTIONS = [
-  {
-    label: i18n.t("Option set"),
-    value: DISAGGREGATION_TYPES.OPTION_SET,
-  },
-  {
-    label: i18n.t("Custom value"),
-    value: DISAGGREGATION_TYPES.CUSTOM_VALUE,
-  },
+    {
+        label: i18n.t("Option set"),
+        value: DISAGGREGATION_TYPES.OPTION_SET,
+    },
+    {
+        label: i18n.t("Custom value"),
+        value: DISAGGREGATION_TYPES.CUSTOM_VALUE,
+    },
 ];
 
 export enum PROGRAM_TYPES {
-  WITH_REGISTRATION = "WITH_REGISTRATION",
-  WITHOUT_REGISTRATION = "WITHOUT_REGISTRATION",
+    WITH_REGISTRATION = "WITH_REGISTRATION",
+    WITHOUT_REGISTRATION = "WITHOUT_REGISTRATION",
 }
 
 export const PROGRAM_INDICATOR_QUERY = {
@@ -78,5 +78,12 @@ export const PROGRAM_INDICATOR_SCHEMA_MUTATION = {
 export const PROGRAM_INDICATOR_MUTATION = {
     type: "create",
     resource: "programIndicators",
+    data: ({data}: any): any => data
+}
+
+export const PROGRAM_INDICATOR_UPDATE_MUTATION = {
+    type: "update",
+    resource: "programIndicators",
+    id: ({id}: any): string => id,
     data: ({data}: any): any => data
 }

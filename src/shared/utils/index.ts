@@ -2,7 +2,7 @@ import {DateTime} from "luxon";
 import type {ProgramIndicator} from "@hisptz/dhis2-utils";
 import {uid} from "@hisptz/dhis2-utils";
 import {DisaggregationConfig} from "../interfaces";
-import {DATA_TYPES, PROGRAM_INDICATOR_MUTATION} from "../constants";
+import {DATA_TYPES, PROGRAM_INDICATOR_MUTATION, PROGRAM_INDICATOR_UPDATE_MUTATION} from "../constants";
 import {compact, isEmpty, reduce} from "lodash";
 import {asyncify, mapSeries} from "async"
 
@@ -16,20 +16,60 @@ export const getSanitizedDateString = (date: string): string => {
 };
 
 
-export function validateNameLength(data: DisaggregationConfig, pi: ProgramIndicator): { valid: boolean, valueWithExtraChars: string } {
+export function generateNamePrefix(value: any, nameTemplate: string): string {
+    return nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, value.toString());
+}
+
+export function validateNameLength(data: DisaggregationConfig, pi: ProgramIndicator): { valid: boolean, valuesWithExtraChars: string[] } {
     const originalShortName = pi.shortName;
-    let valueWithExtraChars = '';
+
+    const valuesWithExtraChars: string[] = [];
     const valid = reduce(data.values, (acc, value) => {
-        const valid = acc && `${originalShortName} ${value}`.length <= 50;
+        const prefix = generateNamePrefix(value, data.nameTemplate);
+        const valid = acc && `${originalShortName} ${prefix}`.length <= 50;
         if (!valid) {
-            valueWithExtraChars = `${value}`;
+            valuesWithExtraChars.push(value);
         }
         return valid;
     }, true);
 
-    return {valid, valueWithExtraChars};
+    return {valid, valuesWithExtraChars};
 }
 
+
+export async function updateIndicator(engine: any, {
+    indicator: programIndicator,
+    value
+}: { indicator: ProgramIndicator, value: any }): Promise<{ id: string, value: any } | undefined> {
+    const uploadResponse = await engine.mutate(PROGRAM_INDICATOR_UPDATE_MUTATION, {
+        variables: {
+            data: programIndicator,
+            id: programIndicator.id
+        }
+    });
+    if (isEmpty(uploadResponse?.response?.errorReports)) {
+        return {id: uploadResponse?.response?.uid, value};
+    }
+}
+
+export async function uploadUpdatedIndicators(engine: any, updatedIndicators: { value: any, indicator: ProgramIndicator }[]): Promise<{ value: any, indicator: ProgramIndicator }[]> {
+
+    const responses = await mapSeries(updatedIndicators, asyncify(async (indicator: { indicator: ProgramIndicator, value: any }) => await updateIndicator(engine, indicator)));
+    return compact(responses) as { value: any, indicator: ProgramIndicator }[];
+}
+
+export function generateProgramIndicatorUpdates(pi: ProgramIndicator, config: DisaggregationConfig): { value: any; indicator: ProgramIndicator }[] {
+    const {indicators} = config;
+    return indicators.map(indicator => {
+        return generateProgramIndicator(pi, config, indicator);
+    });
+}
+
+
+export async function updateIndicators(engine: any, template: ProgramIndicator, config: DisaggregationConfig) {
+    const indicatorsToUpdate = generateProgramIndicatorUpdates(template, config);
+    return await uploadUpdatedIndicators(engine, indicatorsToUpdate);
+}
 
 function generateFilter(disaggregationConfig: DisaggregationConfig, value: string): string {
     if (disaggregationConfig.dataType === DATA_TYPES.DATA_ELEMENT) {
@@ -41,34 +81,39 @@ function generateFilter(disaggregationConfig: DisaggregationConfig, value: strin
     return "";
 }
 
+function generateProgramIndicator(template: ProgramIndicator, config: DisaggregationConfig, {
+    value,
+    id
+}: { value: any, id?: string }): { value: any, indicator: ProgramIndicator } {
+    const {nameTemplate} = config;
+    const prefix = nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, value);
+    let filter = template.filter;
+    if (filter) {
+        filter = `${filter} && ${generateFilter(config, value)}`
+    } else {
+        filter = generateFilter(config, value);
+    }
+    return {
+        value,
+        indicator: {
+            ...template,
+            id: id ?? uid(),
+            name: `${template.name} ${prefix}`,
+            program: {
+                id: template.program.id
+            },
+            displayName: `${template.displayName} ${prefix}`,
+            shortName: `${template.shortName} ${prefix}`,
+            displayShortName: `${template.displayShortName} ${prefix}`,
+            filter
+        }
+    }
+}
+
 export function generatePIConfigurationFromDisaggregationConfig(template: ProgramIndicator, disaggregationConfig: DisaggregationConfig): { value: string, indicator: ProgramIndicator }[] {
     const {values} = disaggregationConfig;
     return values.map(value => {
-        const prefix = disaggregationConfig.nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, value);
-
-        let filter = template.filter;
-
-        if (filter) {
-            filter = `${filter} && ${generateFilter(disaggregationConfig, value)}`
-        } else {
-            filter = generateFilter(disaggregationConfig, value);
-        }
-
-        return {
-            value,
-            indicator: {
-                ...template,
-                id: uid(),
-                name: `${template.name} ${prefix}`,
-                program: {
-                    id: template.program.id
-                },
-                displayName: `${template.displayName} ${prefix}`,
-                shortName: `${template.shortName} ${prefix}`,
-                displayShortName: `${template.displayShortName} ${prefix}`,
-                filter
-            }
-        }
+        return generateProgramIndicator(template, disaggregationConfig, {value});
     });
 }
 
