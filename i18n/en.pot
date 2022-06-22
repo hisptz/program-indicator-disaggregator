@@ -5,8 +5,222 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-04T07:19:40.230Z\n"
-"PO-Revision-Date: 2022-06-04T07:19:40.230Z\n"
+"POT-Creation-Date: 2022-06-22T11:32:29.344Z\n"
+"PO-Revision-Date: 2022-06-22T11:32:29.344Z\n"
 
-msgid "Program Indicator Disaggregator"
-msgstr "Program Indicator Disaggregator"
+msgid "disaggregated by"
+msgstr "disaggregated by"
+
+msgid "Generic program indicator has updates"
+msgstr "Generic program indicator has updates"
+
+msgid ""
+"The program indicator used to generate these disaggregations has been "
+"updated. Click on update to propagate these changes into the disaggregated "
+"program indicators."
+msgstr ""
+"The program indicator used to generate these disaggregations has been "
+"updated. Click on update to propagate these changes into the disaggregated "
+"program indicators."
+
+msgid "Updating..."
+msgstr "Updating..."
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Program Stage"
+msgstr "Program Stage"
+
+msgid "Data Element"
+msgstr "Data Element"
+
+msgid "Attribute"
+msgstr "Attribute"
+
+msgid "Disaggregated values"
+msgstr "Disaggregated values"
+
+msgid "View disaggregations"
+msgstr "View disaggregations"
+
+msgid "Please enter at least one value"
+msgstr "Please enter at least one value"
+
+msgid "Please enter valid values"
+msgstr "Please enter valid values"
+
+msgid "Add options"
+msgstr "Add options"
+
+msgid "Program stage is required"
+msgstr "Program stage is required"
+
+msgid "Program stage"
+msgstr "Program stage"
+
+msgid "Data element is required"
+msgstr "Data element is required"
+
+msgid "Attribute is required"
+msgstr "Attribute is required"
+
+msgid "Disaggregation options"
+msgstr "Disaggregation options"
+
+msgid "Disaggregation type is required"
+msgstr "Disaggregation type is required"
+
+msgid "Disaggregation type"
+msgstr "Disaggregation type"
+
+msgid "Disaggregate by"
+msgstr "Disaggregate by"
+
+msgid "Data element"
+msgstr "Data element"
+
+msgid "Disaggregation name prefix"
+msgstr "Disaggregation name prefix"
+
+msgid "Disaggregation name is required"
+msgstr "Disaggregation name is required"
+
+msgid "Field must contain "
+msgstr "Field must contain "
+
+msgid "This will be prefixed to name, and short name."
+msgstr "This will be prefixed to name, and short name."
+
+msgid "You can access the disaggregation value using the placeholder"
+msgstr "You can access the disaggregation value using the placeholder"
+
+msgid "Name prefix"
+msgstr "Name prefix"
+
+msgid "Please select at least one option"
+msgstr "Please select at least one option"
+
+msgid "Select options"
+msgstr "Select options"
+
+msgid ""
+"Name prefix must be less than {{ chars }} characters for all values. {{ "
+"value }} exceed(s) this limit."
+msgstr ""
+"Name prefix must be less than {{ chars }} characters for all values. {{ "
+"value }} exceed(s) this limit."
+
+msgid "Create new disaggregation"
+msgstr "Create new disaggregation"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Creating..."
+msgstr "Creating..."
+
+msgid "Saving configuration..."
+msgstr "Saving configuration..."
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Display name"
+msgstr "Display name"
+
+msgid "Program"
+msgstr "Program"
+
+msgid "Disaggregation value"
+msgstr "Disaggregation value"
+
+msgid "Last updated"
+msgstr "Last updated"
+
+msgid "View in maintenance"
+msgstr "View in maintenance"
+
+msgid "disaggregations"
+msgstr "disaggregations"
+
+msgid "Hide"
+msgstr "Hide"
+
+msgid "Expression"
+msgstr "Expression"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "No filters"
+msgstr "No filters"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "No description provided"
+msgstr "No description provided"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Disaggregation configurations"
+msgstr "Disaggregation configurations"
+
+msgid "Add new"
+msgstr "Add new"
+
+msgid "Start by adding a new disaggregation configuration"
+msgstr "Start by adding a new disaggregation configuration"
+
+msgid "Successfully uploaded {{ no }} indicators"
+msgstr "Successfully uploaded {{ no }} indicators"
+
+msgid "Configuration updated successfully"
+msgstr "Configuration updated successfully"
+
+msgid "Configuration saved successfully"
+msgstr "Configuration saved successfully"
+
+msgid "Error saving configuration"
+msgstr "Error saving configuration"
+
+msgid "Search by name, code or id"
+msgstr "Search by name, code or id"
+
+msgid "Select program"
+msgstr "Select program"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Last Updated"
+msgstr "Last Updated"
+
+msgid "Disaggregated"
+msgstr "Disaggregated"
+
+msgid "Failed to load Program indicators!"
+msgstr "Failed to load Program indicators!"
+
+msgid "Refresh the page to reload the indicators."
+msgstr "Refresh the page to reload the indicators."
+
+msgid "Program Indicators"
+msgstr "Program Indicators"
+
+msgid "Add value"
+msgstr "Add value"
+
+msgid "Select all"
+msgstr "Select all"
+
+msgid "Select none"
+msgstr "Select none"
+
+msgid "Option set"
+msgstr "Option set"
+
+msgid "Custom value"
+msgstr "Custom value"

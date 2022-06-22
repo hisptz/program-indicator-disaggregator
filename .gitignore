@@ -2,4 +2,12 @@
 node_modules
 .d2
 src/locales
+build!/cypress.env.json
+cypress.env.json
+
 build
+#  enviroment files
+.env
+
+# trial data files
+**/*.trial.*!/.env

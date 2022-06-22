@@ -1,6 +1,6 @@
 {
   "name": "program-indicator-disaggregator",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "",
   "license": "BSD-3-Clause",
   "private": true,
@@ -8,12 +8,39 @@
     "build": "d2-app-scripts build",
     "start": "d2-app-scripts start --proxy https://play.dhis2.org/2.38.0",
     "test": "d2-app-scripts test",
-    "deploy": "d2-app-scripts deploy"
+    "deploy": "d2-app-scripts deploy",
+    "lint": "yarn d2-style check",
+    "lint:staged": "yarn lint --staged",
+    "format": "yarn d2-style apply",
+    "format:staged": "yarn format --staged",
+    "test:open": "cypress open"
   },
   "devDependencies": {
-    "@dhis2/cli-app-scripts": "^9.0.0"
+    "@dhis2/cli-app-scripts": "^9.0.0",
+    "@dhis2/cli-style": "^10.4.1",
+    "@dhis2/cli-utils-cypress": "^9.0.2",
+    "@dhis2/cypress-commands": "^9.0.2",
+    "@dhis2/cypress-plugins": "^9.0.2",
+    "@hookform/devtools": "^4.1.0",
+    "@types/async": "^3.2.13",
+    "@types/lodash": "^4.14.182",
+    "@types/luxon": "^2.3.2",
+    "cypress": "^10.0.2",
+    "cypress-cucumber-preprocessor": "^4.3.1"
   },
   "dependencies": {
-    "@dhis2/app-runtime": "^3.4.3"
+    "@dhis2/app-runtime": "^3.4.3",
+    "@dhis2/app-service-datastore": "^1.0.0-beta.3",
+    "@hisptz/dhis2-utils": "^1.0.0-alpha.2",
+    "async": "^3.2.3",
+    "lodash": "^4.17.21",
+    "luxon": "^2.4.0",
+    "react-error-overlay": "6.0.9",
+    "react-hook-form": "^7.31.3",
+    "react-router-dom": "6",
+    "recoil": "^0.7.3"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }

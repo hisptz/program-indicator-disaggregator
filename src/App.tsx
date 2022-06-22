@@ -1,11 +1,19 @@
 import React from 'react'
-import i18n from '@dhis2/d2-i18n'
+import {HashRouter} from "react-router-dom";
+import {DataStoreProvider} from "@dhis2/app-service-datastore"
 import classes from './App.module.css'
+import MainRouter from "./modules/router";
+import "./layout.css";
+import "./main.css"
 
-const MyApp = () => (
-    <div className={classes.container}>
-        <h1>{i18n.t('Program Indicator Disaggregator')}</h1>
-    </div>
+const App = (): React.ReactElement => (
+    <DataStoreProvider namespace={"hisptz-pid"}>
+        <HashRouter>
+            <div className={classes['main-container']}>
+                <MainRouter/>
+            </div>
+        </HashRouter>
+    </DataStoreProvider>
 )
 
-export default MyApp
+export default App;
