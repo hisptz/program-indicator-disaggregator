@@ -14,6 +14,32 @@ export function generateNewConfig(pi: ProgramIndicator, disaggregationConfig: Di
     }
 }
 
+
+const updateCheckQuery = {
+    check: {
+        resource: "programIndicators",
+        params: ({ids, lastUpdated}: any) => ({
+            fields: ["id", "lastUpdated"],
+            filter: [`id:in:[${ids.join(',')}]`, `lastUpdated:lt:${lastUpdated}`],
+        })
+    }
+}
+
+export async function checkUpdateStatus(engine: any, config: DisaggregationConfig, template: ProgramIndicator): Promise<boolean> {
+    const indicatorIds = config.indicators.map(indicator => indicator.id);
+    const lastUpdated = template.lastUpdated;
+
+    const response = await engine.query(updateCheckQuery, {
+        variables: {
+            ids: indicatorIds,
+            lastUpdated
+        }
+    });
+
+    return response?.check.programIndicators?.length > 0 ?? false;
+
+}
+
 export async function saveConfig(engine: any, {
     config,
     disaggregationConfig,

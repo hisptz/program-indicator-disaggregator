@@ -60,6 +60,7 @@ export const PROGRAM_INDICATOR_QUERY = {
                 "userAccesses",
                 "legendSets[id]",
                 "createdBy[id]",
+                "lastUpdated",
                 "lastUpdatedBy[id]",
                 "expression",
                 "program[id,programType,displayName,programStages[id,displayName,programStageDataElements[id,dataElement[id,displayName,valueType,optionSet[id,displayName,options[id,displayName,code]]]]],programTrackedEntityAttributes[id,displayName,trackedEntityAttribute[id,displayName,valueType,optionSet[id,displayName,options[id,displayName,code]]]]]",
