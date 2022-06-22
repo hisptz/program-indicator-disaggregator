@@ -2,7 +2,7 @@ import React from 'react'
 import {Controller} from "react-hook-form";
 import {Button, ButtonStrip, Checkbox, Field} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import {intersection, isEmpty, map} from "lodash";
+import {find, intersection, isEmpty, map} from "lodash";
 
 export default function MultipleOptionsField({
                                                  name,
@@ -23,7 +23,7 @@ export default function MultipleOptionsField({
                             <Button
                                 disabled={intersection(value, options.map(option => option.value)).length === options.length}
                                 onClick={() => {
-                                    onChange(options?.map(({value}) => value))
+                                    onChange(options?.map(({value, label}) => ({value, name: label})))
                                 }}>{i18n.t("Select all")}</Button>
                             <Button disabled={!value || isEmpty(value)} onClick={() => {
                                 onChange([])
@@ -33,12 +33,12 @@ export default function MultipleOptionsField({
                             {
                                 map(options, ({label, value: optionValue}) => (
                                     <Checkbox
-                                        checked={value?.includes(optionValue)}
+                                        checked={!!find(value, {value: optionValue})}
                                         onChange={({checked}: { checked: boolean }) => {
                                             if (checked) {
-                                                onChange([...(value ?? []), optionValue])
+                                                onChange([...(value ?? []), {value: optionValue, name: label}])
                                             } else {
-                                                onChange((value ?? [])?.filter((item: any) => item !== optionValue))
+                                                onChange((value ?? [])?.filter((item: any) => item.value !== optionValue))
                                             }
                                         }}
                                         label={label}

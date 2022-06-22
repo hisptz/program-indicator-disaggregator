@@ -43,7 +43,7 @@ export default function CustomValueField({
                                 icon={<IconAdd24/>}
                                 onClick={() => {
                                     if (inputValue) {
-                                        onChange([...(value ?? []), inputValue]);
+                                        onChange([...(value ?? []), {value: inputValue, name: inputValue}]);
                                         setInputValue("");
                                     }
                                 }}
