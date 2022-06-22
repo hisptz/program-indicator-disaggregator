@@ -62,7 +62,7 @@ export default function DisaggregationConfig({
                     <div className={classes.data}><label>{i18n.t("Disaggregated values")}:</label>
                         <div
                             className="row-gap-8 align-middle">{config.values.map(value => <Tag bold
-                                                                                                key={`${value}-tag`}>{value}</Tag>)}</div>
+                                                                                                key={`${value}-tag`}>{value.name}</Tag>)}</div>
                     </div>
                     <div className={classes.footer}>
                         <ButtonStrip>

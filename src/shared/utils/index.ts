@@ -16,8 +16,8 @@ export const getSanitizedDateString = (date: string): string => {
 };
 
 
-export function generateNamePrefix(value: any, nameTemplate: string): string {
-    return nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, value.toString());
+export function generateNamePrefix(value: { name: string; value: string; }, nameTemplate: string): string {
+    return nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, value.name.toString());
 }
 
 export function validateNameLength(data: DisaggregationConfig, pi: ProgramIndicator): { valid: boolean, valuesWithExtraChars: string[] } {
@@ -28,7 +28,7 @@ export function validateNameLength(data: DisaggregationConfig, pi: ProgramIndica
         const prefix = generateNamePrefix(value, data.nameTemplate);
         const valid = acc && `${originalShortName} ${prefix}`.length <= 50;
         if (!valid) {
-            valuesWithExtraChars.push(value);
+            valuesWithExtraChars.push(value.name);
         }
         return valid;
     }, true);
@@ -71,9 +71,9 @@ export async function updateIndicators(engine: any, template: ProgramIndicator, 
     return await uploadUpdatedIndicators(engine, indicatorsToUpdate);
 }
 
-function generateFilter(disaggregationConfig: DisaggregationConfig, value: string): string {
+function generateFilter(disaggregationConfig: DisaggregationConfig, value: { name: string; value: any }): string {
     if (disaggregationConfig.dataType === DATA_TYPES.DATA_ELEMENT) {
-        return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}} == "${value}"`;
+        return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}} == "${value.value}"`;
     }
     if (disaggregationConfig.dataType === DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE) {
         return `A{${disaggregationConfig.data}} == "${value}"`;
@@ -86,7 +86,7 @@ function generateProgramIndicator(template: ProgramIndicator, config: Disaggrega
     id
 }: { value: any, id?: string }): { value: any, indicator: ProgramIndicator } {
     const {nameTemplate} = config;
-    const prefix = nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, value);
+    const prefix = generateNamePrefix(value, nameTemplate);
     let filter = template.filter;
     if (filter) {
         filter = `${filter} && ${generateFilter(config, value)}`

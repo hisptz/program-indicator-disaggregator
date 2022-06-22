@@ -21,7 +21,7 @@ const columns = [
     },
     {
         label: i18n.t("Disaggregation value"),
-        key: "value"
+        key: "value.name"
     },
     {
         label: i18n.t("Last updated"),
@@ -73,7 +73,7 @@ export default function DisaggregationList({
             program: pi.program.displayName,
             lastUpdated: DateTime.fromISO(pi.lastUpdated).toFormat("dd-MM-yyyy, HH:mm:ss"),
             value: find(indicatorConfigs, {id: pi.id})?.value,
-            action: <a href={url}>{i18n.t("View in maintenance")}</a>
+            action: <a rel="noreferrer" href={url} target="_blank">{i18n.t("View in maintenance")}</a>
         }
     }), [baseUrl, indicatorConfigs, programIndicators]);
 
