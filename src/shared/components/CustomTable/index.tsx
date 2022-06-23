@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useRef} from "react";
 import {
     CircularLoader,
     Pagination,
@@ -26,20 +26,24 @@ function CustomTableRow({
     const tableId = useRef(uid());
     const rowRef = uid();
 
-    useEffect(() => {
-        if (rowRef) {
-            //A hack to get the table row to be clickable
-            const row = document.querySelector(`[data-test="${rowRef}-row"]`);
-            if (row) {
-                row.addEventListener("click", onClick);
-            }
-        }
-    })
+    // useEffect(() => {
+    //     if (rowRef) {
+    //         //A hack to get the table row to be clickable
+    //         const row = document.querySelector(`[data-test="${rowRef}-row"]`);
+    //         if (row) {
+    //             row.addEventListener("click", onClick);
+    //         }
+    //     }
+    // })
 
     return <TableRow className={selected ? classes['row-selected'] : classes.row} dataTest={`${rowRef}-row`}
                      onClick={onClick}>
         {columns.map(({key, mapperFn}) => (
-            <TableCell key={`${tableId.current}-${key}-column`}>{mapperFn ? mapperFn(row) : get(row, key)}</TableCell>
+            <TableCell key={`${tableId.current}-${key}-column`}>
+                <div onClick={onClick}>
+                    {mapperFn ? mapperFn(row) : get(row, key)}
+                </div>
+            </TableCell>
         ))}
     </TableRow>;
 }
