@@ -23,11 +23,11 @@ export default function CustomValueField({
                     <div ref={ref} className="col gap-16">
                         <div className="row-gap-8 flex-wrap">
                             {
-                                (value ?? [])?.map((item: string) => (
+                                (value ?? [])?.map((item: { value: string; name: string }) => (
                                     <Chip
                                         key={`${item}-chip`}
                                         onRemove={() => onChange(value.filter((i: any) => i !== item))}
-                                    >{item}</Chip>
+                                    >{item.name}</Chip>
                                 ))
                             }
                         </div>
