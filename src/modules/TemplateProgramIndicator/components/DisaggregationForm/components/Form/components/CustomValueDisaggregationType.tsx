@@ -14,7 +14,7 @@ export function CustomValueDisaggregationType({valueType}: { valueType: string }
                 required: `${i18n.t("Please enter at least one value")}`,
                 validate: {
                     notEmpty: (value: Array<string>) => value.length > 0 || `${i18n.t("Please enter at least one value")}`,
-                    validElements: (value: Array<string>) => !some(value, (v: string) => v.match(/^"*$/)) || `${i18n.t("Please enter valid values")}`
+                    validElements: (value: Array<string>) => !some(value, (v: { value: string; name: string; }) => v.value.match(/^"*$/)) || `${i18n.t("Please enter valid values")}`
                 }
             }}
             type={valueType.toLowerCase()} name="values"
