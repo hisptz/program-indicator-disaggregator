@@ -24,19 +24,19 @@ function CustomTableRow({
                             selected
                         }: { onClick: () => void, row: Record<string, any>, columns: Column[], selected?: boolean }) {
     const tableId = useRef(uid());
-    const rowRef = useRef<string>(uid());
+    const rowRef = uid();
 
     useEffect(() => {
-        if (rowRef.current) {
+        if (rowRef) {
             //A hack to get the table row to be clickable
-            const row = document.querySelector(`[data-test="${rowRef.current}-row"]`);
+            const row = document.querySelector(`[data-test="${rowRef}-row"]`);
             if (row) {
                 row.addEventListener("click", onClick);
             }
         }
     })
 
-    return <TableRow className={selected ? classes['row-selected'] : classes.row} dataTest={`${rowRef.current}-row`}
+    return <TableRow className={selected ? classes['row-selected'] : classes.row} dataTest={`${rowRef}-row`}
                      onClick={onClick}>
         {columns.map(({key, mapperFn}) => (
             <TableCell key={`${tableId.current}-${key}-column`}>{mapperFn ? mapperFn(row) : get(row, key)}</TableCell>
