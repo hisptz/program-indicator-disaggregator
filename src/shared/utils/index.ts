@@ -72,11 +72,12 @@ export async function updateIndicators(engine: any, template: ProgramIndicator, 
 }
 
 function generateFilter(disaggregationConfig: DisaggregationConfig, value: { name: string; value: any }): string {
+    const filterValue = value.value;
     if (disaggregationConfig.dataType === DATA_TYPES.DATA_ELEMENT) {
-        return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}} == "${value.value}"`;
+        return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}} == "${filterValue}"`;
     }
     if (disaggregationConfig.dataType === DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE) {
-        return `A{${disaggregationConfig.data}} == "${value}"`;
+        return `A{${disaggregationConfig.data}} == "${filterValue}"`;
     }
     return "";
 }
