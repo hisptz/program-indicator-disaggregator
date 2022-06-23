@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react'
+import React, {useState} from 'react'
 import {DisaggregationConfig as DisaggregationConfigType} from "../../../../shared/interfaces";
 import {chunk, get} from "lodash";
 import DisaggregationConfig from '../DisaggregationConfig';
@@ -13,9 +13,9 @@ export default function DisaggregationConfigList({
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
 
-    const dataChunks = useMemo(() => chunk(configs, pageSize), [configs, pageSize]);
-    const hasMoreThanOnePage = useMemo(() => dataChunks.length > 1, [dataChunks]);
-    const pagedData = useMemo(() => get(dataChunks, [page - 1]), [dataChunks, page]);
+    const dataChunks = chunk(configs, pageSize);
+    const hasMoreThanOnePage = dataChunks.length > 1;
+    const pagedData = get(dataChunks, [page - 1])
 
     const onPageChange = (page: number) => setPage(page);
     const onPageSizeChange = (pageSize: number) => setPageSize(pageSize);
