@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-22T11:32:29.344Z\n"
-"PO-Revision-Date: 2022-06-22T11:32:29.344Z\n"
+"POT-Creation-Date: 2022-09-13T12:23:05.583Z\n"
+"PO-Revision-Date: 2022-09-13T12:23:05.583Z\n"
 
 msgid "disaggregated by"
 msgstr "disaggregated by"
@@ -210,6 +210,30 @@ msgstr "Refresh the page to reload the indicators."
 msgid "Program Indicators"
 msgstr "Program Indicators"
 
+<<<<<<< Updated upstream
+=======
+msgid "Add Operator"
+msgstr "Add Operator"
+
+msgid ">"
+msgstr ">"
+
+msgid "<"
+msgstr "<"
+
+msgid ">="
+msgstr ">="
+
+msgid "<="
+msgstr "<="
+
+msgid "=="
+msgstr "=="
+
+msgid "!="
+msgstr "!="
+
+>>>>>>> Stashed changes
 msgid "Add value"
 msgstr "Add value"
 

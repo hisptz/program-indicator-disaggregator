@@ -1,7 +1,10 @@
 import React, {useState} from 'react'
 import {Controller} from "react-hook-form";
-import {Button, Chip, Field, IconAdd24, InputField} from '@dhis2/ui'
+import {Button, Chip, Field, IconAdd24, InputField, SingleSelectField, SingleSelectOption} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
+import { any } from 'async';
+
+const supportedOperators: string[] = ['==','>','<','<=','>=','!='];
 
 export default function CustomValueField({
                                              name,
@@ -12,6 +15,7 @@ export default function CustomValueField({
                                          }: { name: string, validations?: Record<string, any>, label: string, type?: string, [key: string]: any }): React.ReactElement {
 
     const [inputValue, setInputValue] = useState("");
+    const [selectValue, setSelectValue] = useState("==");
 
 
     return (
@@ -39,11 +43,21 @@ export default function CustomValueField({
                                 name={`${name}-input`}
                                 placeholder={i18n.t("Add new")}
                             />
+                            <SingleSelectField
+                            name={`${name}-select`}
+                              selected={selectValue}
+                              onChange={({selected: value}:any) => setSelectValue(value)}
+                              placeholder={i18n.t("Add Operator")}>
+                                {
+                                    supportedOperators.map((operator, index) => <SingleSelectOption key={`${operator}-${index}`} label={operator} value={operator} />)
+                                }
+                            </SingleSelectField>
                             <Button
                                 icon={<IconAdd24/>}
                                 onClick={() => {
-                                    if (inputValue) {
-                                        onChange([...(value ?? []), {value: inputValue, name: inputValue}]);
+                                    if (inputValue && selectValue) {
+                                        onChange([...(value ?? []), {value: inputValue, name: inputValue}, {value: selectValue, name: selectValue}]);
+                                        setSelectValue("==");
                                         setInputValue("");
                                     }
                                 }}
