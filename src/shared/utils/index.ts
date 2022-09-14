@@ -26,7 +26,7 @@ export function validateNameLength(data: DisaggregationConfig, pi: ProgramIndica
     const valuesWithExtraChars: string[] = [];
     const valid = reduce(data.values, (acc, value) => {
         const prefix = generateNamePrefix(value, data.nameTemplate);
-        const valid = acc && `${originalShortName} ${prefix}`.length <= 50;
+        const valid= acc && `${originalShortName} ${prefix}`.length <= 50;
         if (!valid) {
             valuesWithExtraChars.push(value.name);
         }
@@ -71,13 +71,14 @@ export async function updateIndicators(engine: any, template: ProgramIndicator, 
     return await uploadUpdatedIndicators(engine, indicatorsToUpdate);
 }
 
-function generateFilter(disaggregationConfig: DisaggregationConfig, value: { name: string; value: any }): string {
+function generateFilter(disaggregationConfig: DisaggregationConfig, value: { name: string; value: any , operator?: string}): string {
     const filterValue = value.value;
+    const operator = value.operator;
     if (disaggregationConfig.dataType === DATA_TYPES.DATA_ELEMENT) {
-        return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}} == "${filterValue}"`;
+        return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}}  ${operator?? "=="} ${filterValue}`;
     }
     if (disaggregationConfig.dataType === DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE) {
-        return `A{${disaggregationConfig.data}} == "${filterValue}"`;
+        return `A{${disaggregationConfig.data}} ${operator ?? "=="} ${filterValue}`;
     }
     return "";
 }
