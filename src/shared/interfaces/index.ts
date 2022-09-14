@@ -17,6 +17,7 @@ export interface DisaggregationConfig {
         value: string,
         name: string,
         operator?: string,
+        valueType?: string,
     }>,
     indicators: { id: string, value: string }[]
 }

@@ -16,8 +16,8 @@ export const getSanitizedDateString = (date: string): string => {
 };
 
 
-export function generateNamePrefix(value: { name: string; value: string; }, nameTemplate: string): string {
-    return nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, value.name.toString());
+export function generateNamePrefix(value: { name: string; value: string; operator?: string }, nameTemplate: string): string {
+    return nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/,`${value.operator === '==' ?  '-': value.operator?? "-"} ` + value.name.toString());
 }
 
 export function validateNameLength(data: DisaggregationConfig, pi: ProgramIndicator): { valid: boolean, valuesWithExtraChars: string[] } {
@@ -35,7 +35,6 @@ export function validateNameLength(data: DisaggregationConfig, pi: ProgramIndica
 
     return {valid, valuesWithExtraChars};
 }
-
 
 export async function updateIndicator(engine: any, {
     indicator: programIndicator,
@@ -69,16 +68,18 @@ export function generateProgramIndicatorUpdates(pi: ProgramIndicator, config: Di
 export async function updateIndicators(engine: any, template: ProgramIndicator, config: DisaggregationConfig) {
     const indicatorsToUpdate = generateProgramIndicatorUpdates(template, config);
     return await uploadUpdatedIndicators(engine, indicatorsToUpdate);
+    return null;
 }
 
-function generateFilter(disaggregationConfig: DisaggregationConfig, value: { name: string; value: any , operator?: string}): string {
-    const filterValue = value.value;
-    const operator = value.operator;
+function generateFilter(disaggregationConfig: DisaggregationConfig, value: { name: string; value: any , operator?: string, valueType?:string}): string {
+    const {value: filterValue, operator, valueType} = value;
+    const sanitizedValue = !valueType || valueType == 'text' ? `"${filterValue}"` : `${filterValue}`;
+
     if (disaggregationConfig.dataType === DATA_TYPES.DATA_ELEMENT) {
-        return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}}  ${operator?? "=="} ${filterValue}`;
+        return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}}  ${operator?? "=="} ` ;
     }
     if (disaggregationConfig.dataType === DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE) {
-        return `A{${disaggregationConfig.data}} ${operator ?? "=="} ${filterValue}`;
+        return `A{${disaggregationConfig.data}} ${operator ?? "=="} ` + sanitizedValue;
     }
     return "";
 }
@@ -154,7 +155,6 @@ export async function uploadProgramIndicator(engine: any, {
         return;
     }
 }
-
 
 export function getIndicatorUrl(baseUrl: string, id: string): string {
     return `${baseUrl}/dhis-web-maintenance/index.html#/edit/indicatorSection/programIndicator/${id}`;

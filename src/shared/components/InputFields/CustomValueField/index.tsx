@@ -27,7 +27,7 @@ export default function CustomValueField({
                     <div ref={ref} className="col gap-16">
                         <div className="row-gap-8 flex-wrap">
                             {
-                                (value ?? [])?.map((item: { value: string; name: string, operator: string }, index:number) => (
+                                (value ?? [])?.map((item: { value: string; name: string, operator: string, valueType: string }, index:number) => (
                                     <Chip
                                         key={`${item.name}-chip-${index}`}
                                         onRemove={() => onChange(value.filter((i: any) => i !== item))}
@@ -56,7 +56,7 @@ export default function CustomValueField({
                                 icon={<IconAdd24/>}
                                 onClick={() => {
                                     if (inputValue && selectValue) {
-                                        onChange([...(value ?? []), {value: inputValue, name: inputValue, operator: selectValue},]);
+                                        onChange([...(value ?? []), {value: inputValue, name: inputValue, operator: selectValue, valueType: type},]);
                                         setSelectValue("");
                                         setInputValue("");
                                     }
