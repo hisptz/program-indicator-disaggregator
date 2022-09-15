@@ -15,7 +15,9 @@ export interface DisaggregationConfig {
     },
     values: Array<{
         value: string,
-        name: string
+        name: string,
+        operator?: string,
+        valueType?: string,
     }>,
     indicators: { id: string, value: string }[]
 }

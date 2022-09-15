@@ -1,10 +1,10 @@
-import {DisaggregationConfig, ProgramIndicatorTemplate} from "../../../shared/interfaces";
-import {useSavedObject} from "@dhis2/app-service-datastore"
-import type {ProgramIndicator} from "@hisptz/dhis2-utils";
-import {saveConfig} from "../utils";
-import {useState} from "react";
-import {useAlert, useDataEngine} from "@dhis2/app-runtime";
-import {useParams} from "react-router-dom";
+import { DisaggregationConfig, ProgramIndicatorTemplate } from "../../../shared/interfaces";
+import { useSavedObject } from "@dhis2/app-service-datastore"
+import type { ProgramIndicator } from "@hisptz/dhis2-utils";
+import { saveConfig } from "../utils";
+import { useState } from "react";
+import { useAlert, useDataEngine } from "@dhis2/app-runtime";
+import { useParams } from "react-router-dom";
 
 export function useManageProgramIndicatorTemplate(programIndicator: ProgramIndicator): {
     save: (disaggregationConfig: DisaggregationConfig) => Promise<boolean>,
@@ -14,13 +14,13 @@ export function useManageProgramIndicatorTemplate(programIndicator: ProgramIndic
     uploading: boolean
     count: number
 } {
-    const [config, {replace}] = useSavedObject(programIndicator?.id, {global: true});
+    const [config, { replace }] = useSavedObject(programIndicator?.id, { global: true });
     const engine = useDataEngine();
     const [saving, setSaving] = useState<boolean>(false);
     const [uploading, setUploading] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
     const [count, setCount] = useState<number>(0);
-    const {show} = useAlert(({message}) => message, ({type}) => ({...type, duration: 3000}));
+    const { show } = useAlert(({ message }) => message, ({ type }) => ({ ...type, duration: 3000 }));
     const save = async (disaggregationConfig: DisaggregationConfig): Promise<boolean> => {
         setCount(disaggregationConfig.values.length);
         return await saveConfig(engine, {config, disaggregationConfig, programIndicator}, {
@@ -43,7 +43,7 @@ export function useManageProgramIndicatorTemplate(programIndicator: ProgramIndic
 
 
 export function useProgramIndicatorTemplate(): ProgramIndicatorTemplate {
-    const {id} = useParams();
-    const [config] = useSavedObject(id, {global: true, ignoreUpdates: false});
+    const { id } = useParams();
+    const [config] = useSavedObject(id, { global: true, ignoreUpdates: false });
     return config;
 }
