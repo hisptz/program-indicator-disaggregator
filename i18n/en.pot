@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-09-13T15:10:00.412Z\n"
-"PO-Revision-Date: 2022-09-13T15:10:00.412Z\n"
+"POT-Creation-Date: 2022-09-15T09:17:00.145Z\n"
+"PO-Revision-Date: 2022-09-15T09:17:00.145Z\n"
 
 msgid "disaggregated by"
 msgstr "disaggregated by"
@@ -209,9 +209,6 @@ msgstr "Refresh the page to reload the indicators."
 
 msgid "Program Indicators"
 msgstr "Program Indicators"
-
-msgid "Add Operator"
-msgstr "Add Operator"
 
 msgid "Add value"
 msgstr "Add value"

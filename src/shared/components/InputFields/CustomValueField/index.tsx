@@ -1,11 +1,10 @@
-import React, {useState} from 'react'
-import {Controller} from "react-hook-form";
+import React, {useState, useEffect} from 'react'
+import {Controller, useForm} from "react-hook-form";
 import {Button, Chip, Field, IconAdd24, InputField, SingleSelectField, SingleSelectOption} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 import { any } from 'async';
 
 const supportedOperators: string[] = ['==','>','<','<=','>=','!='];
-
 export default function CustomValueField({
                                              name,
                                              label,
@@ -16,8 +15,15 @@ export default function CustomValueField({
 
     const [inputValue, setInputValue] = useState("");
     const [selectValue, setSelectValue] = useState("==");
-
-
+    function checkDisableStatus(){
+        return(
+        type === 'text'
+        )
+    }
+    useEffect(() =>{
+        setSelectValue("==")
+    },[type]);
+    
     return (
         <Controller
             name={name}
@@ -44,10 +50,11 @@ export default function CustomValueField({
                                 placeholder={i18n.t("Add new")}
                             />
                             <SingleSelectField
-                            name={`${name}-select`}
+                              name={`${name}-select`}
+                              disabled={checkDisableStatus()}
                               selected={selectValue}
                               onChange={({selected: value}:any) => setSelectValue(value)}
-                              placeholder={i18n.t("Add Operator")}>
+                              >
                                 {
                                     supportedOperators.map((operator, index) => <SingleSelectOption key={`${operator}-${index}`} label={operator} value={operator} />)
                                 }
