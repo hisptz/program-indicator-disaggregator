@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Controller} from "react-hook-form";
-import {Button, Chip, Field, IconAdd24, InputField} from '@dhis2/ui'
+import {Button, Chip, Field, IconAdd24, InputField, SingleSelectField, SingleSelectOption} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
 
+const supportedOperators: string[] = ['==','>','<','<=','>=','!='];
 export default function CustomValueField({
                                              name,
                                              label,
@@ -12,8 +13,16 @@ export default function CustomValueField({
                                          }: { name: string, validations?: Record<string, any>, label: string, type?: string, [key: string]: any }): React.ReactElement {
 
     const [inputValue, setInputValue] = useState("");
-
-
+    const [selectValue, setSelectValue] = useState("==");
+    function checkDisableStatus(){
+        return(
+        type === 'text'
+        )
+    }
+    useEffect(() =>{
+        setSelectValue("==")
+    },[type]);
+    
     return (
         <Controller
             name={name}
@@ -23,11 +32,11 @@ export default function CustomValueField({
                     <div ref={ref} className="col gap-16">
                         <div className="row-gap-8 flex-wrap">
                             {
-                                (value ?? [])?.map((item: { value: string; name: string }) => (
+                                (value ?? [])?.map((item: { value: string; name: string, operator: string, valueType: string }, index:number) => (
                                     <Chip
-                                        key={`${item}-chip`}
+                                        key={`${item.name}-chip-${index}`}
                                         onRemove={() => onChange(value.filter((i: any) => i !== item))}
-                                    >{item.name}</Chip>
+                                    >{`${item.operator} ${item.name}`}</Chip>
                                 ))
                             }
                         </div>
@@ -39,11 +48,22 @@ export default function CustomValueField({
                                 name={`${name}-input`}
                                 placeholder={i18n.t("Add new")}
                             />
+                            <SingleSelectField
+                              name={`${name}-select`}
+                              disabled={checkDisableStatus()}
+                              selected={selectValue}
+                              onChange={({selected: value}:any) => setSelectValue(value)}
+                              >
+                                {
+                                    supportedOperators.map((operator, index) => <SingleSelectOption key={`${operator}-${index}`} label={operator} value={operator} />)
+                                }
+                            </SingleSelectField>
                             <Button
                                 icon={<IconAdd24/>}
                                 onClick={() => {
-                                    if (inputValue) {
-                                        onChange([...(value ?? []), {value: inputValue, name: inputValue}]);
+                                    if (inputValue && selectValue) {
+                                        onChange([...(value ?? []), {value: inputValue, name: inputValue, operator: selectValue, valueType: type},]);
+                                        setSelectValue("");
                                         setInputValue("");
                                     }
                                 }}

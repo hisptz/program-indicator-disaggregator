@@ -14,7 +14,7 @@ export function NameEditor({pi}: { pi: ProgramIndicator }): React.ReactElement |
 
     useEffect(() => {
         if (selectedData) {
-            setValue("nameTemplate", `- ${selectedData?.displayName ?? ""} - {{ disaggregationValue }}`);
+            setValue("nameTemplate", `- ${selectedData?.displayName ?? ""} {{ disaggregationValue }}`);
         }
     }, [pi.displayName, setValue, data, dataType, selectedData]);
 
