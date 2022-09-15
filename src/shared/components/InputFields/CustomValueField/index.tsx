@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import {Controller, useForm} from "react-hook-form";
+import {Controller} from "react-hook-form";
 import {Button, Chip, Field, IconAdd24, InputField, SingleSelectField, SingleSelectOption} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import { any } from 'async';
 
 const supportedOperators: string[] = ['==','>','<','<=','>=','!='];
 export default function CustomValueField({
