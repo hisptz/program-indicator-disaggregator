@@ -63,7 +63,7 @@ export default function CustomValueField({
                                 onClick={() => {
                                     if (inputValue && selectValue) {
                                         onChange([...(value ?? []), {value: inputValue, name: inputValue, operator: selectValue, valueType: type},]);
-                                        setSelectValue("");
+                                        setSelectValue("==");
                                         setInputValue("");
                                     }
                                 }}

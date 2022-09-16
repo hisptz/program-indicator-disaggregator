@@ -28,6 +28,7 @@ export function MainDataTypeSelector({pi}: { pi: ProgramIndicator }): React.Reac
         if (isEventProgram) {
             setValue("dataType", DATA_TYPES.DATA_ELEMENT);
         }
+        isEventProgram
     }, [isEventProgram, pi.program.programType, setValue]);
 
     return <div className={classes["form-group"]}>
