@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-06-22T11:32:29.344Z\n"
-"PO-Revision-Date: 2022-06-22T11:32:29.344Z\n"
+"POT-Creation-Date: 2022-09-15T15:23:36.438Z\n"
+"PO-Revision-Date: 2022-09-15T15:23:36.438Z\n"
 
 msgid "disaggregated by"
 msgstr "disaggregated by"
@@ -161,6 +161,9 @@ msgstr "Description"
 
 msgid "No description provided"
 msgstr "No description provided"
+
+msgid "Open Dictionary"
+msgstr "Open Dictionary"
 
 msgid "Back"
 msgstr "Back"
