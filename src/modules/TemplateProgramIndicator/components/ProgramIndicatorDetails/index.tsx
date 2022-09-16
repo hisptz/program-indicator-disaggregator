@@ -34,8 +34,6 @@ export default function ProgramIndicatorDetails({
                 </div>
                 <a href={`${url}`} target="_blank" referrerPolicy="no-referrer"
                    rel="noreferrer">{i18n.t("View in maintenance")}</a>
-                <a style={{textAlign:"right"
-                   }} href="/" target="_blank">{i18n.t("Open Dictionary")}</a>   
             </div>
         </div>
     );

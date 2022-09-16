@@ -10,6 +10,7 @@ import DisaggregationList from "../DisaggregationList";
 import {useAlert, useDataEngine} from "@dhis2/app-runtime";
 import {updateIndicators} from "../../../../shared/utils";
 import {checkUpdateStatus} from "../../utils";
+import { values } from 'lodash';
 
 export default function DisaggregationConfig({
                                                  config,
@@ -85,10 +86,10 @@ export default function DisaggregationConfig({
                         <div className={classes.data}><label>{i18n.t("Attribute")}:</label> {dataSelected?.displayName}
                         </div>
                     }
-                    <div className={classes.data}><label>{i18n.t("Disaggregated values")}:</label>
+                    <div className={classes.data}><label>{i18n.t("Disaggregated values")}:</label> 
                         <div
                             className="row-gap-8 align-middle">{config.values.map(value => <Tag bold
-                                                                                                key={`${value.value}-tag`}>{value.name}</Tag>)}</div>
+                              key={`${value.value}-tag`}>{value.operator === "=="? "":value.operator } {value.name}</Tag>)}</div>
                     </div>
                     <div className={classes.footer}>
                         <ButtonStrip>
