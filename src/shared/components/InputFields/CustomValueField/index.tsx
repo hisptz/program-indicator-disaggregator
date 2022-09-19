@@ -41,14 +41,7 @@ export default function CustomValueField({
                             }
                         </div>
                         <div className="row-gap-16">
-                            <InputField
-                                type={type}
-                                value={inputValue}
-                                onChange={({value}: { value: string }) => setInputValue(value)}
-                                name={`${name}-input`}
-                                placeholder={i18n.t("Add new")}
-                            />
-                            <SingleSelectField
+                        <SingleSelectField
                               name={`${name}-select`}
                               disabled={checkDisableStatus()}
                               selected={selectValue}
@@ -58,12 +51,20 @@ export default function CustomValueField({
                                     supportedOperators.map((operator, index) => <SingleSelectOption key={`${operator}-${index}`} label={operator} value={operator} />)
                                 }
                             </SingleSelectField>
+                            
+                            <InputField
+                                type={type}
+                                value={inputValue}
+                                onChange={({value}: { value: string }) => setInputValue(value)}
+                                name={`${name}-input`}
+                                placeholder={i18n.t("Add new")}
+                            />
                             <Button
                                 icon={<IconAdd24/>}
                                 onClick={() => {
                                     if (inputValue && selectValue) {
                                         onChange([...(value ?? []), {value: inputValue, name: inputValue, operator: selectValue, valueType: type},]);
-                                        setSelectValue("");
+                                        setSelectValue("==");
                                         setInputValue("");
                                     }
                                 }}
