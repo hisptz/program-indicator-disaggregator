@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {DisaggregationConfig as DisaggregationConfigType} from "../../../../shared/interfaces";
-import {Box, Button, ButtonStrip, Card, NoticeBox, Tag} from "@dhis2/ui";
+import {Box, Button,Modal, ModalContent, ButtonStrip, Card, NoticeBox, Tag} from "@dhis2/ui";
 import type {DataElement, ProgramIndicator, TrackedEntityAttribute} from "@hisptz/dhis2-utils";
 import i18n from '@dhis2/d2-i18n'
 import {getSelectedData} from "../DisaggregationForm/components/Form/utils";
@@ -10,7 +10,7 @@ import DisaggregationList from "../DisaggregationList";
 import {useAlert, useDataEngine} from "@dhis2/app-runtime";
 import {updateIndicators} from "../../../../shared/utils";
 import {checkUpdateStatus} from "../../utils";
-import { values } from 'lodash';
+import { DictionaryAnalysis } from "@hisptz/react-ui"
 
 export default function DisaggregationConfig({
                                                  config,
@@ -22,6 +22,7 @@ export default function DisaggregationConfig({
     const [templateUpdated, setTemplateUpdated] = useState<boolean | undefined>();
     const [refresh, setRefresh] = useState(false);
     const engine = useDataEngine();
+    const [hide, setHide] = useState(true);
     const {show} = useAlert(({message}) => message, ({type}) => ({...type, duration: 3000}))
 
     const dataSelected: TrackedEntityAttribute | DataElement | undefined = getSelectedData(pi, config.data, config.dataType);
@@ -89,13 +90,11 @@ export default function DisaggregationConfig({
                     <div className={classes.data}><label>{i18n.t("Disaggregated values")}:</label> 
                         <div
                             className="row-gap-8 align-middle">{config.values.map(value => <Tag bold
-                              key={`${value.value}-tag`}>{value.operator === "=="? "":value.operator } {value.name}</Tag>)}</div>
+                              key={`${value.value}-tag`}>{value.operator === "=="? "":value.operator } {value.name}</Tag>)}
+                        </div>
                     </div>
                     <div className={classes.footer}>
                         <ButtonStrip>
-                            {/*<Button loading={updating} onClick={onUpdate}>*/}
-                            {/*    {updating ? i18n.t("Updating...") : i18n.t("Update")}*/}
-                            {/*</Button>*/}
                             <Button
                                 onClick={() => setOpenDisaggregationList(true)}>{i18n.t("View disaggregations")}</Button>
                             {
@@ -104,6 +103,16 @@ export default function DisaggregationConfig({
                                                                              title={title} config={config}/> : null
                             }
                         </ButtonStrip>
+                        <div><Button onClick={() => { setHide(false) }}>{i18n.t("Open Dictionary")}</Button></div>
+                       <Modal large hide={hide}>
+                         <ModalContent>
+                            <DictionaryAnalysis dataSources={config.indicators} />
+                        <br/>
+                        <div style={{float: "right", paddingRight:"15px" }} onClick={() => { setHide(true) }}>
+                            <Button>Hide</Button>
+                        </div>
+                        </ModalContent>
+                       </Modal>
                     </div>
                 </div>
             </Card>

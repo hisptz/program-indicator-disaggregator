@@ -4,7 +4,7 @@ import i18n from '@dhis2/d2-i18n'
 import classes from "./ProgramIndicatorDetails.module.css"
 import { useConfig } from "@dhis2/app-runtime";
 import { getIndicatorUrl } from "../../../../shared/utils";
-import { Button, Modal, ModalContent, IconCross16 } from "@dhis2/ui"
+import { Button, Modal, ModalContent} from "@dhis2/ui"
 import { DictionaryAnalysis } from "@hisptz/react-ui"
 type Props = {
     programIndicator: ProgramIndicator;
@@ -35,14 +35,18 @@ export default function ProgramIndicatorDetails({
                 </div>
                 <a href={`${url}`} target="_blank" referrerPolicy="no-referrer"
                     rel="noreferrer">{i18n.t("View in maintenance")}</a>
-                <div style={{ textAlign: "right" }}><Button onClick={() => { setHide(false) }}>{i18n.t("Open Dictionary")}</Button></div>
-                <Modal hide={hide}>
-                    <ModalContent><div style={{ float: "right" }} onClick={() => { setHide(true) }}><IconCross16 /></div>
+                <div><Button onClick={() => { setHide(false) }}>{i18n.t("Open Dictionary")}</Button></div>
+                <Modal large hide={hide}>
+                    <ModalContent>
                         <DictionaryAnalysis dataSources={[
                             {
                                 id: programIndicator.id
                             },
                         ]} />
+                        <br/>
+                        <div style={{float: "right", paddingRight:"15px" }} onClick={() => { setHide(true) }}>
+                            <Button>Hide</Button>
+                        </div>
                     </ModalContent>
                 </Modal>
             </div>
