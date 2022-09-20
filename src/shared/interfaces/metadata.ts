@@ -33,6 +33,18 @@ export interface Program extends DHIS2Resource {
         id: string,
         displayName: string
     }[];
+    programVariables?:{
+        variables: Variables;
+        id:string,
+        displayName:string
+    }[];
+}
+
+export interface Variables extends DHIS2Resource{
+    valueType?:DHIS2ValueType;
+    optionSet?: OptionSet;
+    legendSets?: LegendSet[];
+    variableValues?: {value: string, variable: {id: string} }[];    
 }
 
 export interface TrackedEntityAttribute extends DHIS2Resource {

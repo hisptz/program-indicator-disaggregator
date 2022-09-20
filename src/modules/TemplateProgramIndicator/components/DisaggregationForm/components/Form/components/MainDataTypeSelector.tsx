@@ -23,6 +23,15 @@ export function MainDataTypeSelector({pi}: { pi: ProgramIndicator }): React.Reac
         }
     }, [dataType, dataTypeFieldState.isDirty, setValue]);
 
+    useEffect(() => {
+        if (dataTypeFieldState.isDirty) {
+            setValue("data", "");
+            if (dataType === DATA_TYPES.VARIABLE) {
+                setValue("programStage", "");
+            }
+        }
+    }, [dataType, dataTypeFieldState.isDirty, setValue]);
+
     //Auto assign data element for event programs
     useEffect(() => {
         if (isEventProgram) {
@@ -45,6 +54,12 @@ export function MainDataTypeSelector({pi}: { pi: ProgramIndicator }): React.Reac
                                   dataTest="attribute-radio-option"
                                   label={i18n.t("Attribute")}/>
             </div>
+            <div className="col-sm-6">
+                <CustomRadioField disabled={isEventProgram} name="dataType"
+                                  radioValue={DATA_TYPES.VARIABLE}
+                                  dataTest="variable-radio-option"
+                                  label={i18n.t("Variable")}/>
+            </div>            
         </div>
         <DataTypeSelector pi={pi}/>
     </div>;

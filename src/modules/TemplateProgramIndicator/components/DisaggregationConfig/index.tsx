@@ -106,7 +106,7 @@ export default function DisaggregationConfig({
                         <div><Button onClick={() => { setHide(false) }}>{i18n.t("Open Dictionary")}</Button></div>
                        <Modal large hide={hide}>
                          <ModalContent>
-                            <DictionaryAnalysis dataSources={config.indicators} />
+                            <DictionaryAnalysis dataSources={config.indicators.map(indicator => ({id: indicator.id}))} />
                         <br/>
                         <div style={{float: "right", paddingRight:"15px" }} onClick={() => { setHide(true) }}>
                             <Button>Hide</Button>
