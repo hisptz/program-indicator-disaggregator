@@ -1,6 +1,6 @@
 import {ProgramIndicator} from "../../../../../../../shared/interfaces/metadata";
 import {useWatch} from "react-hook-form";
-import {DATA_TYPES, SUPPORTED_VALUE_TYPES} from "../../../../../../../shared/constants";
+import {DATA_TYPES, SUPPORTED_VALUE_TYPES,VARIABLE_CONST} from "../../../../../../../shared/constants";
 import CustomSingleSelectField from "../../../../../../../shared/components/InputFields/SingleSelectField";
 import i18n from "@dhis2/d2-i18n";
 import React from "react";
@@ -9,6 +9,7 @@ export function DataTypeSelector({pi}: { pi: ProgramIndicator }): React.ReactEle
     const dataType = useWatch({name: "dataType"});
 
     const programStages = pi.program.programStages?.map(ps => ({label: ps.displayName ?? '', value: ps.id}));
+    const programVariable = VARIABLE_CONST.map(pv => ({label: pv.displayName, value: pv.id, type: pv.valueType}));
     const attributes = pi.program.programTrackedEntityAttributes?.filter((attribute) => SUPPORTED_VALUE_TYPES.includes(attribute?.trackedEntityAttribute?.valueType ?? "")).map(pta => ({
         label: pta.trackedEntityAttribute.displayName ?? '',
         value: pta.trackedEntityAttribute.id
@@ -48,6 +49,17 @@ export function DataTypeSelector({pi}: { pi: ProgramIndicator }): React.ReactEle
                         required
                         validations={{required: `${i18n.t("Attribute is required")}`}}
                         options={attributes} name="data" label={i18n.t("Attribute")}
+                    />
+                </div>
+            </>
+        }
+        {
+            dataType === DATA_TYPES.VARIABLE && <>
+                <div className="col-sm-12">
+                    <CustomSingleSelectField
+                        required
+                        validations={{required: `${i18n.t("Variable is required")}`}}
+                        options={programVariable} name="data" label={i18n.t("Variable")}
                     />
                 </div>
             </>

@@ -1,9 +1,10 @@
 import i18n from "@dhis2/d2-i18n";
-
+import { Variable } from "../interfaces/metadata";
 
 export enum DATA_TYPES {
     'DATA_ELEMENT' = 'DATA_ELEMENT',
     'TRACKED_ENTITY_ATTRIBUTE' = 'TRACKED_ENTITY_ATTRIBUTE',
+    'VARIABLE' = 'VARIABLE',
 }
 
 export enum DISAGGREGATION_TYPES {
@@ -11,7 +12,7 @@ export enum DISAGGREGATION_TYPES {
     CUSTOM_VALUE = "CUSTOM_VALUE",
 }
 
-export const SUPPORTED_VALUE_TYPES = ["NUMBER", "TEXT"];
+export const SUPPORTED_VALUE_TYPES = ["NUMBER", "TEXT", "DATE"];
 
 export const DISAGGREGATION_TYPES_OPTIONS = [
     {
@@ -88,3 +89,66 @@ export const PROGRAM_INDICATOR_UPDATE_MUTATION = {
     id: ({id}: any): string => id,
     data: ({data}: any): any => data
 }
+
+export const VARIABLE_CONST: Array<Variable> = [
+    {
+        displayName: i18n.t("Completed date"),
+        id: 'completed_date',
+        valueType: "DATE"
+    },
+    {
+        displayName: i18n.t("Creation date"),
+        id: 'creation_date',
+        valueType: "DATE"
+    },
+    {
+        displayName: i18n.t("Current date"),
+        id: 'current_date',
+        valueType: "DATE"  
+    },
+    {
+        displayName: i18n.t("Due date"),
+        id: 'due_date',
+        valueType: "DATE"
+    },
+    {
+        displayName: i18n.t("Enrollment date"),
+        id: 'enrollment_date',
+        valueType: "DATE"
+    },
+    {
+        displayName: i18n.t("Event date"),
+        id: 'event_date',
+        valueType: "DATE"
+    },
+    {
+        displayName: i18n.t("Incident date"),
+        id: 'Incident_date',
+        valueType: "DATE"
+    },
+    {
+        displayName: i18n.t("Program stage id"),
+        id: 'program_stage_id',
+        valueType: "TEXT"
+    },
+    {
+        displayName: i18n.t("Program stage name"),
+        id: 'program_stage_name',
+        valueType: "TEXT"
+    },
+    {
+        displayName: i18n.t("Sync date"),
+        id: 'sync_date',
+        valueType: "DATE"
+    },
+    {
+        displayName: i18n.t("Value count"),
+        id: 'value_count',
+        valueType: "NUMBER"
+    },
+    {
+        displayName: i18n.t("Zero or positive value count"),
+        id: 'zero_or_positive_value_count',
+        valueType: "NUMBER"
+    }
+];
