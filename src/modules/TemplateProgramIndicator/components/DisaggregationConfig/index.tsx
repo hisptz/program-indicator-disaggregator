@@ -11,6 +11,7 @@ import {useAlert, useDataEngine} from "@dhis2/app-runtime";
 import {updateIndicators} from "../../../../shared/utils";
 import {checkUpdateStatus} from "../../utils";
 import { DictionaryAnalysis } from "@hisptz/react-ui"
+import { Variable } from '../../../../shared/interfaces/metadata';
 
 export default function DisaggregationConfig({
                                                  config,
@@ -25,7 +26,7 @@ export default function DisaggregationConfig({
     const [hide, setHide] = useState(true);
     const {show} = useAlert(({message}) => message, ({type}) => ({...type, duration: 3000}))
 
-    const dataSelected: TrackedEntityAttribute | DataElement | undefined = getSelectedData(pi, config.data, config.dataType);
+    const dataSelected: TrackedEntityAttribute | DataElement | Variable |undefined = getSelectedData(pi, config.data, config.dataType);
     const title = `${pi.displayName} ${i18n.t("disaggregated by")} ${dataSelected?.displayName}`
 
     useEffect(() => {
