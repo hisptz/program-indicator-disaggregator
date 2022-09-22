@@ -4,7 +4,8 @@ import {getSelectedData} from "../utils";
 import {
     DISAGGREGATION_TYPES,
     DISAGGREGATION_TYPES_OPTIONS,
-    SUPPORTED_VALUE_TYPES
+    SUPPORTED_VALUE_TYPES,
+    VARIABLE_CONST
 } from "../../../../../../../shared/constants";
 import React, {useEffect, useMemo} from "react";
 import classes from "../../../DisaggregationForm.module.css";
@@ -29,7 +30,7 @@ export function DisaggregationOptions({pi}: { pi: ProgramIndicator }): React.Rea
     });
     const options = useMemo(() => dataSelected?.optionSet?.options?.map(option => ({
         label: option.displayName ?? "",
-        value: option.code
+        value: option.code,
     })) ?? [], [dataSelected]);
 
     useEffect(() => {

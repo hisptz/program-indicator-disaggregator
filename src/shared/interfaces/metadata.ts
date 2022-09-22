@@ -35,6 +35,10 @@ export interface Program extends DHIS2Resource {
     }[];
 }
 
+
+export interface Variable {id: string, displayName:string, valueType: string, optionSet?: OptionSet;}
+
+
 export interface TrackedEntityAttribute extends DHIS2Resource {
     valueType?: DHIS2ValueType;
     optionSet?: OptionSet;

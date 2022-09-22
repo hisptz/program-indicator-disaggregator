@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-09-15T15:23:36.438Z\n"
-"PO-Revision-Date: 2022-09-15T15:23:36.438Z\n"
+"POT-Creation-Date: 2022-09-20T13:10:04.811Z\n"
+"PO-Revision-Date: 2022-09-20T13:10:04.811Z\n"
 
 msgid "disaggregated by"
 msgstr "disaggregated by"
@@ -44,6 +44,9 @@ msgstr "Disaggregated values"
 msgid "View disaggregations"
 msgstr "View disaggregations"
 
+msgid "Open Dictionary"
+msgstr "Open Dictionary"
+
 msgid "Please enter at least one value"
 msgstr "Please enter at least one value"
 
@@ -64,6 +67,12 @@ msgstr "Data element is required"
 
 msgid "Attribute is required"
 msgstr "Attribute is required"
+
+msgid "Variable is required"
+msgstr "Variable is required"
+
+msgid "Variable"
+msgstr "Variable"
 
 msgid "Disaggregation options"
 msgstr "Disaggregation options"
@@ -162,9 +171,6 @@ msgstr "Description"
 msgid "No description provided"
 msgstr "No description provided"
 
-msgid "Open Dictionary"
-msgstr "Open Dictionary"
-
 msgid "Back"
 msgstr "Back"
 
@@ -227,3 +233,39 @@ msgstr "Option set"
 
 msgid "Custom value"
 msgstr "Custom value"
+
+msgid "Completed date"
+msgstr "Completed date"
+
+msgid "Creation date"
+msgstr "Creation date"
+
+msgid "Current date"
+msgstr "Current date"
+
+msgid "Due date"
+msgstr "Due date"
+
+msgid "Enrollment date"
+msgstr "Enrollment date"
+
+msgid "Event date"
+msgstr "Event date"
+
+msgid "Incident date"
+msgstr "Incident date"
+
+msgid "Program stage id"
+msgstr "Program stage id"
+
+msgid "Program stage name"
+msgstr "Program stage name"
+
+msgid "Sync date"
+msgstr "Sync date"
+
+msgid "Value count"
+msgstr "Value count"
+
+msgid "Zero or positive value count"
+msgstr "Zero or positive value count"

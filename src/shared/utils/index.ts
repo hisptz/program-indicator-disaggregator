@@ -68,18 +68,19 @@ export function generateProgramIndicatorUpdates(pi: ProgramIndicator, config: Di
 export async function updateIndicators(engine: any, template: ProgramIndicator, config: DisaggregationConfig) {
     const indicatorsToUpdate = generateProgramIndicatorUpdates(template, config);
     return await uploadUpdatedIndicators(engine, indicatorsToUpdate);
-    return null;
 }
 
 function generateFilter(disaggregationConfig: DisaggregationConfig, value: { name: string; value: any , operator?: string, valueType?:string}): string {
     const {value: filterValue, operator, valueType} = value;
-    const sanitizedValue = !valueType || valueType == 'text' ? `"${filterValue}"` : `${filterValue}`;
-
+    const sanitizedValue = valueType === 'text' || valueType === "date" ? `"${filterValue}"` : `${filterValue}`;
     if (disaggregationConfig.dataType === DATA_TYPES.DATA_ELEMENT) {
         return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}}  ${operator?? "=="} ` ;
     }
     if (disaggregationConfig.dataType === DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE) {
         return `A{${disaggregationConfig.data}} ${operator ?? "=="} ` + sanitizedValue;
+    }
+    if (disaggregationConfig.dataType === DATA_TYPES.VARIABLE) {
+        return `V{${disaggregationConfig.data}} ${operator ?? "=="} ` + sanitizedValue;
     }
     return "";
 }
