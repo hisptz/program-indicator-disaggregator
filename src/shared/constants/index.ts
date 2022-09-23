@@ -10,6 +10,7 @@ export enum DATA_TYPES {
 export enum DISAGGREGATION_TYPES {
     OPTION_SET = "OPTION_SET",
     CUSTOM_VALUE = "CUSTOM_VALUE",
+    CONSTANT_VALUE = "CONSTANT_VALUE",
 }
 
 export const SUPPORTED_VALUE_TYPES = ["NUMBER", "TEXT", "DATE"];
@@ -22,6 +23,10 @@ export const DISAGGREGATION_TYPES_OPTIONS = [
     {
         label: i18n.t("Custom value"),
         value: DISAGGREGATION_TYPES.CUSTOM_VALUE,
+    },
+    {
+        label: i18n.t("Constant"),
+        value: DISAGGREGATION_TYPES.CONSTANT_VALUE,
     },
 ];
 
@@ -152,3 +157,15 @@ export const VARIABLE_CONST: Array<Variable> = [
         valueType: "NUMBER"
     }
 ];
+
+export const queryResponse = {
+    "constantsQuery": {
+        "resource": "constants",
+        "params": {
+            "fields": [
+                "id",
+                "displayName"
+            ],
+        }
+    }
+}

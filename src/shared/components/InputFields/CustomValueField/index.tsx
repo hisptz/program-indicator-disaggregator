@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react'
+import { useDataQuery } from '@dhis2/app-runtime'
 import {Controller} from "react-hook-form";
-import {Button, Chip, Field, IconAdd24, InputField, SingleSelectField, SingleSelectOption} from '@dhis2/ui'
+import {Button, Chip, Field, IconAdd24, InputField, SingleSelectField, SingleSelectOption, CircularLoader} from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
+import {useWatch} from "react-hook-form";
+import {DISAGGREGATION_TYPES, queryResponse} from "../../../constants";
 
 const supportedOperators: string[] = ['==','>','<','<=','>=','!='];
 export default function CustomValueField({
@@ -14,6 +17,8 @@ export default function CustomValueField({
 
     const [inputValue, setInputValue] = useState("");
     const [selectValue, setSelectValue] = useState("==");
+    const disaggrationType = useWatch({name: "type"});  
+    const {loading, error, data} = useDataQuery(queryResponse);
     function checkDisableStatus(){
         return(
         type === 'text'
@@ -51,14 +56,24 @@ export default function CustomValueField({
                                     supportedOperators.map((operator, index) => <SingleSelectOption key={`${operator}-${index}`} label={operator} value={operator} />)
                                 }
                             </SingleSelectField>
-                            
-                            <InputField
+                            {
+                            (disaggrationType === DISAGGREGATION_TYPES.CUSTOM_VALUE )?<InputField
                                 type={type}
                                 value={inputValue}
                                 onChange={({value}: { value: string }) => setInputValue(value)}
                                 name={`${name}-input`}
                                 placeholder={i18n.t("Add new")}
-                            />
+                            />:
+                            (disaggrationType === DISAGGREGATION_TYPES.CONSTANT_VALUE)?
+                            <SingleSelectField name={`${name}`}>
+                            {loading && <CircularLoader/>}
+                            {error && <span>{`ERROR: ${error.message}`}</span>}
+                            {data && (
+                                <pre>{(data as Record<string, any>).constantsQuery?.constants.map((constant: any) => ({}))}</pre>
+                            )}
+                            </SingleSelectField>
+                            :null
+                            }
                             <Button
                                 icon={<IconAdd24/>}
                                 onClick={() => {
