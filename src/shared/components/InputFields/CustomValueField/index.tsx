@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDataQuery } from '@dhis2/app-runtime'
+import { clearSensitiveCaches, useDataQuery } from '@dhis2/app-runtime'
 import { Controller } from "react-hook-form";
 import { Button, Chip, Field, IconAdd24, InputField, SingleSelectField, SingleSelectOption, CircularLoader } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
@@ -14,7 +14,6 @@ export default function CustomValueField({
     validations,
     ...props
 }: { name: string, validations?: Record<string, any>, label: string, type?: string, [key: string]: any }): React.ReactElement {
-
     const [inputValue, setInputValue] = useState("");
     const [selectValue, setSelectValue] = useState("==");
     const disaggrationType = useWatch({ name: "type" });
@@ -27,7 +26,6 @@ export default function CustomValueField({
     useEffect(() => {
         setSelectValue("==")
     }, [type]);
-
     return (
         <Controller
             name={name}
@@ -57,15 +55,17 @@ export default function CustomValueField({
                                 }
                             </SingleSelectField>
                             {
-                                (disaggrationType === DISAGGREGATION_TYPES.CUSTOM_VALUE) ? <InputField
+                                (disaggrationType === DISAGGREGATION_TYPES.CUSTOM_VALUE) ? 
+                                <div style={{width:"50%"}}>
+                                <InputField
                                     type={type}
                                     value={inputValue}
                                     onChange={({ value }: { value: string }) => setInputValue(value)}
                                     name={`${name}-input`}
                                     placeholder={i18n.t("Add new")}
-                                /> :
+                                /></div> :
                                     (disaggrationType === DISAGGREGATION_TYPES.CONSTANT_VALUE) ?
-                                        <SingleSelectField name={`${name}-input`} selected={inputValue}
+                                        <div style={{width:"51%"}}><SingleSelectField name={`${name}-input`} selected={inputValue}
                                             onChange={({ selected: value }: any) => setInputValue(value)}>
                                             {loading && <CircularLoader />}
                                             {error && <span>{`ERROR: ${error.message}`}</span>}
@@ -73,7 +73,7 @@ export default function CustomValueField({
                                                 (data as Record<string, any>).constantsQuery?.constants.map((constant: any) =>
                                                     <SingleSelectOption key={`${constant.id}`} label={constant.displayName} value={`C{${constant.id}}`} />)
                                             )}
-                                        </SingleSelectField>
+                                        </SingleSelectField></div>
                                         : null
                             }
                             <Button
