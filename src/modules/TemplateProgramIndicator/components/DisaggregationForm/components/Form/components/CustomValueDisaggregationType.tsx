@@ -7,7 +7,7 @@ import {some} from "lodash";
 
 export function CustomValueDisaggregationType({valueType}: { valueType: string }): React.ReactElement | null {
     const type = useWatch({name: "type"});
-    return type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? <div className="col gap-16 col-sm-12">
+    return type === DISAGGREGATION_TYPES.CUSTOM_VALUE || type === DISAGGREGATION_TYPES.CONSTANT_VALUE ? <div className="col gap-16 col-sm-12">
         <CustomValueField
             required
             validations={{
@@ -17,7 +17,7 @@ export function CustomValueDisaggregationType({valueType}: { valueType: string }
                     validElements: (value: Array<string>) => !some(value, (v: { value: string; name: string; }) => v.value.match(/^"*$/)) || `${i18n.t("Please enter valid values")}`
                 }
             }}
-            type={valueType.toLowerCase()} name="values"
+            type={(type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? valueType: 'constant').toLowerCase()} name="values"
             label={i18n.t("Add options")}/>
     </div> : null;
 }

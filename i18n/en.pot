@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-09-20T13:10:04.811Z\n"
-"PO-Revision-Date: 2022-09-20T13:10:04.811Z\n"
+"POT-Creation-Date: 2022-09-25T15:31:04.523Z\n"
+"PO-Revision-Date: 2022-09-25T15:31:04.523Z\n"
 
 msgid "disaggregated by"
 msgstr "disaggregated by"
@@ -233,6 +233,9 @@ msgstr "Option set"
 
 msgid "Custom value"
 msgstr "Custom value"
+
+msgid "Constant"
+msgstr "Constant"
 
 msgid "Completed date"
 msgstr "Completed date"
