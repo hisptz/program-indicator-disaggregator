@@ -82,9 +82,6 @@ function generateFilter(disaggregationConfig: DisaggregationConfig, value: { nam
     if (disaggregationConfig.dataType === DATA_TYPES.VARIABLE) {
         return `V{${disaggregationConfig.data}} ${operator ?? "=="} ` + sanitizedValue;
     }
-    if (disaggregationConfig.dataType === DATA_TYPES.CONSTANT) {
-        return `C{${disaggregationConfig.data}} ${operator ?? "=="} ` + sanitizedValue; 
-    }
     return "";
 }
 

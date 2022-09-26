@@ -17,7 +17,7 @@ export function CustomValueDisaggregationType({valueType}: { valueType: string }
                     validElements: (value: Array<string>) => !some(value, (v: { value: string; name: string; }) => v.value.match(/^"*$/)) || `${i18n.t("Please enter valid values")}`
                 }
             }}
-            type={valueType.toLowerCase()} name="values"
+            type={(type === DISAGGREGATION_TYPES.CUSTOM_VALUE ? valueType: 'constant').toLowerCase()} name="values"
             label={i18n.t("Add options")}/>
     </div> : null;
 }
