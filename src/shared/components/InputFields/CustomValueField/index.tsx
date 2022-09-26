@@ -68,8 +68,8 @@ export default function CustomValueField({
                             <SingleSelectField name={`${name}`}>
                             {loading && <CircularLoader/>}
                             {error && <span>{`ERROR: ${error.message}`}</span>}
-                            {data && (
-                                <pre>{(data as Record<string, any>).constantsQuery?.constants.map((constant: any) => ({}))}</pre>
+                            {data && (console.log(
+                                <pre>{(data as Record<string, any>).constantsQuery?.constants.map((constant: any) => ({value:constant.id, label: constant.displayName}))}</pre>)
                             )}
                             </SingleSelectField>
                             :null
