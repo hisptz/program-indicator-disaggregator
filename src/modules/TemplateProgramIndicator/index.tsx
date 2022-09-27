@@ -3,7 +3,6 @@ import {useNavigate} from "react-router-dom";
 import {Button, CircularLoader, Divider, IconAdd24} from "@dhis2/ui";
 import DisaggregationForm from "./components/DisaggregationForm";
 import i18n from "@dhis2/d2-i18n";
-
 import ProgramIndicatorDetails from "./components/ProgramIndicatorDetails";
 import {useSelectedProgramIndicator} from "../../shared/hooks";
 import {useProgramIndicatorTemplate} from "./hooks";
@@ -15,10 +14,7 @@ export default function TemplateProgramIndicator(): React.ReactElement {
     const [open, setOpen] = useState(false);
     const {pi, error, loading} = useSelectedProgramIndicator();
     const config = useProgramIndicatorTemplate();
-
-
     const onOpen = () => setOpen((prevState) => !prevState)
-
     if (loading) {
         return (
             <div
@@ -34,13 +30,11 @@ export default function TemplateProgramIndicator(): React.ReactElement {
             </div>
         );
     }
-
     if (error) {
         return <h3>{error.message}</h3>;
     }
 
     const configurationsEmpty = isEmpty(config?.disaggregationConfigs);
-
     return (
         <div style={{marginBottom: 32}} className="container-fluid w-100">
             <div className="row-gap-16 space-between">

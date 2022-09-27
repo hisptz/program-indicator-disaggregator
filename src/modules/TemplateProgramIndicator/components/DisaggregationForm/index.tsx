@@ -15,7 +15,8 @@ export default function DisaggregationForm({
                                                open,
                                                onClose,
                                                disaggregationConfigId,
-                                           }: { open: boolean, onClose: () => void, disaggregationConfigId?: string }): React.ReactElement {
+                                               compound
+                                           }: { open: boolean, onClose: () => void, disaggregationConfigId?: string, compound?: DisaggregationConfig  }): React.ReactElement {
 
     const {error, loading, pi} = useSelectedProgramIndicator();
     const {save, saving, config, uploading, progress, count} = useManageProgramIndicatorTemplate(pi);
@@ -28,6 +29,8 @@ export default function DisaggregationForm({
             form.reset();
         };
     }, [defaultValues, form]);
+
+    
 
     const onFormSubmit = async (data: DisaggregationConfig) => {
         const {valid, valuesWithExtraChars} = validateNameLength(data, pi);
@@ -72,7 +75,7 @@ export default function DisaggregationForm({
             </ModalTitle>
             <ModalContent>
                 <FormProvider {...form}>
-                    <Form pi={pi}/>
+                    <Form config={compound} pi={pi}/>
                     <DevTool/>
                 </FormProvider>
             </ModalContent>

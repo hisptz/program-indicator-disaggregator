@@ -1,6 +1,5 @@
 import {DATA_TYPES, DISAGGREGATION_TYPES} from "../constants";
 
-
 export interface DisaggregationConfig {
     id: string;
     programIndicator: {
@@ -21,7 +20,6 @@ export interface DisaggregationConfig {
     }>,
     indicators: { id: string, value: string }[]
 }
-
 
 export interface ProgramIndicatorTemplate {
     id: string;

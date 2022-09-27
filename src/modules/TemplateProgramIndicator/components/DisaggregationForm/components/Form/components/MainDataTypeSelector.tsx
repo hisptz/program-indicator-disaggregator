@@ -6,8 +6,9 @@ import classes from "../../../DisaggregationForm.module.css";
 import i18n from "@dhis2/d2-i18n";
 import CustomRadioField from "../../../../../../../shared/components/InputFields/RadioField";
 import {DataTypeSelector} from "./DataTypeSelector";
+import { DisaggregationConfig } from "../../../../../../../shared/interfaces";
 
-export function MainDataTypeSelector({pi}: { pi: ProgramIndicator }): React.ReactElement {
+export function MainDataTypeSelector({pi, config}: { pi: ProgramIndicator, config?: DisaggregationConfig }): React.ReactElement {
     const dataType = useWatch({name: "dataType"});
     const {setValue, getFieldState} = useFormContext();
     const dataTypeFieldState = getFieldState("dataType");
@@ -61,6 +62,6 @@ export function MainDataTypeSelector({pi}: { pi: ProgramIndicator }): React.Reac
                                   label={i18n.t("Variable")}/>
             </div>            
         </div>
-        <DataTypeSelector pi={pi}/>
+        <DataTypeSelector config={config} pi={pi}/>
     </div>;
 }

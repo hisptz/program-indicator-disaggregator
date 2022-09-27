@@ -4,24 +4,47 @@ import {DATA_TYPES, SUPPORTED_VALUE_TYPES,VARIABLE_CONST} from "../../../../../.
 import CustomSingleSelectField from "../../../../../../../shared/components/InputFields/SingleSelectField";
 import i18n from "@dhis2/d2-i18n";
 import React from "react";
+import { DisaggregationConfig } from "../../../../../../../shared/interfaces";
 
-export function DataTypeSelector({pi}: { pi: ProgramIndicator }): React.ReactElement {
+export function DataTypeSelector({pi, config}: { pi: ProgramIndicator, config?: DisaggregationConfig }): React.ReactElement {
     const dataType = useWatch({name: "dataType"});
-
     const programStages = pi.program.programStages?.map(ps => ({label: ps.displayName ?? '', value: ps.id}));
-    const programVariable = VARIABLE_CONST.map(pv => ({label: pv.displayName, value: pv.id, type: pv.valueType}));
+    const programVariable = VARIABLE_CONST.map(pv => ({label: pv.displayName, value: pv.id, type: pv.valueType})).filter(constant => {
+        if(!config){
+            return true;
+        }
+        if(config.dataType !== DATA_TYPES.VARIABLE){
+            return true;
+        }
+        return constant.value !== config.data;
+    });
     const attributes = pi.program.programTrackedEntityAttributes?.filter((attribute) => SUPPORTED_VALUE_TYPES.includes(attribute?.trackedEntityAttribute?.valueType ?? "")).map(pta => ({
         label: pta.trackedEntityAttribute.displayName ?? '',
         value: pta.trackedEntityAttribute.id
-    })) ?? [];
+    })).filter(attribute => {
+        if (!config){
+            return true;
+        }
+        if(config.dataType !== DATA_TYPES.TRACKED_ENTITY_ATTRIBUTE){
+            return true;
+        }
+        return attribute.value !== config.data;
+    }) ?? [];
 
     const selectedProgramStage = useWatch({name: "programStage"});
 
     const dataElements = pi.program.programStages?.find(ps => ps.id === selectedProgramStage)?.programStageDataElements?.filter((dataElement) => SUPPORTED_VALUE_TYPES.includes(dataElement.dataElement.valueType)).map(psde => ({
         label: psde.dataElement.displayName ?? '',
         value: psde.dataElement.id
-    })) ?? [];
-
+    })).filter(dataElement => {
+        if (!config){
+            return true;
+        }
+        if(config.dataType !== DATA_TYPES.DATA_ELEMENT){
+            return true;
+        }
+        return dataElement.value !== config.data;
+    }) ?? [];
     return <div className="row-gap-16">
         {
             dataType === DATA_TYPES.DATA_ELEMENT && <>

@@ -64,7 +64,6 @@ export function generateProgramIndicatorUpdates(pi: ProgramIndicator, config: Di
     });
 }
 
-
 export async function updateIndicators(engine: any, template: ProgramIndicator, config: DisaggregationConfig) {
     const indicatorsToUpdate = generateProgramIndicatorUpdates(template, config);
     return await uploadUpdatedIndicators(engine, indicatorsToUpdate);
