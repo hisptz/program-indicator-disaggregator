@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {DisaggregationConfig as DisaggregationConfigType} from "../../../../shared/interfaces";
-import {Box, Button,Modal, ModalContent, ButtonStrip, Card, NoticeBox, Tag} from "@dhis2/ui";
+import {Box, Button,Modal, ModalContent, ButtonStrip, Card, NoticeBox, Tag, IconAdd24, CircularLoader} from "@dhis2/ui";
 import type {DataElement, ProgramIndicator, TrackedEntityAttribute} from "@hisptz/dhis2-utils";
 import i18n from '@dhis2/d2-i18n'
 import {getSelectedData} from "../DisaggregationForm/components/Form/utils";
@@ -12,6 +12,8 @@ import {updateIndicators} from "../../../../shared/utils";
 import {checkUpdateStatus} from "../../utils";
 import { DictionaryAnalysis } from "@hisptz/react-ui"
 import { Variable } from '../../../../shared/interfaces/metadata';
+import { useSelectedProgramIndicator } from '../../../../shared/hooks';
+import DisaggregationForm from '../DisaggregationForm';
 
 export default function DisaggregationConfig({
                                                  config,
@@ -25,9 +27,30 @@ export default function DisaggregationConfig({
     const engine = useDataEngine();
     const [hide, setHide] = useState(true);
     const {show} = useAlert(({message}) => message, ({type}) => ({...type, duration: 3000}))
-
     const dataSelected: TrackedEntityAttribute | DataElement | Variable |undefined = getSelectedData(pi, config.data, config.dataType);
     const title = `${pi.displayName} ${i18n.t("disaggregated by")} ${dataSelected?.displayName}`
+    const [open, setOpen] = useState(false);
+    const {error, loading} = useSelectedProgramIndicator();
+    const onOpen = () => setOpen((prevState) => !prevState)
+
+    if (loading) {
+        return (
+            <div
+                style={{
+                    height: "100%",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <CircularLoader small/>
+            </div>
+        );
+    }
+    if (error) {
+        return <h3>{error.message}</h3>;
+    }
 
     useEffect(() => {
         checkUpdateStatus(engine, config, pi)
@@ -58,7 +81,6 @@ export default function DisaggregationConfig({
             setUpdating(false);
         }
     }
-
     return (
         <Box width="100%">
             <Card>
@@ -95,6 +117,9 @@ export default function DisaggregationConfig({
                         </div>
                     </div>
                     <div className={classes.footer}>
+                    {
+                        <div style={{float:"right", paddingRight:"15px"}}><Button onClick={onOpen} icon={<IconAdd24/>}>{i18n.t("Add new")}</Button></div>
+                    }
                         <ButtonStrip>
                             <Button
                                 onClick={() => setOpenDisaggregationList(true)}>{i18n.t("View disaggregations")}</Button>
@@ -104,7 +129,7 @@ export default function DisaggregationConfig({
                                                                              title={title} config={config}/> : null
                             }
                         </ButtonStrip>
-                        <div><Button onClick={() => { setHide(false) }}>{i18n.t("Open Dictionary")}</Button></div>
+                        <div><Button onClick={() => { setHide(false) }}>{i18n.t("Open dictionary")}</Button></div>
                        <Modal large hide={hide}>
                          <ModalContent>
                             <DictionaryAnalysis dataSources={config.indicators.map(indicator => ({id: indicator.id}))}/>
@@ -115,6 +140,11 @@ export default function DisaggregationConfig({
                         </ModalContent>
                        </Modal>
                     </div>
+                    { 
+                    open && (
+                     <DisaggregationForm compound={config} open={open} onClose={() => setOpen(false)}/>
+                    )}
+                    
                 </div>
             </Card>
         </Box>

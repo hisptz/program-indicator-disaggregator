@@ -55,17 +55,17 @@ export default function CustomValueField({
                                 }
                             </SingleSelectField>
                             {
-                                (disaggrationType === DISAGGREGATION_TYPES.CUSTOM_VALUE) ? 
-                                <div style={{width:"50%"}}>
-                                <InputField
-                                    type={type}
-                                    value={inputValue}
-                                    onChange={({ value }: { value: string }) => setInputValue(value)}
-                                    name={`${name}-input`}
-                                    placeholder={i18n.t("Add new")}
-                                /></div> :
+                                (disaggrationType === DISAGGREGATION_TYPES.CUSTOM_VALUE) ?
+                                    <div style={{ width: "50%" }}>
+                                        <InputField
+                                            type={type}
+                                            value={inputValue}
+                                            onChange={({ value }: { value: string }) => setInputValue(value)}
+                                            name={`${name}-input`}
+                                            placeholder={i18n.t("Add new")}
+                                        /></div> :
                                     (disaggrationType === DISAGGREGATION_TYPES.CONSTANT_VALUE) ?
-                                        <div style={{width:"51%"}}><SingleSelectField name={`${name}-input`} selected={inputValue}
+                                        <div style={{ width: "51%" }}><SingleSelectField name={`${name}-input`} selected={inputValue}
                                             onChange={({ selected: value }: any) => setInputValue(value)}>
                                             {loading && <CircularLoader />}
                                             {error && <span>{`ERROR: ${error.message}`}</span>}
