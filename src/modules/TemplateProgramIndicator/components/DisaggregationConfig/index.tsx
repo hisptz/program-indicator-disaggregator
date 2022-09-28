@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {DisaggregationConfig as DisaggregationConfigType} from "../../../../shared/interfaces";
-import {Box, Button,Modal, ModalContent, ButtonStrip, Card, NoticeBox, Tag, IconAdd24, CircularLoader} from "@dhis2/ui";
+import {Box, Button,Modal, ModalContent, ButtonStrip, Card, NoticeBox, Tag, IconAdd24, CircularLoader, TableRow, TableCell} from "@dhis2/ui";
 import type {DataElement, ProgramIndicator, TrackedEntityAttribute} from "@hisptz/dhis2-utils";
 import i18n from '@dhis2/d2-i18n'
 import {getSelectedData} from "../DisaggregationForm/components/Form/utils";
@@ -14,7 +14,36 @@ import { DictionaryAnalysis } from "@hisptz/react-ui"
 import { Variable } from '../../../../shared/interfaces/metadata';
 import { useSelectedProgramIndicator } from '../../../../shared/hooks';
 import DisaggregationForm from '../DisaggregationForm';
+import CustomTable from '../../../../shared/components/CustomTable';
+import { Column } from '../../../../shared/components/CustomTable/interfaces';
 
+const columns: Column[] = [
+    {
+        label: "Name",
+        key: "name"
+    },
+    {
+        label: "Disaggregate by",
+        key: "disaggregatedBy"
+    },
+    {
+        label: "Data",
+        key: "data"
+    },
+    {
+        label: "Data type",
+        key: "dataType"
+    },
+]
+
+const rows = [
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    }
+]
 export default function DisaggregationConfig({
                                                  config,
                                                  pi
@@ -143,9 +172,19 @@ export default function DisaggregationConfig({
                     { 
                     open && (
                      <DisaggregationForm compound={config} open={open} onClose={() => setOpen(false)}/>
-                    )}
-                    
+                    )}  
                 </div>
+                <div style={{width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                            }}>
+                    <CustomTable
+                    columns={columns}
+                    data={rows} 
+                    /> 
+                    </div>              
             </Card>
         </Box>
     )
