@@ -40,7 +40,6 @@ export function MainDataTypeSelector({pi, config}: { pi: ProgramIndicator, confi
         }
         isEventProgram
     }, [isEventProgram, pi.program.programType, setValue]);
-
     return <div className={classes["form-group"]}>
         <label>{i18n.t("Disaggregate by")}</label>
         <div className="row-gap-16">

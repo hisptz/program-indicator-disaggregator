@@ -118,7 +118,7 @@ export default function DisaggregationConfig({
                     </div>
                     <div className={classes.footer}>
                     {
-                        <div style={{float:"right", paddingRight:"15px"}}><Button onClick={onOpen} icon={<IconAdd24/>}>{i18n.t("Add new")}</Button></div>
+                        <div style={{float:"right", paddingRight:"8px"}}><Button onClick={onOpen} icon={<IconAdd24/>}>{i18n.t("Add new")}</Button></div>
                     }
                         <ButtonStrip>
                             <Button
