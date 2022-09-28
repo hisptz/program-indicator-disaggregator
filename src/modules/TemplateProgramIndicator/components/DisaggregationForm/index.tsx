@@ -30,8 +30,6 @@ export default function DisaggregationForm({
         };
     }, [defaultValues, form]);
 
-    
-
     const onFormSubmit = async (data: DisaggregationConfig) => {
         const {valid, valuesWithExtraChars} = validateNameLength(data, pi);
         if (valid) {
@@ -50,7 +48,6 @@ export default function DisaggregationForm({
             }, {shouldFocus: true});
         }
     }
-
     if (loading) {
         return <div style={{
             height: "100%",
@@ -63,11 +60,10 @@ export default function DisaggregationForm({
             <CircularLoader small/>
         </div>
     }
-
     if (error) {
         return <h3>{error.message}</h3>
     }
-
+    
     return (
         <Modal position="middle" open={open} onClose={onClose}>
             <ModalTitle>
