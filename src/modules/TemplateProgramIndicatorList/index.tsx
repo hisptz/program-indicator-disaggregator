@@ -34,13 +34,11 @@ export default function TemplateProgramIndicatorList(): React.ReactElement {
         );
     }
 
-
     const queryData: QueryData =
         (data?.programIndicatorsQuery as QueryData) ?? ({} as QueryData);
     const {programIndicators: rawData, pager: pagination} = queryData;
 
     const programIndicators = sanitizeProgramIndicators(configurations, rawData as ProgramIndicator[]);
-
 
     return (
         <div>
@@ -51,7 +49,6 @@ export default function TemplateProgramIndicatorList(): React.ReactElement {
             />
             <div className={styles["table-container"]}>
                 <TemplateIndicatorsTable
-
                     tableData={programIndicators ?? []}
                     loadingData={loading}
                     pagination={pagination ? {

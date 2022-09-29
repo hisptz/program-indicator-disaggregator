@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {DisaggregationConfig as DisaggregationConfigType} from "../../../../shared/interfaces";
-import {Box, Button,Modal, ModalContent, ButtonStrip, Card, NoticeBox, Tag, IconAdd24, CircularLoader, TableRow, TableCell} from "@dhis2/ui";
+import {Box, Button,Modal, ModalContent, ButtonStrip, Card, NoticeBox, Tag, IconAdd24, CircularLoader, IconChevronUp24, IconChevronDown24} from "@dhis2/ui";
 import type {DataElement, ProgramIndicator, TrackedEntityAttribute} from "@hisptz/dhis2-utils";
 import i18n from '@dhis2/d2-i18n'
 import {getSelectedData} from "../DisaggregationForm/components/Form/utils";
@@ -16,6 +16,7 @@ import { useSelectedProgramIndicator } from '../../../../shared/hooks';
 import DisaggregationForm from '../DisaggregationForm';
 import CustomTable from '../../../../shared/components/CustomTable';
 import { Column } from '../../../../shared/components/CustomTable/interfaces';
+import useCollapse from 'react-collapsed';
 
 const columns: Column[] = [
     {
@@ -42,7 +43,32 @@ const rows = [
         disaggregatedBy: "",
         data: "",
         dataType: ""
-    }
+    },
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    },
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    },
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    },
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    },
+
 ]
 export default function DisaggregationConfig({
                                                  config,
@@ -61,6 +87,29 @@ export default function DisaggregationConfig({
     const [open, setOpen] = useState(false);
     const {error, loading} = useSelectedProgramIndicator();
     const onOpen = () => setOpen((prevState) => !prevState)
+    function CollapseTable(){
+        const{getCollapseProps, getToggleProps, isExpanded} = useCollapse();
+        return(
+            <div>
+        <div style={{paddingLeft:"15px", paddingBottom:"10px"}} {...getToggleProps()}>
+            {isExpanded ? <IconChevronUp24/> : <IconChevronDown24/>}
+        </div>
+        <div {...getCollapseProps()}>
+            <div style={{width: "90%",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            margin:"auto",
+                            paddingBottom:"20px"
+                            }}>
+            <CustomTable
+                    columns={columns}
+                    data={rows} 
+                    /> 
+            </div>
+        </div>
+    </div>     
+        );
+    }
 
     if (loading) {
         return (
@@ -174,17 +223,7 @@ export default function DisaggregationConfig({
                      <DisaggregationForm compound={config} open={open} onClose={() => setOpen(false)}/>
                     )}  
                 </div>
-                <div style={{width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center"
-                            }}>
-                    <CustomTable
-                    columns={columns}
-                    data={rows} 
-                    /> 
-                    </div>              
+                <CollapseTable/>            
             </Card>
         </Box>
     )

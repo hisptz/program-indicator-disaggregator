@@ -14219,6 +14219,14 @@ react-circular-progressbar@^2.1.0:
   resolved "https://registry.yarnpkg.com/react-circular-progressbar/-/react-circular-progressbar-2.1.0.tgz#99e5ae499c21de82223b498289e96f66adb8fa3a"
   integrity sha512-xp4THTrod4aLpGy68FX/k1Q3nzrfHUjUe5v6FsdwXBl3YVMwgeXYQKDrku7n/D6qsJA9CuunarAboC2xCiKs1g==
 
+react-collapsed@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-collapsed/-/react-collapsed-3.4.0.tgz#bf50a5092bb2b1e98090416906eb80514e416121"
+  integrity sha512-v/xsvxGb7bOGHb+zkAeSjb4VAP+P5CDyvhGkIqKwHuHDHCnEjnFFRHgfPz/y3N4mLsWyOZ1QWH27EDz5/mRHXQ==
+  dependencies:
+    raf "^3.4.1"
+    tiny-warning "^1.0.3"
+
 react-color@^2.19.3:
   version "2.19.3"
   resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.19.3.tgz#ec6c6b4568312a3c6a18420ab0472e146aa5683d"
@@ -16485,7 +16493,7 @@ tiny-invariant@^1.0.6:
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.2.0.tgz#a1141f86b672a9148c72e978a19a73b9b94a15a9"
   integrity sha512-1Uhn/aqw5C6RI4KejVeTg6mIS7IqxnLJ8Mv2tV5rTc0qWobay7pDUz6Wi392Cnc8ak1H0F2cjoRzb2/AW4+Fvg==
 
-tiny-warning@^1.0.2:
+tiny-warning@^1.0.2, tiny-warning@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==

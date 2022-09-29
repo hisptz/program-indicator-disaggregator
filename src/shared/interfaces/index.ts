@@ -19,7 +19,6 @@ export interface DisaggregationConfig {
         valueType?: string,
     }>,
     indicators: { id: string, value: string }[],
-    compounds?: Array<DisaggregationConfig>
 }
 
 export interface ProgramIndicatorTemplate {
