@@ -35,9 +35,7 @@ export interface Program extends DHIS2Resource {
     }[];
 }
 
-
 export interface Variable {id: string, displayName:string, valueType: string, optionSet?: OptionSet;}
-
 
 export interface TrackedEntityAttribute extends DHIS2Resource {
     valueType?: DHIS2ValueType;
@@ -47,7 +45,6 @@ export interface TrackedEntityAttribute extends DHIS2Resource {
 }
 
 export type TrackedEntityType = DHIS2Resource
-
 
 export interface DHIS2Resource {
     id: string;
@@ -69,7 +66,6 @@ export type DHIS2AccessString = "rw------" | "r-------" | "-------" | "rwrw----"
 export type DHIS2ValueType = "LONG_TEXT" | "TEXT" | "BOOLEAN" | "DATE" | "AGE" | "NUMBER"
 
 export type ProgramType = "WITH_REGISTRATION" | "WITHOUT_REGISTRATION"
-
 
 export interface DHIS2Access {
     read?: boolean;
@@ -121,8 +117,6 @@ export interface Legend extends DHIS2Resource {
     startValue: number;
     endValue: number;
     color: string;
-
-
 }
 
 export interface LegendSet extends DHIS2Resource {
@@ -130,7 +124,6 @@ export interface LegendSet extends DHIS2Resource {
     name: string;
     legends: Legend[];
 }
-
 
 export interface AnalyticsPeriodBoundaries extends DHIS2Resource {
     boundaryTarget?: string;

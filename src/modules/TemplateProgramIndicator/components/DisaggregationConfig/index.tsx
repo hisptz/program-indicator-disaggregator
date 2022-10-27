@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {DisaggregationConfig as DisaggregationConfigType} from "../../../../shared/interfaces";
-import {Box, Button,Modal, ModalContent, ButtonStrip, Card, NoticeBox, Tag} from "@dhis2/ui";
+import {Box, Button,Modal, ModalContent, ButtonStrip, Card, NoticeBox, Tag, IconAdd24, CircularLoader, IconChevronUp24, IconChevronDown24} from "@dhis2/ui";
 import type {DataElement, ProgramIndicator, TrackedEntityAttribute} from "@hisptz/dhis2-utils";
 import i18n from '@dhis2/d2-i18n'
 import {getSelectedData} from "../DisaggregationForm/components/Form/utils";
@@ -12,7 +12,64 @@ import {updateIndicators} from "../../../../shared/utils";
 import {checkUpdateStatus} from "../../utils";
 import { DictionaryAnalysis } from "@hisptz/react-ui"
 import { Variable } from '../../../../shared/interfaces/metadata';
+import { useSelectedProgramIndicator } from '../../../../shared/hooks';
+import DisaggregationForm from '../DisaggregationForm';
+import CustomTable from '../../../../shared/components/CustomTable';
+import { Column } from '../../../../shared/components/CustomTable/interfaces';
+import useCollapse from 'react-collapsed';
 
+const columns: Column[] = [
+    {
+        label: "Name",
+        key: "name"
+    },
+    {
+        label: "Disaggregate by",
+        key: "disaggregatedBy"
+    },
+    {
+        label: "Data",
+        key: "data"
+    },
+    {
+        label: "Data type",
+        key: "dataType"
+    },
+]
+
+const rows = [
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    },
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    },
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    },
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    },
+    {
+        name: "",
+        disaggregatedBy: "",
+        data: "",
+        dataType: ""
+    },
+
+]
 export default function DisaggregationConfig({
                                                  config,
                                                  pi
@@ -25,9 +82,53 @@ export default function DisaggregationConfig({
     const engine = useDataEngine();
     const [hide, setHide] = useState(true);
     const {show} = useAlert(({message}) => message, ({type}) => ({...type, duration: 3000}))
-
     const dataSelected: TrackedEntityAttribute | DataElement | Variable |undefined = getSelectedData(pi, config.data, config.dataType);
     const title = `${pi.displayName} ${i18n.t("disaggregated by")} ${dataSelected?.displayName}`
+    const [open, setOpen] = useState(false);
+    const {error, loading} = useSelectedProgramIndicator();
+    const onOpen = () => setOpen((prevState) => !prevState)
+    function CollapseTable(){
+        const{getCollapseProps, getToggleProps, isExpanded} = useCollapse();
+        return(
+            <div>
+        <div style={{paddingLeft:"15px", paddingBottom:"10px"}} {...getToggleProps()}>
+            {isExpanded ? <IconChevronUp24/> : <IconChevronDown24/>}
+        </div>
+        <div {...getCollapseProps()}>
+            <div style={{width: "90%",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            margin:"auto",
+                            paddingBottom:"20px"
+                            }}>
+            <CustomTable
+                    columns={columns}
+                    data={rows} 
+                    /> 
+            </div>
+        </div>
+    </div>     
+        );
+    }
+
+    if (loading) {
+        return (
+            <div
+                style={{
+                    height: "100%",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <CircularLoader small/>
+            </div>
+        );
+    }
+    if (error) {
+        return <h3>{error.message}</h3>;
+    }
 
     useEffect(() => {
         checkUpdateStatus(engine, config, pi)
@@ -58,7 +159,6 @@ export default function DisaggregationConfig({
             setUpdating(false);
         }
     }
-
     return (
         <Box width="100%">
             <Card>
@@ -95,6 +195,9 @@ export default function DisaggregationConfig({
                         </div>
                     </div>
                     <div className={classes.footer}>
+                    {
+                        <div style={{float:"right", paddingRight:"8px"}}><Button onClick={onOpen} icon={<IconAdd24/>}>{i18n.t("Add new")}</Button></div>
+                    }
                         <ButtonStrip>
                             <Button
                                 onClick={() => setOpenDisaggregationList(true)}>{i18n.t("View disaggregations")}</Button>
@@ -104,10 +207,10 @@ export default function DisaggregationConfig({
                                                                              title={title} config={config}/> : null
                             }
                         </ButtonStrip>
-                        <div><Button onClick={() => { setHide(false) }}>{i18n.t("Open Dictionary")}</Button></div>
+                        <div><Button onClick={() => { setHide(false) }}>{i18n.t("Open dictionary")}</Button></div>
                        <Modal large hide={hide}>
                          <ModalContent>
-                            <DictionaryAnalysis dataSources={config.indicators.map(indicator => ({id: indicator.id}))} />
+                            <DictionaryAnalysis dataSources={config.indicators.map(indicator => ({id: indicator.id}))}/>
                         <br/>
                         <div style={{float: "right", paddingRight:"15px" }} onClick={() => { setHide(true) }}>
                             <Button>Hide</Button>
@@ -115,7 +218,12 @@ export default function DisaggregationConfig({
                         </ModalContent>
                        </Modal>
                     </div>
+                    { 
+                    open && (
+                     <DisaggregationForm compound={config} open={open} onClose={() => setOpen(false)}/>
+                    )}  
                 </div>
+                <CollapseTable/>            
             </Card>
         </Box>
     )

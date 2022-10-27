@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2022-09-20T13:10:04.811Z\n"
-"PO-Revision-Date: 2022-09-20T13:10:04.811Z\n"
+"POT-Creation-Date: 2022-09-28T05:02:32.899Z\n"
+"PO-Revision-Date: 2022-09-28T05:02:32.899Z\n"
 
 msgid "disaggregated by"
 msgstr "disaggregated by"
@@ -41,11 +41,14 @@ msgstr "Attribute"
 msgid "Disaggregated values"
 msgstr "Disaggregated values"
 
+msgid "Add new"
+msgstr "Add new"
+
 msgid "View disaggregations"
 msgstr "View disaggregations"
 
-msgid "Open Dictionary"
-msgstr "Open Dictionary"
+msgid "Open dictionary"
+msgstr "Open dictionary"
 
 msgid "Please enter at least one value"
 msgstr "Please enter at least one value"
@@ -171,14 +174,14 @@ msgstr "Description"
 msgid "No description provided"
 msgstr "No description provided"
 
+msgid "Open Dictionary"
+msgstr "Open Dictionary"
+
 msgid "Back"
 msgstr "Back"
 
 msgid "Disaggregation configurations"
 msgstr "Disaggregation configurations"
-
-msgid "Add new"
-msgstr "Add new"
 
 msgid "Start by adding a new disaggregation configuration"
 msgstr "Start by adding a new disaggregation configuration"
@@ -233,6 +236,9 @@ msgstr "Option set"
 
 msgid "Custom value"
 msgstr "Custom value"
+
+msgid "Constant"
+msgstr "Constant"
 
 msgid "Completed date"
 msgstr "Completed date"

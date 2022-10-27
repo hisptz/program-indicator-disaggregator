@@ -36,6 +36,7 @@
     "async": "^3.2.3",
     "lodash": "^4.17.21",
     "luxon": "^2.4.0",
+    "react-collapsed": "^3.4.0",
     "react-error-overlay": "6.0.9",
     "react-hook-form": "^7.31.3",
     "react-router-dom": "6",

@@ -5,7 +5,7 @@ import {
     DISAGGREGATION_TYPES,
     DISAGGREGATION_TYPES_OPTIONS,
     SUPPORTED_VALUE_TYPES,
-    VARIABLE_CONST
+    queryResponse,
 } from "../../../../../../../shared/constants";
 import React, {useEffect, useMemo} from "react";
 import classes from "../../../DisaggregationForm.module.css";
@@ -24,8 +24,9 @@ export function DisaggregationOptions({pi}: { pi: ProgramIndicator }): React.Rea
             return option.value === DISAGGREGATION_TYPES.OPTION_SET;
         }
         if (SUPPORTED_VALUE_TYPES.includes(dataSelected?.valueType ?? '')) {
-            return option.value === DISAGGREGATION_TYPES.CUSTOM_VALUE;
+            return option.value === DISAGGREGATION_TYPES.CUSTOM_VALUE || option.value === DISAGGREGATION_TYPES.CONSTANT_VALUE;
         }
+        
         return false;
     });
     const options = useMemo(() => dataSelected?.optionSet?.options?.map(option => ({

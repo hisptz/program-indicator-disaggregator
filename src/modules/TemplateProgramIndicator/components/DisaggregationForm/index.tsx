@@ -15,7 +15,8 @@ export default function DisaggregationForm({
                                                open,
                                                onClose,
                                                disaggregationConfigId,
-                                           }: { open: boolean, onClose: () => void, disaggregationConfigId?: string }): React.ReactElement {
+                                               compound
+                                           }: { open: boolean, onClose: () => void, disaggregationConfigId?: string, compound?: DisaggregationConfig  }): React.ReactElement {
 
     const {error, loading, pi} = useSelectedProgramIndicator();
     const {save, saving, config, uploading, progress, count} = useManageProgramIndicatorTemplate(pi);
@@ -47,7 +48,6 @@ export default function DisaggregationForm({
             }, {shouldFocus: true});
         }
     }
-
     if (loading) {
         return <div style={{
             height: "100%",
@@ -60,11 +60,10 @@ export default function DisaggregationForm({
             <CircularLoader small/>
         </div>
     }
-
     if (error) {
         return <h3>{error.message}</h3>
     }
-
+    
     return (
         <Modal position="middle" open={open} onClose={onClose}>
             <ModalTitle>
@@ -72,7 +71,7 @@ export default function DisaggregationForm({
             </ModalTitle>
             <ModalContent>
                 <FormProvider {...form}>
-                    <Form pi={pi}/>
+                    <Form config={compound} pi={pi}/>
                     <DevTool/>
                 </FormProvider>
             </ModalContent>
