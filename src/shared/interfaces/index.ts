@@ -1,5 +1,18 @@
 import {DATA_TYPES, DISAGGREGATION_TYPES} from "../constants";
 
+
+export interface DisaggregationValue {
+    value: string,
+    name: string,
+    operator?: string,
+    valueType?: string,
+}
+
+export interface DisaggregationIndicatorConfig {
+    id: string,
+    value: string
+}
+
 export interface DisaggregationConfig {
     id: string;
     programIndicator: {
@@ -12,13 +25,9 @@ export interface DisaggregationConfig {
     programStage?: {
         id: string
     },
-    values: Array<{
-        value: string,
-        name: string,
-        operator?: string,
-        valueType?: string,
-    }>,
-    indicators: { id: string, value: string }[],
+    values: Array<DisaggregationValue>,
+    indicators: DisaggregationIndicatorConfig[],
+    compoundDisaggregations?: DisaggregationConfig[]
 }
 
 export interface ProgramIndicatorTemplate {
