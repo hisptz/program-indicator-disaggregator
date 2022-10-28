@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { clearSensitiveCaches, useDataQuery } from '@dhis2/app-runtime'
-import { Controller } from "react-hook-form";
+import {  useDataQuery } from '@dhis2/app-runtime'
+import { Controller , useWatch } from "react-hook-form";
 import { Button, Chip, Field, IconAdd24, InputField, SingleSelectField, SingleSelectOption, CircularLoader } from '@dhis2/ui'
 import i18n from '@dhis2/d2-i18n'
-import { useWatch } from "react-hook-form";
 import { DISAGGREGATION_TYPES, queryResponse } from "../../../constants";
 
 const supportedOperators: string[] = ['==', '>', '<', '<=', '>=', '!='];
@@ -16,8 +15,8 @@ export default function CustomValueField({
 }: { name: string, validations?: Record<string, any>, label: string, type?: string, [key: string]: any }): React.ReactElement {
     const [inputValue, setInputValue] = useState("");
     const [selectValue, setSelectValue] = useState("==");
-    const disaggrationType = useWatch({ name: "type" });
-    const { loading, error, data } = useDataQuery(queryResponse);
+    const disaggregationType = useWatch({ name: "type" });
+    const { loading, data } = useDataQuery(queryResponse);
     function checkDisableStatus() {
         return (
             type === 'text'
@@ -55,7 +54,7 @@ export default function CustomValueField({
                                 }
                             </SingleSelectField>
                             {
-                                (disaggrationType === DISAGGREGATION_TYPES.CUSTOM_VALUE) ?
+                                (disaggregationType === DISAGGREGATION_TYPES.CUSTOM_VALUE) ?
                                     <div style={{ width: "50%" }}>
                                         <InputField
                                             type={type}
@@ -64,7 +63,7 @@ export default function CustomValueField({
                                             name={`${name}-input`}
                                             placeholder={i18n.t("Add new")}
                                         /></div> :
-                                    (disaggrationType === DISAGGREGATION_TYPES.CONSTANT_VALUE) ?
+                                    (disaggregationType === DISAGGREGATION_TYPES.CONSTANT_VALUE) ?
                                         <div style={{ width: "51%" }}><SingleSelectField name={`${name}-input`} selected={inputValue}
                                             onChange={({ selected: value }: any) => setInputValue(value)}>
                                             {loading && <CircularLoader />}

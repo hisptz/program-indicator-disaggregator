@@ -16,10 +16,18 @@ export default function DisaggregationForm({
                                                onClose,
                                                disaggregationConfigId,
                                                compound
-                                           }: { open: boolean, onClose: () => void, disaggregationConfigId?: string, compound?: DisaggregationConfig  }): React.ReactElement {
+                                           }: { open: boolean, onClose: () => void, disaggregationConfigId?: string, compound?: DisaggregationConfig }): React.ReactElement {
 
     const {error, loading, pi} = useSelectedProgramIndicator();
-    const {save, saving, config, uploading, progress, count} = useManageProgramIndicatorTemplate(pi);
+    const {
+        save,
+        saving,
+        config,
+        uploading,
+        progress,
+        count,
+        saveCompoundDisaggregations
+    } = useManageProgramIndicatorTemplate(pi);
     const defaultValues = config?.disaggregationConfigs?.find(dc => dc.id === disaggregationConfigId);
     const form = useForm<DisaggregationConfig>();
 
@@ -33,7 +41,13 @@ export default function DisaggregationForm({
     const onFormSubmit = async (data: DisaggregationConfig) => {
         const {valid, valuesWithExtraChars} = validateNameLength(data, pi);
         if (valid) {
-            const isSuccess = await save({...data, id: disaggregationConfigId ?? `${data.data}.${uid()}`});
+            const config = {...data, id: disaggregationConfigId ?? `${data.data}.${uid()}`};
+            let isSuccess: boolean;
+            if (compound) {
+                isSuccess = await saveCompoundDisaggregations(config, compound)
+            } else {
+                isSuccess = await save(config);
+            }
             if (isSuccess) {
                 onClose();
             }
@@ -63,7 +77,7 @@ export default function DisaggregationForm({
     if (error) {
         return <h3>{error.message}</h3>
     }
-    
+
     return (
         <Modal position="middle" open={open} onClose={onClose}>
             <ModalTitle>

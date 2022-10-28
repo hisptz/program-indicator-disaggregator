@@ -26,7 +26,7 @@ export function DisaggregationOptions({pi}: { pi: ProgramIndicator }): React.Rea
         if (SUPPORTED_VALUE_TYPES.includes(dataSelected?.valueType ?? '')) {
             return option.value === DISAGGREGATION_TYPES.CUSTOM_VALUE || option.value === DISAGGREGATION_TYPES.CONSTANT_VALUE;
         }
-        
+
         return false;
     });
     const options = useMemo(() => dataSelected?.optionSet?.options?.map(option => ({
@@ -60,7 +60,7 @@ export function DisaggregationOptions({pi}: { pi: ProgramIndicator }): React.Rea
             </div>
         </div>
         <div className="row-gap-16">
-            <OptionSetDisaggregationType options={options}/>
+            <OptionSetDisaggregationType dataSelected={dataSelected} options={options}/>
         </div>
         <div className="row-gap-16">
             <CustomValueDisaggregationType valueType={dataSelected?.valueType ?? "TEXT"}/>

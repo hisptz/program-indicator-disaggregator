@@ -2,7 +2,7 @@ import {DateTime} from "luxon";
 import type {ProgramIndicator} from "@hisptz/dhis2-utils";
 import {uid} from "@hisptz/dhis2-utils";
 import {DisaggregationConfig, DisaggregationIndicatorConfig, DisaggregationValue} from "../interfaces";
-import {DATA_TYPES, PROGRAM_INDICATOR_MUTATION, PROGRAM_INDICATOR_UPDATE_MUTATION} from "../constants";
+import {DATA_TYPES, PROGRAM_INDICATOR_MUTATION, PROGRAM_INDICATOR_UPDATE_MUTATION, VALUE_TYPES} from "../constants";
 import {compact, find, flattenDeep, isEmpty, reduce} from "lodash";
 import {asyncify, mapSeries} from "async"
 
@@ -15,8 +15,12 @@ export const getSanitizedDateString = (date: string): string => {
     }
 };
 
-export function generateNamePrefix(value: DisaggregationValue, nameTemplate: string): string {
-    return nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, `${value.operator === '==' ? '-' : value.operator ?? "-"} ` + value.name.toString());
+export function generateNamePrefix(value: DisaggregationValue, nameTemplate: string, maxLength?: number): string {
+    const prefix = nameTemplate.replace(/({{ disaggregationValue }})|({{disaggregationValue}})/, `${value.operator === '==' ? '-' : value.operator ?? "-"} ` + value.name.toString());
+    if (maxLength && prefix.length > 50) {
+        throw Error("Generated name exceeds allowed length")
+    }
+    return prefix;
 }
 
 export function validateNameLength(data: DisaggregationConfig, pi: ProgramIndicator): { valid: boolean, valuesWithExtraChars: string[] } {
@@ -76,7 +80,7 @@ export async function updateIndicators(engine: any, template: ProgramIndicator, 
 
 function generateFilter(disaggregationConfig: DisaggregationConfig, value: DisaggregationValue): string {
     const {value: filterValue, operator, valueType} = value;
-    const sanitizedValue = valueType === 'text' || valueType === "date" ? `"${filterValue}"` : `${filterValue}`;
+    const sanitizedValue = (valueType === VALUE_TYPES.TEXT || valueType === VALUE_TYPES.DATE) ? `"${filterValue}"` : `${filterValue}`;
     if (disaggregationConfig.dataType === DATA_TYPES.DATA_ELEMENT) {
         return `#{${disaggregationConfig.programStage}.${disaggregationConfig.data}}  ${operator ?? "=="} `;
     }
@@ -94,7 +98,9 @@ function generateProgramIndicator(template: ProgramIndicator, config: Disaggrega
     id
 }: { value: DisaggregationValue, id?: string }): { value: string, indicator: ProgramIndicator } {
     const {nameTemplate} = config;
-    const prefix = generateNamePrefix(value, nameTemplate);
+    const displayNameLength = template.shortName?.length;
+
+    const prefix = generateNamePrefix(value, nameTemplate, (50 - (displayNameLength ?? 0)));
     let filter = template.filter;
     if (filter) {
         filter = `${filter} && ${generateFilter(config, value)}`
@@ -112,19 +118,11 @@ function generateProgramIndicator(template: ProgramIndicator, config: Disaggrega
             },
             displayName: `${template.displayName} ${prefix}`,
             shortName: `${template.shortName} ${prefix}`,
-            displayShortName: `${template.displayShortName} ${prefix}`,
+            displayShortName: `${template.displayShortName ?? ''} ${prefix}`,
             filter
         }
     }
 }
-
-function generateCompoundProgramIndicators(templates: ProgramIndicator[], config: DisaggregationConfig, {
-    value,
-    id
-}: { value: DisaggregationValue, id?: string }): { value: string, indicator: ProgramIndicator }[] {
-    return flattenDeep(templates.map(template => generateProgramIndicator(template, config, {value, id})))
-}
-
 
 export function generatePIConfigurationFromDisaggregationConfig(template: ProgramIndicator, disaggregationConfig: DisaggregationConfig): { value: string; indicator: ProgramIndicator }[] {
     const {values} = disaggregationConfig;
@@ -132,6 +130,7 @@ export function generatePIConfigurationFromDisaggregationConfig(template: Progra
         return generateProgramIndicator(template, disaggregationConfig, {value});
     });
 }
+
 
 export async function uploadGeneratedProgramIndicators(engine: any, {programIndicator, disaggregationConfig}: {
     programIndicator: ProgramIndicator,
@@ -141,7 +140,6 @@ export async function uploadGeneratedProgramIndicators(engine: any, {programIndi
         (setter: (prevState: number) => number) => void
 }): Promise<Array<{ id: string; value: string }>> {
     const indicators = generatePIConfigurationFromDisaggregationConfig(programIndicator, disaggregationConfig);
-
     if (isEmpty(indicators)) {
         return [];
     }

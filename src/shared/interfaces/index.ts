@@ -27,7 +27,6 @@ export interface DisaggregationConfig {
     },
     values: Array<DisaggregationValue>,
     indicators: DisaggregationIndicatorConfig[],
-    compoundDisaggregations?: DisaggregationConfig[]
 }
 
 export interface ProgramIndicatorTemplate {

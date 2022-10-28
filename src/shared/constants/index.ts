@@ -1,5 +1,5 @@
 import i18n from "@dhis2/d2-i18n";
-import { Variable } from "../interfaces/metadata";
+import {Variable} from "../interfaces/metadata";
 
 export enum DATA_TYPES {
     'DATA_ELEMENT' = 'DATA_ELEMENT',
@@ -12,6 +12,12 @@ export enum DISAGGREGATION_TYPES {
     OPTION_SET = "OPTION_SET",
     CUSTOM_VALUE = "CUSTOM_VALUE",
     CONSTANT_VALUE = "CONSTANT_VALUE",
+}
+
+export enum VALUE_TYPES {
+    TEXT = 'TEXT',
+    DATE = 'DATE',
+    NUMBER = 'NUMBER'
 }
 
 export const SUPPORTED_VALUE_TYPES = ["NUMBER", "TEXT", "DATE"];
@@ -110,7 +116,7 @@ export const VARIABLE_CONST: Array<Variable> = [
     {
         displayName: i18n.t("Current date"),
         id: 'current_date',
-        valueType: "DATE"  
+        valueType: "DATE"
     },
     {
         displayName: i18n.t("Due date"),
